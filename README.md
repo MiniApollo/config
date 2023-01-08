@@ -31,3 +31,7 @@ Neovim
 - all in init.vim (26-45 lines)
 
  Thanks for reading!
+
+![alt awesomewm](https://github.com/SMark5/config/blob/main/images/AwesomeWM.png)
+
+![alt neovim](https://github.com/SMark5/config/blob/main/images/NeoVim.png)
