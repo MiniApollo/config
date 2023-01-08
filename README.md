@@ -2,6 +2,8 @@
 
 List of programs that needed for awesome wm
 
+- jetbrains mono nerd font (if not callerdar not diplaying correctly (top right))
+
 - librewolf
 
 - alacritty
