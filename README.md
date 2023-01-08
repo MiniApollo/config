@@ -18,9 +18,9 @@ List of programs that needed for awesome wm
 
 - picom
 
-- dwall (wallpaper)
+- dwall (https://github.com/adi1090x/dynamic-wallpaper)
 
-- optimus-manager-qt (for hybrid grapics nvidia laptops)
+- optimus-manager (for hybrid grapics nvidia laptops)
 
 If you don't need any of this programs just delete from rc.lua at the end 674-679 lines or change at 95-100 lines to your favor of programs(firefox vim and any file manager)
 
