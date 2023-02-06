@@ -26,9 +26,14 @@ If you don't need any of this programs just delete from rc.lua at the end 674-67
 
 Neovim
 
-- vim plug
+- packer
 
-- all in init.vim (26-45 lines)
+- based on ThePrimeagen
+
+- The Godot editor must be running when you connect with LSP.
+- The default port in nvim-lspconfig for Godot is 6008, but if you're running Godot 4.0 then that's configured to use 6005 (you can change this in the settings).
+- Thank to Greyly on reddit
+- https://www.reddit.com/r/godot/comments/sexkij/state_of_neovim_support_in_2022/
 
  Thanks for reading!
 
