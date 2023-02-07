@@ -22,7 +22,8 @@ lsp.configure('sumneko_lua', {
         }
     }
 })
-
+--gdscript lsp
+require'lspconfig'.gdscript.setup{capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())}
 
 local cmp = require('cmp')
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
@@ -70,6 +71,4 @@ lsp.setup()
 vim.diagnostic.config({
     virtual_text = true
 })
-
-require'lspconfig'.gdscript.setup{capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())}
 
