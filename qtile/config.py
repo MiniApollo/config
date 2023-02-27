@@ -1,8 +1,17 @@
 # Thanks to luxirio
 # https://github.com/luxirio/linux/tree/master/arco_dotfiles/qtile
 
+# dependencies and wayland
+
+# playerctl brillo khal alacritty thunar librewolf dmenu galculator picom nm-applet redshift 
+# xorg-xwayland python-pywlroots python-pywayland python-xkbcommon
+# StatusNotifier needs
+# python-dbus-next (https://www.reddit.com/r/qtile/comments/um1i0w/comment/i8237d0/)
+# python-pyxdg
+# from qtile_extras import widget as extrawidgets
+
 from libqtile import bar, layout, widget, hook
-from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad, DropDown
+from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 import subprocess
 import os
@@ -22,6 +31,10 @@ mod = "mod4"
 terminal = "alacritty"
 file_manager = "thunar"
 browser = "librewolf"
+
+# backlight(brillo) to work user need to be in video group (gpasswd -a user video)
+# /sys/class/backlight/nvidia_wmi_ec_backlight Change it
+backlight_name = "nvidia_wmi_ec_backlight"
 
 # Color theming
 everforest = {
@@ -126,14 +139,14 @@ groups = [Group(i) for i in "123456789"]
 for i in groups:
     keys.extend(
         [
-            # mod1 + letter of group = switch to group
+            # mod + letter of group = switch to group
             Key(
                 [mod],
                 i.name,
                 lazy.group[i.name].toscreen(),
                 desc="Switch to group {}".format(i.name),
             ),
-            # mod1 + shift + letter of group = switch to & move focused window to group
+            # mod + shift + letter of group = switch to & move focused window to group
             Key(
                 [mod, "shift"],
                 i.name,
@@ -141,7 +154,7 @@ for i in groups:
                 desc="Switch to & move focused window to group {}".format(i.name),
             ),
             # Or, use below if you prefer not to switch to that group.
-            # # mod1 + shift + letter of group = move focused window to group
+            # # mod + shift + letter of group = move focused window to group
             # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
             #     desc="move focused window to group {}".format(i.name)),
         ]
@@ -225,6 +238,8 @@ def init_widgets_list():
             widget.WindowName(),
             # Right Widgets
             widget.Systray(),
+            # Wayland
+            # widget.StatusNotifier(),
             widget.Sep(
                 linewidth = 0,
                 padding = 7,
@@ -237,10 +252,9 @@ def init_widgets_list():
                 ),
             widget.Image(filename = "~/.config/qtile/icons/screen.png",scale = "False"),
             widget.Backlight(
-                # change value what's inside /sys/backlight/
                 update_interval = 1,
                 fontsize = 14,
-                backlight_name = "nvidia_wmi_ec_backlight",
+                backlight_name = backlight_name,
                 change_command  = "brillo",
                 ),
             widget.Sep(

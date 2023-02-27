@@ -7,9 +7,9 @@ function run {
   fi
 }
 
-run nm-applet 
 run picom 
-run dwall -s firewatch 
-run optimus-manager-qt 
-run thunar --daemon 
 run redshift -l 47.55:19.09 
+run optimus-manager-qt 
+run nm-applet 
+run dwall -s firewatch 
+run thunar --daemon 
