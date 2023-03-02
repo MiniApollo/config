@@ -14,10 +14,10 @@ vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
 -- next greatest remap ever : asbjornHaland
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 
-vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
+vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
 -- This is going to get me cancelled
 vim.keymap.set("i", "<C-c>", "<Esc>")
@@ -36,3 +36,23 @@ vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.dotfiles/nvim/.config/nvim/lua/theprimeagen/packer.lua<CR>");
 vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>");
+
+-- lsp diagnostic toggle and float viewing
+vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float)
+local diagnostics_active = true
+vim.keymap.set('n', '<leader>s', function()
+    diagnostics_active = not diagnostics_active
+    if diagnostics_active then
+        vim.diagnostic.show(nil, 0)
+    else
+        vim.diagnostic.hide()
+    end
+end)
+
+--Folding
+--Use za to fold 
+vim.keymap.set('n', '<leader>zR', require('ufo').openAllFolds)
+vim.keymap.set('n', '<leader>zM', require('ufo').closeAllFolds)
+
+-- UndoTree
+vim.keymap.set('n', '<leader>u', ":UndoTreeShow<CR>")

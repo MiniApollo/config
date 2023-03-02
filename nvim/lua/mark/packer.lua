@@ -51,5 +51,6 @@ return require('packer').startup(function(use)
           {'rafamadriz/friendly-snippets'}, -- Optional
       }
   }
+  use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
 
 end)
