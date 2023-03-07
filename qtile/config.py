@@ -8,11 +8,11 @@
 # StatusNotifier needs
 # python-dbus-next (https://www.reddit.com/r/qtile/comments/um1i0w/comment/i8237d0/)
 # python-pyxdg
-# from qtile_extras import widget as extrawidgets
 
 from libqtile import bar, layout, widget, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
+from qtile_extras import widget as extrawidgets
 import subprocess
 import os
 import locale
@@ -239,7 +239,7 @@ def init_widgets_list():
             # Right Widgets
             widget.Systray(),
             # Wayland
-            # widget.StatusNotifier(),
+            # extrawidgets.StatusNotifier(),
             widget.Sep(
                 linewidth = 0,
                 padding = 7,
@@ -261,15 +261,21 @@ def init_widgets_list():
                 linewidth = 0,
                 padding = 7,
                 ),
-            widget.Image(filename = "~/.config/qtile/icons/battery.png",scale = "False"),
+            extrawidgets.UPowerWidget(
+                background=everforest["background"],
+                border_charge_colour=everforest["aqua"],
+                foreground=everforest["fg1"],
+                fill_normal=everforest["fg1"],
+                border_colour="#ede8dc",
+                margin=5,
+                ),
+
             widget.Battery(
                 fontsize = 14,
                 format = "{percent:2.0%}",
                 notify_below = 15,
-                background = everforest["background"],
                 foreground=everforest["fg1"],
                 ),
-            #widget.Clock(fontsize = 14,format = "%d %b %A %R"),
             MyClock(
                     fontsize = 14,format = "%b %d %A %R",
                     foreground=everforest["fg1"], 
