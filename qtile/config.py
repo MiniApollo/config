@@ -12,7 +12,8 @@
 from libqtile import bar, layout, widget, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
-from qtile_extras import widget as extrawidgets
+from qtile_extras import widget #as extrawidgets
+from qtile_extras.widget.decorations import PowerLineDecoration, RectDecoration
 import subprocess
 import os
 import locale
@@ -40,9 +41,15 @@ backlight_name = "nvidia_wmi_ec_backlight"
 everforest = {
     "background":   "#2D353B",
     "bg_blue":      "#3A515D",
+    "bg_dim":       "#232A2E",
+    "bg_0":         "#2D353B",
+    "bg_1":         "#343F44",
+    "bg_2":         "#3D484D",
+    "bg_3":         "#475258",
+    "bg_4":         "#4F585E",
     "error":        "#514045",
     "selection":    "#425047",
-    "fg1":          "#f5eddc",
+    "fg1":          "#dfdcd6",
     "orange":       "#E69875",
     "red":          "#E67E80",
     "yellow":       "#DBBC7F",
@@ -52,8 +59,11 @@ everforest = {
     "aqua2":        "#506e57",
     "blue":         "#7FBBB3",
     "purple":       "#D699B6",
-    "grey":         "#7A8478"
-}
+    "grey":         "#7A8478",
+    "greyblock":    "#565e65",
+    "greyblock_dark":"#444B50",
+    "greybg":       "#3a4248",
+    "black":        "#1d2124"}
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -94,6 +104,10 @@ keys = [
     Key([mod, "shift"], "f", lazy.window.toggle_floating(), desc='toggle floating'),
     Key([mod], "f", lazy.window.toggle_fullscreen(), desc='toggle fullscreen'),
 
+    # WorkSpace Controls
+    Key([mod], "Left", lazy.screen.prev_group(), desc='Move to previous workspace with left arrow key'),
+    Key([mod], "Right", lazy.screen.next_group(), desc='Move to next workspace with right arrow key'),
+    
     # System Controls
     Key([mod, "shift"], "p", lazy.spawn("shutdown now"), desc="Shutdown Computer"),
     Key([mod, "shift"], "u", lazy.spawn("reboot"), desc="Restart Computer"),
@@ -185,12 +199,26 @@ layouts = [
     # layout.Zoomy(),
 ]
 
+# My decorations
+# Originally from Stats decoration
+decoration_group_clock = {
+    "decorations": [
+        RectDecoration(colour=everforest["bg_1"], radius=10, filled=True, padding_y=3, group=True)
+    ],
+    "padding": 10,}
+
+# Originally from Battery decoration
+decoration_group_stats = {
+    "decorations": [
+        RectDecoration(colour=everforest["bg_2"], radius=10, filled=True, padding_y=3, group=True)
+    ],
+    "padding": 5 }
 
 class MyClock(widget.Clock):
     defaults = [
         (
             "long_format",
-            "%Y - %b %d %A %R",
+            "%Y - %b %d %A %R:%S",
             "Format to show when mouse is over widget."
         )
     ]
@@ -239,35 +267,44 @@ def init_widgets_list():
             # Right Widgets
             widget.Systray(),
             # Wayland
-            # extrawidgets.StatusNotifier(),
+            # widget.StatusNotifier(),
             widget.Sep(
                 linewidth = 0,
                 padding = 7,
                 ),
-            widget.Image(filename = "~/.config/qtile/icons/volume.png",scale = "False"),
-            widget.Volume(fontsize = 14, update_interval = 0.3),
+            widget.Image(filename = "~/.config/qtile/icons/volume.png",scale = "False",**decoration_group_stats),
+            widget.Volume(
+                fontsize = 14,
+                update_interval = 0.3,
+                foreground=everforest["fg1"],
+                **decoration_group_stats
+                ),
+
             widget.Sep(
                 linewidth = 0,
                 padding = 7,
                 ),
-            widget.Image(filename = "~/.config/qtile/icons/screen.png",scale = "False"),
+            widget.Image(filename = "~/.config/qtile/icons/screen.png",scale = "False",**decoration_group_stats),
             widget.Backlight(
                 update_interval = 1,
                 fontsize = 14,
                 backlight_name = backlight_name,
+                foreground=everforest["fg1"],
                 change_command  = "brillo",
+                **decoration_group_stats,
                 ),
             widget.Sep(
                 linewidth = 0,
                 padding = 7,
                 ),
-            extrawidgets.UPowerWidget(
+            widget.UPowerWidget(
                 background=everforest["background"],
                 border_charge_colour=everforest["aqua"],
                 foreground=everforest["fg1"],
                 fill_normal=everforest["fg1"],
                 border_colour="#ede8dc",
                 margin=5,
+                **decoration_group_stats,
                 ),
 
             widget.Battery(
@@ -275,13 +312,21 @@ def init_widgets_list():
                 format = "{percent:2.0%}",
                 notify_below = 15,
                 foreground=everforest["fg1"],
+                **decoration_group_stats,
                 ),
+
+            widget.Sep(
+                linewidth = 0,
+                padding = 7,
+                ),
+
             MyClock(
                     fontsize = 14,format = "%b %d %A %R",
                     foreground=everforest["fg1"], 
-                    mouse_callbacks = {'Button1': lazy.spawn(terminal + ' -e khal interactive')}
+                    mouse_callbacks = {'Button1': lazy.spawn(terminal + ' -e khal interactive')},
+                    **decoration_group_clock,
                     ),
-            widget.CurrentLayout(fontsize = 12),
+            widget.CurrentLayout(fontsize = 12,foreground=everforest["fg1"], **decoration_group_stats),
              ]
     return widgets
 
@@ -290,7 +335,7 @@ screens = [
         bottom=bar.Bar(
             init_widgets_list(),
             30,
-            background="#000000.0",
+            background=everforest["background"],
             # change opacity to fix applet overlap each other
             # https://github.com/qtile/qtile/issues/2935
             opacity=1.0,
