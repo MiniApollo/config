@@ -335,7 +335,7 @@ screens = [
         bottom=bar.Bar(
             init_widgets_list(),
             30,
-            background=everforest["background"],
+            background="#000000.0",
             # change opacity to fix applet overlap each other
             # https://github.com/qtile/qtile/issues/2935
             opacity=1.0,
