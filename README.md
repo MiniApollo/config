@@ -47,7 +47,7 @@ cp -r .* ~/.config
 
 ### <samp>Dev</samp>
 
--Text Editor: [NeoVim](https://neovim.io)
+- Text Editor: [NeoVim](https://neovim.io)
 
 ### <samp>Other Utilities</samp>
 
