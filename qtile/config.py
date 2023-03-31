@@ -3,7 +3,7 @@
 
 # dependencies and wayland
 
-# playerctl brillo khal alacritty thunar librewolf dmenu galculator picom nm-applet redshift 
+# playerctl brillo alacritty thunar librewolf dmenu galculator picom nm-applet redshift 
 # xorg-xwayland python-pywlroots python-pywayland python-xkbcommon
 # StatusNotifier needs
 # python-dbus-next (https://www.reddit.com/r/qtile/comments/um1i0w/comment/i8237d0/)
@@ -323,7 +323,7 @@ def init_widgets_list():
             MyClock(
                     fontsize = 14,format = "%b %d %A %R",
                     foreground=everforest["fg1"], 
-                    mouse_callbacks = {'Button1': lazy.spawn(terminal + ' -e khal interactive')},
+                    mouse_callbacks = {'Button1': lazy.spawn("alacritty --hold -e cal -y")},
                     **decoration_group_clock,
                     ),
             widget.CurrentLayout(fontsize = 12,foreground=everforest["fg1"], **decoration_group_stats),
