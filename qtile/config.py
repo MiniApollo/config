@@ -3,7 +3,7 @@
 
 # dependencies and wayland
 
-# playerctl brillo alacritty thunar librewolf dmenu galculator picom nm-applet redshift 
+# playerctl light alacritty thunar librewolf dmenu galculator picom nm-applet redshift 
 # xorg-xwayland python-pywlroots python-pywayland python-xkbcommon
 # StatusNotifier needs
 # python-dbus-next (https://www.reddit.com/r/qtile/comments/um1i0w/comment/i8237d0/)
@@ -12,7 +12,7 @@
 from libqtile import bar, layout, widget, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
-from qtile_extras import widget #as extrawidgets
+from qtile_extras import widget
 from qtile_extras.widget.decorations import PowerLineDecoration, RectDecoration
 import subprocess
 import os
@@ -114,8 +114,8 @@ keys = [
 
     # Brightness Controls
     # to use brillo user need to be in video group or edit to not require sudo
-    Key([], "XF86MonBrightnessUp", lazy.spawn("brillo -q -A 5"), desc="Increase brightness"),
-    Key([], "XF86MonBrightnessDown", lazy.spawn("brillo -q -U 5"), desc="Decrease brightness"),
+    Key([], "XF86MonBrightnessUp", lazy.spawn("light -A 5"), desc="Increase brightness"),
+    Key([], "XF86MonBrightnessDown", lazy.spawn("light -U 5"), desc="Decrease brightness"),
 
     # Volume Controls
     Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer -q sset Master 1%+"), desc="Increase volume"),
@@ -290,7 +290,7 @@ def init_widgets_list():
                 fontsize = 14,
                 backlight_name = backlight_name,
                 foreground=everforest["fg1"],
-                change_command  = "brillo",
+                change_command  = "light",
                 **decoration_group_stats,
                 ),
             widget.Sep(
@@ -314,18 +314,20 @@ def init_widgets_list():
                 foreground=everforest["fg1"],
                 **decoration_group_stats,
                 ),
-
             widget.Sep(
                 linewidth = 0,
                 padding = 7,
                 ),
-
             MyClock(
                     fontsize = 14,format = "%b %d %A %R",
                     foreground=everforest["fg1"], 
                     mouse_callbacks = {'Button1': lazy.spawn("alacritty --hold -e cal -y")},
                     **decoration_group_clock,
                     ),
+            widget.Sep(
+                linewidth = 0,
+                padding = 7,
+                ),
             widget.CurrentLayout(fontsize = 12,foreground=everforest["fg1"], **decoration_group_stats),
              ]
     return widgets
