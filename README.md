@@ -54,7 +54,7 @@ cp -r .* ~/.config
 - Resource monitor: [HTOP](https://htop.dev)
 - GUI File manager: [Thunar](https://docs.xfce.org/xfce/thunar/start)
 - Night light: [Redshift](https://wiki.archlinux.org/title/redshift)
-- Brightness: [Brillo](https://wiki.archlinux.org/title/backlight#Backlight_utilities)
+- Brightness: [Light](https://wiki.archlinux.org/title/backlight#Backlight_utilities)
 - Network-manager-applet: [nm-applet](https://wiki.archlinux.org/title/NetworkManager)
 - Wallpaper: [Dwall](https://github.com/adi1090x/dynamic-wallpaper)
 - [Optimus-Manager(for hybrid grapics nvidia laptops)](https://wiki.archlinux.org/title/NVIDIA_Optimus#Using_optimus-manager)
