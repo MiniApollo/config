@@ -87,6 +87,6 @@ cp -r .* ~/.config
 
 # <samp>Thanks for reading!</samp>
 
-![alt awesomewm](https://github.com/SMark5/config/blob/main/images/AwesomeWM.png)
+![alt Qtile](https://github.com/SMark5/config/blob/main/images/Qtile.png)
 
 ![alt neovim](https://github.com/SMark5/config/blob/main/images/NeoVim.png)
