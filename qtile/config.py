@@ -140,6 +140,8 @@ keys = [
     # UserPrograms
     # Dmenu
     Key([mod], "d", lazy.spawn("dmenu_run -i -fn 'Monospace'"), desc="Show dmenu"),
+    # Prime-run(nvidia optimus selector with Dmenu)
+    Key([mod, "shift"], "d", lazy.spawn("/home/mark/.config/qtile/hybrid.sh"), desc="Prime-run with dmenu"),
     # Browser
     Key([mod], "q", lazy.spawn(browser), desc="Launch browser"),
     # File Manager

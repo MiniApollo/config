@@ -13,3 +13,4 @@ run optimus-manager-qt
 run nm-applet 
 run dwall -s firewatch 
 run thunar --daemon 
+run xsettingsd
