@@ -9,8 +9,6 @@ function run {
 
 run picom 
 run redshift -l 47.55:19.09 
-run optimus-manager-qt 
 run nm-applet 
 run dwall -s firewatch 
 run thunar --daemon 
-run xsettingsd
