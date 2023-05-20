@@ -1,0 +1,11 @@
+/** Basic config file **/
+
+configuration {
+  terminal: "alacritty";
+  show-icons: true;
+  icon-theme: "Qogir";
+  display-drun: "";
+  display-window: "﩯 ";
+  display-combi: "  ";
+}
+@theme "themes/squared-everforest.rasi"
