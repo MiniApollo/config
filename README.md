@@ -38,7 +38,7 @@ cp -r .* ~/.config
 
 
 - Linux Kernel: [Linux](https://www.kernel.org)
-- Distro: [EndeavourOS](https://endeavouros.com)
+- Distro: [Gentoo](https://www.gentoo.org)
 - Window Manager: [Qtile](http://www.qtile.org)
 - Terminal Emulator: [Alacritty](https://github.com/alacritty/alacritty)
 - Shell: [Bash](https://www.gnu.org/software/bash)
@@ -57,9 +57,8 @@ cp -r .* ~/.config
 - Brightness: [Light](https://wiki.archlinux.org/title/backlight#Backlight_utilities)
 - Network-manager-applet: [nm-applet](https://wiki.archlinux.org/title/NetworkManager)
 - Wallpaper: [Dwall](https://github.com/adi1090x/dynamic-wallpaper)
-- Desktop Environment: [Xfce](https://www.xfce.org)
-> I use Xfce as a base install
-- Font: [jetbrains mono nerd](https://www.jetbrains.com/lp/mono)
+
+> Font: [jetbrains mono nerd](https://www.jetbrains.com/lp/mono)
 > In awesome wm it's recomended to install, because callerdar will not display correctly (top right)
 ### <samp>Notes</samp>
 > **Note**
