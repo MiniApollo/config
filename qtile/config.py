@@ -138,11 +138,13 @@ keys = [
     Key([], "XF86AudioNext", lazy.spawn("playerctl next"), desc="Next"),
 
     # UserPrograms
-    # Dmenu
-    Key([mod], "d", lazy.spawn("rofi -show drun"), desc="Show dmenu"),
+    # rofi
+    Key([mod], "d", lazy.spawn("rofi -show drun"), desc="Show rofi"),
+    # dmenu
     #Key([mod], "d", lazy.spawn("dmenu_run -i -fn 'Monospace'"), desc="Show dmenu"),
-    # Prime-run(nvidia optimus selector with Dmenu)
-    Key([mod, "shift"], "d", lazy.spawn("/home/mark/.config/qtile/hybrid.sh"), desc="Prime-run with dmenu"),
+
+    # Prime-run(nvidia optimus selector with rofi)
+    Key([mod, "shift"], "d", lazy.spawn("/home/mark/.config/qtile/hybrid.sh"), desc="Prime-run with rofi"),
     # Browser
     Key([mod], "q", lazy.spawn(browser), desc="Launch browser"),
     # File Manager
