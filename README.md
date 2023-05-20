@@ -57,7 +57,6 @@ cp -r .* ~/.config
 - Brightness: [Light](https://wiki.archlinux.org/title/backlight#Backlight_utilities)
 - Network-manager-applet: [nm-applet](https://wiki.archlinux.org/title/NetworkManager)
 - Wallpaper: [Dwall](https://github.com/adi1090x/dynamic-wallpaper)
-- [Optimus-Manager(for hybrid grapics nvidia laptops)](https://wiki.archlinux.org/title/NVIDIA_Optimus#Using_optimus-manager)
 - Desktop Environment: [Xfce](https://www.xfce.org)
 > I use Xfce as a base install
 - Font: [jetbrains mono nerd](https://www.jetbrains.com/lp/mono)
