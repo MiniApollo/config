@@ -31,7 +31,7 @@ mod = "mod4"
 # Programs
 terminal = "alacritty"
 file_manager = "thunar"
-browser = "librewolf"
+browser = "librewolf-bin"
 
 # backlight(brillo) to work user need to be in video group (gpasswd -a user video)
 # /sys/class/backlight/nvidia_wmi_ec_backlight Change it
@@ -109,8 +109,8 @@ keys = [
     Key([mod], "Right", lazy.screen.next_group(), desc='Move to next workspace with right arrow key'),
     
     # System Controls
-    Key([mod, "shift"], "p", lazy.spawn("shutdown now"), desc="Shutdown Computer"),
-    Key([mod, "shift"], "u", lazy.spawn("reboot"), desc="Restart Computer"),
+    Key([mod, "shift"], "p", lazy.spawn("loginctl poweroff"), desc="Shutdown Computer"),
+    Key([mod, "shift"], "u", lazy.spawn("loginctl reboot"), desc="Restart Computer"),
 
     # Brightness Controls
     # to use brillo user need to be in video group or edit to not require sudo
@@ -139,7 +139,8 @@ keys = [
 
     # UserPrograms
     # Dmenu
-    Key([mod], "d", lazy.spawn("dmenu_run -i -fn 'Monospace'"), desc="Show dmenu"),
+    Key([mod], "d", lazy.spawn("rofi -show drun"), desc="Show dmenu"),
+    #Key([mod], "d", lazy.spawn("dmenu_run -i -fn 'Monospace'"), desc="Show dmenu"),
     # Prime-run(nvidia optimus selector with Dmenu)
     Key([mod, "shift"], "d", lazy.spawn("/home/mark/.config/qtile/hybrid.sh"), desc="Prime-run with dmenu"),
     # Browser
@@ -331,6 +332,18 @@ def init_widgets_list():
                 padding = 7,
                 ),
             widget.CurrentLayout(fontsize = 12,foreground=everforest["fg1"], **decoration_group_stats),
+            widget.Sep(
+                linewidth = 0,
+                padding = 7,
+                ),
+            widget.TextBox(
+                    text="⏻",
+                    foreground=everforest["aqua"],
+                    font="Font Awesome 6 Free Solid",
+                    fontsize=15,
+                    #mouse_callbacks={"Button1": open_powermenu},
+                    **decoration_group_clock,
+                ),
              ]
     return widgets
 
@@ -370,7 +383,10 @@ floating_layout = layout.Floating(
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
         Match(title="galculator"),  # Galculator
-    ]
+    ],
+    border_width = 2,
+    border_focus = everforest["selection"],
+    border_normal = everforest["background"]
 )
 auto_fullscreen = True
 focus_on_window_activation = "smart"
