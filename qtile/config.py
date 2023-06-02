@@ -113,7 +113,7 @@ keys = [
     Key([mod, "shift"], "u", lazy.spawn("loginctl reboot"), desc="Restart Computer"),
 
     # Brightness Controls
-    # to use brillo user need to be in video group or edit to not require sudo
+    # to use light user need to be in video group or edit to not require sudo
     Key([], "XF86MonBrightnessUp", lazy.spawn("light -A 5"), desc="Increase brightness"),
     Key([], "XF86MonBrightnessDown", lazy.spawn("light -U 5"), desc="Decrease brightness"),
 
@@ -243,7 +243,7 @@ class MyClock(widget.Clock):
 
 
 widget_defaults = dict(
-    font="JetBrainsMono Nerd Font Bold",
+    font="Noto Bold",
     fontsize=13,
     padding=3,
     background = everforest["background"]
@@ -260,7 +260,7 @@ def init_widgets_list():
                 ),
             widget.GroupBox(
                 highlight_method = "line",
-                font = "JetBrainsMono Nerd Font",
+                font = "Noto",
                 fontsize = 14,
                 spacing = 5,
                 active = everforest["fg1"],
@@ -339,11 +339,10 @@ def init_widgets_list():
                 padding = 7,
                 ),
             widget.TextBox(
-                    text="⏻",
+                    text="",
                     foreground=everforest["aqua"],
-                    font="Font Awesome 6 Free Solid",
                     fontsize=15,
-                    #mouse_callbacks={"Button1": open_powermenu},
+                    mouse_callbacks={"Button1": lazy.spawn("/home/mark/.config/rofi/powermenu/powermenu.sh")},
                     **decoration_group_clock,
                 ),
              ]

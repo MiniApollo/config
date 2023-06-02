@@ -6,6 +6,7 @@ function run {
     $@&
   fi
 }
+killall redshift
 
 run picom 
 run redshift -l 47.55:19.09 
