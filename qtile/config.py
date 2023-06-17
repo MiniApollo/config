@@ -140,6 +140,7 @@ keys = [
     # UserPrograms
     # rofi
     Key([mod], "d", lazy.spawn("rofi -show drun"), desc="Show rofi"),
+    Key([mod, "control"], "d", lazy.spawn("/home/mark/.config/rofi/powermenu/powermenu.sh"), desc="Show powermenu"),
     # dmenu
     #Key([mod], "d", lazy.spawn("dmenu_run -i -fn 'Monospace'"), desc="Show dmenu"),
 
