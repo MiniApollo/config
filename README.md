@@ -8,6 +8,9 @@
 
 </div>
 
+## <samp>Dependencies</samp>
+
+qtile alacritty picom librewolf neovim htop thunar redshift light nm-applet rofi 
 
 ## :wrench: <samp>INSTALLATION</samp>
 
@@ -33,7 +36,6 @@ cp -r .* ~/.config
 > **Warning**
 > Don't forget to edit the qtile config to match your hardware and install the required packages
 
-
 ## :bookmark_tabs: <samp>DETAILS</samp>
 
 
@@ -56,7 +58,7 @@ cp -r .* ~/.config
 - Night light: [Redshift](https://wiki.archlinux.org/title/redshift)
 - Brightness: [Light](https://wiki.archlinux.org/title/backlight#Backlight_utilities)
 - Network-manager-applet: [nm-applet](https://wiki.archlinux.org/title/NetworkManager)
-- Wallpaper: [Dwall](https://github.com/adi1090x/dynamic-wallpaper)
+- Wallpaper: [dynamic-wallpaper-wayland](https://github.com/SMark5/dynamic-wallpaper-wayland)
 
 > Font: [jetbrains mono nerd](https://www.jetbrains.com/lp/mono)
 > In awesome wm it's recomended to install, because callerdar will not display correctly (top right)
