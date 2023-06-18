@@ -11,5 +11,5 @@ killall redshift
 run picom 
 run redshift -l 47.55:19.09 
 run nm-applet 
-run dwall -s firewatch 
 run thunar --daemon 
+$HOME/SystemFiles/dynamic-wallpaper-wayland/wallpaper.sh
