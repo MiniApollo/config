@@ -24,3 +24,5 @@ bind '"\e[A":history-search-backward'
 bind '"\e[B":history-search-forward'
 bind '"\C-l": clear;'
 stty -ixon #disable ctrl-s and ctrl-q
+export TERM=xterm-256color
+export EDITOR=nvim
