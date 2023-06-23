@@ -39,17 +39,20 @@ run_cmd() {
 			loginctl poweroff
 		elif [[ $1 == '--reboot' ]]; then
 			loginctl reboot
+		elif [[ $1 == '--lock' ]]; then
+            swaylock 
 		elif [[ $1 == '--suspend' ]]; then
 			loginctl suspend
 		elif [[ $1 == '--logout' ]]; then
-			if [[ "$DESKTOP_SESSION" == 'qtile' ]]; then
-				qtile cmd-obj -o cmd -f shutdown
+			if [[ "$XDG_CURRENT_DESKTOP" == 'Hyprland' ]]; then
+                hyprctl dispatch exit
 			fi
 		fi
 	else
 		exit 0
 	fi
 }
+
 
 # Actions
 chosen="$(run_rofi)"
@@ -61,7 +64,7 @@ case ${chosen} in
 		run_cmd --reboot
         ;;
     $lock)
-        #light-locker-command -l
+		run_cmd --lock
         ;;
     $suspend)
 		run_cmd --suspend

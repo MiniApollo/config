@@ -1,0 +1,66 @@
+{
+    "layer": "top", // Waybar at top layer
+    "position": "bottom", // Waybar position (top|bottom|left|right)
+    "height": 34, // Waybar height (to be removed for auto height)
+    // "width": 1280, // Waybar width
+    "spacing": 4, // Gaps between modules (4px)
+    // Choose the order of the modules
+    "modules-left": ["wlr/workspaces","hyprland/window"],
+    "modules-center": [],
+    "modules-right": ["tray","pulseaudio", "backlight", "battery", "clock", "custom/powermenu"],
+    // Modules configuration
+     "wlr/workspaces": {
+         "on-click": "activate",
+         "on-scroll-up": "hyprctl dispatch workspace m-1 > /dev/null",
+         "on-scroll-down": "hyprctl dispatch workspace m+1 > /dev/null",
+     },
+    "hyprland/window": {
+        "separate-outputs": true
+    },
+    "tray": {
+        "icon-size": 21,
+        "spacing": 1
+    },
+    "clock": {
+        "format": "{:%b %d %A %R}",
+        "format-alt": "{:%Y - %b %d %A %R:%S}",
+        "on-click-right": "alacritty --hold -e cal -y"
+    },
+    "backlight": {
+        "format": " {icon} {percent}% ",
+        "format-icons": ["", "", "", "", "", "", "", "", ""]
+    },
+    "battery": {
+        "states": {
+            "good": 55,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}% ",
+        "format-charging": "{icon} {capacity}% ",
+        "interval": 60,
+        "format-icons": ["", "", "", "", ""],
+    },
+    "battery#bat2": {
+        "bat": "BAT2"
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}% {format_source}",
+		"format-muted": "婢 Muted {format_source}",
+        "format-source": " {volume}%",
+        "format-source-muted": "",
+        "format-icons": {
+            "default": ["", ""]
+        },
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "on-click-middle": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
+        "on-click-right": "",
+    },
+    "custom/powermenu": {
+        "interval": "once",
+        "tooltip": false, 
+        "format":"  ",
+        "on-click": "~/.config/rofi/powermenu/powermenu.sh"
+    },
+}
+
