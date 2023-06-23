@@ -8,9 +8,9 @@
 
 </div>
 
-## <samp>Dependencies</samp>
+## <samp>How to setup</samp>
 
-qtile alacritty picom librewolf neovim htop thunar redshift light nm-applet rofi 
+hyprland alacritty librewolf neovim htop thunar gammastep brightnessctl nm-applet rofi swaylock swayidle swaybg
 
 ## :wrench: <samp>INSTALLATION</samp>
 
@@ -33,18 +33,15 @@ cd config
 ```bash
 cp -r .* ~/.config
 ```
-> **Warning**
-> Don't forget to edit the qtile config to match your hardware and install the required packages
 
 ## :bookmark_tabs: <samp>DETAILS</samp>
 
 
 - Linux Kernel: [Linux](https://www.kernel.org)
 - Distro: [Gentoo](https://www.gentoo.org)
-- Window Manager: [Qtile](http://www.qtile.org)
+- Window Manager - Compositor: [Hyprland](https://hyprland.org/)
 - Terminal Emulator: [Alacritty](https://github.com/alacritty/alacritty)
 - Shell: [Bash](https://www.gnu.org/software/bash)
-- Compositor: [Picom](https://github.com/yshui/picom)
 - Browser: [Librewolf](https://librewolf.net)
 
 ### <samp>Dev</samp>
@@ -55,19 +52,15 @@ cp -r .* ~/.config
 
 - Resource monitor: [HTOP](https://htop.dev)
 - GUI File manager: [Thunar](https://docs.xfce.org/xfce/thunar/start)
-- Night light: [Redshift](https://wiki.archlinux.org/title/redshift)
-- Brightness: [Light](https://wiki.archlinux.org/title/backlight#Backlight_utilities)
+- Night light: [Gammastep](https://wiki.archlinux.org/title/backlight#Wayland)
+- Brightness: [brightnessctl](https://wiki.archlinux.org/title/backlight#Backlight_utilities)
 - Network-manager-applet: [nm-applet](https://wiki.archlinux.org/title/NetworkManager)
 - Wallpaper: [dynamic-wallpaper-wayland](https://github.com/SMark5/dynamic-wallpaper-wayland)
 
-> Font: [jetbrains mono nerd](https://www.jetbrains.com/lp/mono)
-> In awesome wm it's recomended to install, because callerdar will not display correctly (top right)
+> Font: [noto fonts](https://wiki.gentoo.org/wiki/Fonts)
 ### <samp>Notes</samp>
 > **Note**
-> If you don't want any of the programs just delete it or change it in autostart.sh or config.py   
-
-> **Note**
->Awesome WM If you don't need any of this programs just delete from rc.lua at the end 674-679 lines or change at 95-100 lines to your favor of programs(firefox vim and any file manager)
+> If you don't want any of the programs just delete it or change it in autostart.sh or hyprland.conf 
 
 ### <samp>NeoVim</samp>
 
