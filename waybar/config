@@ -7,7 +7,7 @@
     // Choose the order of the modules
     "modules-left": ["wlr/workspaces","hyprland/window"],
     "modules-center": [],
-    "modules-right": ["tray","pulseaudio", "backlight", "battery", "clock", "custom/powermenu"],
+    "modules-right": ["tray", "network", "pulseaudio", "backlight", "battery", "clock", "custom/powermenu"],
     // Modules configuration
      "wlr/workspaces": {
          "on-click": "activate",
@@ -55,6 +55,14 @@
         "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
         "on-click-middle": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
         "on-click-right": "",
+    },
+    "network": {
+        "format": "⚠ Disabled",
+        "format-wifi": " ",
+        "format-ethernet": " Wired",
+        "format-disconnected": "⚠ Disconnected",
+        "on-click": "alacritty -e nmtui",
+        "tooltip": false,
     },
     "custom/powermenu": {
         "interval": "once",
