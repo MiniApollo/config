@@ -85,18 +85,18 @@ Choose the desktop profile
 
 Set the use flags and makeopts for faster emerge
 
+<h3>Use ram instead of ssd,hdd</h3>
+Change fstab https://wiki.gentoo.org/wiki/Portage_TMPDIR_on_tmpfs
+
+> **Warning**
+> Only use it if you have at least 2 gb per thread 
+
 > **Note**
 > If you want you can copy the /etc/portage files, but change it to your hardware (makeopts, use flags, videocards) 
 
 After the install
 
 Open /etc/rc.conf and change to rc_parallel="YES" and rc_logger="YES" 
-
-<h3>Use ram instead of ssd,hdd</h3>
-Change fstab https://wiki.gentoo.org/wiki/Portage_TMPDIR_on_tmpfs
-
-> **Warning**
-> Only use it if you have at least 2 gb per thread 
 
 Core
 ```bash
