@@ -1,0 +1,32 @@
+x11-drivers/nvidia-drivers ~amd64
+dev-util/nvidia-cuda-toolkit ~amd64
+media-gfx/raw-thumbnailer ~amd64
+dev-dotnet/dotnet-sdk-bin ~amd64
+#sys-kernel/gentoo-kernel-bin ~amd64
+#virtual/dist-kernel ~amd64
+media-gfx/blender ~amd64
+games-action/prismlauncher ~amd64
+
+gui-apps/tuigreet ~amd64
+app-misc/brightnessctl ~amd64
+gui-apps/swaylock-effects ~amd64
+
+*/*::steam-overlay
+games-util/game-device-udev-rules ~amd64
+
+#hyprland
+gui-wm/hyprland ~amd64
+dev-libs/libliftoff ~amd64
+media-libs/libdisplay-info ~amd64
+dev-libs/hyprland-protocols ~amd64
+
+gui-apps/waybar ~amd64
+dev-libs/date ~amd64
+
+gui-libs/xdg-desktop-portal-hyprland ~amd64
+dev-qt/qtbase ~amd64
+dev-qt/qtwayland ~amd64
+dev-qt/qtdeclarative ~amd64
+dev-qt/qtshadertools ~amd64
+# rofi-wayland
+gui-apps/rofi-wayland ~amd64

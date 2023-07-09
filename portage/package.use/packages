@@ -1,0 +1,35 @@
+app-admin/doas persist
+sys-process/htop lm-sensors
+app-editor/vim gpm -sound
+sys-boot/grub mount
+sys-kernel/installkernel-gentoo grub
+gnome-extra/nm-applet appindicator -modemmanager 
+x11-drivers/nvidia-drivers tools  
+media-video/ffmpeg nvenc
+### Pipewire
+
+media-sound/pulseaudio -daemon
+media-video/pipewire sound-server readline ssl v4l pipewire-alsa dbus extra
+### Wine (asszem)
+
+media-libs/opus abi_x86_32
+media-sound/lame abi_x86_32
+### steam
+
+sys-libs/ncurses -gpm
+### blender 
+
+media-libs/opencolorio -opengl
+media-libs/freetype brotli
+media-video/ffmpeg theora opus vpx
+app-arch/brotli abi_x86_32
+media-gfx/blender collada jemalloc openal cuda
+### hyprland
+
+dev-qt/qtbase egl 
+sys-apps/xdg-desktop-portal screencast
+gui-apps/waybar experimental tray network pipewire wifi -upower
+gui-libs/wlroots x11-backend
+
+### PrismLauchner
+sys-libs/zlib minizip
