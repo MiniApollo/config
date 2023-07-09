@@ -92,13 +92,19 @@ After the install
 
 Open /etc/rc.conf and change to rc_parallel="YES" and rc_logger="YES" 
 
+<h3>Use ram instead of ssd,hdd</h3>
+Change fstab https://wiki.gentoo.org/wiki/Portage_TMPDIR_on_tmpfs
+
+> **Warning**
+> Only use it if you have at least 2 gb per thread 
+
 Core
 ```bash
 emerge -av gentoolkit app-admin/doas sys-process/dcron app-admin/sysklogd net-misc/networkmanager
 efibootmgr grub sys-boot/os-prober
 ```
 > **Note**
-> Enable [Guru](https://wiki.gentoo.org/wiki/Project:GURU/Information_for_End_Users) for rofi-wayland, swaylock-effects <br>
+> Enable [Guru](https://wiki.gentoo.org/wiki/Project:GURU/Information_for_End_Users) for swaylock-effects <br>
 > For [Librewolf](https://wiki.gentoo.org/wiki/LibreWolf) select the librewolf repository 
 
 > **Warning**
@@ -107,7 +113,7 @@ efibootmgr grub sys-boot/os-prober
 Window manager
 ```bash
 doas emerge -av neofetch nvim vim hyprland waybar alacritty htop gammastep
-nm-applet gui-apps/rofi-wayland dmenu gui-apps/swaylock-effects swayidle swaybg gui-apps/wl-clipboard
+nm-applet rofi dmenu gui-apps/swaylock-effects swayidle swaybg gui-apps/wl-clipboard
 gui-apps/foot gui-apps/slurp gui-apps/grim media-sound/playerctl app-misc/brightnessctl gui-libs/xdg-desktop-portal-hyprland
 media-sound/alsa-utils gnome-extra/polkit-gnome
 ```
@@ -175,6 +181,9 @@ To update the system
 ```bash
 doas emaint -a sync && doas emerge -qavuDN @world && doas emerge --ask --depclean && doas eclean-dist -d && doas eclean-pkg -d && doas eclean-kernel -n 2
 ```
+
+<h2>ntfs partition fstab</h2>
+if you want to mount ntfs partion in fstab you need to use ntfs3 type
 
 ## <samp>Sources</samp>
 
