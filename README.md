@@ -8,11 +8,111 @@
 
 </div>
 
-## <samp>How to setup</samp>
+## <samp>How to replicate</samp>
 
-hyprland alacritty librewolf neovim htop thunar gammastep brightnessctl nm-applet rofi swaylock swayidle swaybg
+Make a base gentoo install [(I recommend Denshi's video )](https://www.youtube.com/watch?v=J7W9MItUSGw) <br>
 
-## :wrench: <samp>INSTALLATION</samp>
+> **Note**
+> When partitioning the disk you can use Gparted 
+
+Choose the desktop profile 
+> **Warning**
+> Don't forget to emerge the rust binary if you don't want longer emerge time (1-2 hours)
+
+Set the use flags and makeopts for faster emerge
+
+> **Note**
+> If you want you can copy the /etc/portage files, but change it to your hardware (makeopts, use flags, videocards) 
+
+After the install
+
+Open /etc/rc.conf and change to rc_parallel="YES" and rc_logger="YES" 
+
+Core
+```bash
+emerge -av gentoolkit app-admin/doas sys-process/dcron app-admin/sysklogd net-misc/networkmanager
+efibootmgr grub sys-boot/os-prober
+```
+> **Note**
+> Enable [Guru](https://wiki.gentoo.org/wiki/Project:GURU/Information_for_End_Users) for rofi-wayland, swaylock-effects <br>
+> For [Librewolf](https://wiki.gentoo.org/wiki/LibreWolf) select the librewolf repository 
+
+> **Warning**
+> Don't forget /etc/doas.conf [wiki](https://wiki.gentoo.org/wiki/Doas)
+
+Window manager
+```bash
+doas emerge -av neofetch nvim vim hyprland waybar alacritty htop gammastep
+nm-applet gui-apps/rofi-wayland dmenu gui-apps/swaylock-effects swayidle swaybg gui-apps/wl-clipboard
+gui-apps/foot gui-apps/slurp gui-apps/grim media-sound/playerctl app-misc/brightnessctl gui-libs/xdg-desktop-portal-hyprland
+media-sound/alsa-utils gnome-extra/polkit-gnome
+```
+
+Lighter Programs
+```bash
+doas emerge -av gparted thunar xfce-base/tumbler xfce-base/thunar-volman media-gfx/raw-thumbnailer
+app-admin/keepassxc ristretto galgulator celluloid app-arch/file-roller
+```
+
+Heavy Programs
+
+```bash
+doas emerge -av librewolf-bin www-client/firefox-bin app-office/libreoffice-bin mail-client/thunderbird-bin
+gimp
+```
+Themes
+```bash
+emerge -av x11-themes/arc-theme
+```
+> **Note**
+> I personaly install Qogir [icon](https://github.com/vinceliuice/Qogir-icon-theme),[cursor](https://github.com/vinceliuice/Qogir-icon-theme/tree/master/src/cursors) theme
+
+To install Qogir icon/cursor theme
+```bash
+git clone https://github.com/vinceliuice/Qogir-icon-theme.git
+doas emerge --ask xcb-util-cursor
+cd Qogir-icon-theme/
+ls
+doas ./install.sh
+```
+Laptop
+```bash
+emerge -av tlp powertop
+```
+> **Note**
+> To poweroff the computer use loginctl poweroff/reboot in order when closing of the leds the command finish
+
+Nvidia
+```bash
+emerge -av x11-drivers/nvidia-drivers dev-util/nvidia-cuda-toolkit
+```
+Nvidia Optimus 
+```bash
+emerge -av prime-run
+```
+Gaming 
+
+To install  
+- [Steam](https://wiki.gentoo.org/wiki/Steam)
+- [Wine](https://wiki.gentoo.org/wiki/Wine) <br>
+follow the gentoo wiki
+
+Fonts
+
+Install all three in the [gentoo wiki](https://wiki.gentoo.org/wiki/Fonts#Additional_package_considerations)
++ copy the fonts included in config into fonts folder  
+> **Note**
+> Change in desktop files at /usr/share/applications/ to terminal=false exec=alacritty -e command
+
+> **Warning**
+> Don't forget bluetooth printing
+ 
+To update the system 
+```bash
+doas emaint -a sync && doas emerge -qavuDN @world && doas emerge --ask --depclean && doas eclean-dist -d && doas eclean-pkg -d && doas eclean-kernel -n 2
+```
+
+## :wrench: <samp>Config INSTALLATION</samp>
 
 ### :paperclip: <samp>Standard</samp>
 
