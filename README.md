@@ -187,7 +187,7 @@ if you want to mount ntfs partion in fstab you need to use ntfs3 type
 
 ## <samp>Sources</samp>
 
-- Qtile config: [luxirio/linux](https://github.com/luxirio/linux/tree/master/arco_dotfiles)
+- Qtile config and EverForest theme(waybar): [luxirio/linux](https://github.com/luxirio/linux/tree/master/arco_dotfiles)
 - Neovim config: [ThePrimeagen](https://www.youtube.com/@ThePrimeagen)
 - Amazing Readme: [Sigmanificient/dotfiles](https://github.com/Sigmanificient/dotfiles)
 
