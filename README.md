@@ -8,7 +8,7 @@
 
 </div>
 
-![alt Qtile](https://github.com/SMark5/config/blob/main/images/Qtile.png)
+![alt Hyprland](https://github.com/SMark5/config/blob/main/images/hyprland.png)
 
 ## :wrench: <samp>Config INSTALLATION</samp>
 
@@ -70,7 +70,7 @@ cp -r .* ~/.config
 > The default port in nvim-lspconfig for Godot is 6008, but if you're running Godot 4.0 then that's configured to use 6005 (you can change this in the  settings).<br>
 > #### [Thanks to Greyly on reddit](https://www.reddit.com/r/godot/comments/sexkij/state_of_neovim_support_in_2022)
 
-![alt neovim](https://github.com/SMark5/config/blob/main/images/NeoVim.png)
+![alt neovim](https://github.com/SMark5/config/blob/main/images/Neovim.png)
 
 ## <samp>How to replicate</samp>
 
