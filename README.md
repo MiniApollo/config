@@ -112,7 +112,7 @@ efibootmgr grub sys-boot/os-prober
 
 Window manager
 ```bash
-doas emerge -av neofetch nvim vim hyprland waybar alacritty htop gammastep
+doas emerge -qav neofetch nvim vim hyprland waybar alacritty htop gammastep
 nm-applet rofi dmenu gui-apps/swaylock-effects swayidle swaybg gui-apps/wl-clipboard
 gui-apps/foot gui-apps/slurp gui-apps/grim media-sound/playerctl app-misc/brightnessctl gui-libs/xdg-desktop-portal-hyprland
 media-sound/alsa-utils gnome-extra/polkit-gnome
@@ -120,19 +120,24 @@ media-sound/alsa-utils gnome-extra/polkit-gnome
 
 Lighter Programs
 ```bash
-doas emerge -av gparted thunar xfce-base/tumbler xfce-base/thunar-volman media-gfx/raw-thumbnailer
-app-admin/keepassxc ristretto galgulator celluloid app-arch/file-roller
+doas emerge -qav gparted thunar xfce-base/tumbler xfce-base/thunar-volman media-gfx/raw-thumbnailer
+app-admin/keepassxc ristretto galgulator celluloid app-arch/file-roller net-misc/yt-dlp cmus
+```
+
+Editor Neovim
+```bash
+doas emerge -qav sys-apps/ripgrep
 ```
 
 Heavy Programs
 
 ```bash
-doas emerge -av librewolf-bin www-client/firefox-bin app-office/libreoffice-bin mail-client/thunderbird-bin
+doas emerge -qav librewolf-bin www-client/firefox-bin app-office/libreoffice-bin mail-client/thunderbird-bin
 gimp
 ```
 Themes
 ```bash
-emerge -av x11-themes/arc-theme
+emerge -qav x11-themes/arc-theme
 ```
 > **Note**
 > I personaly install Qogir [icon](https://github.com/vinceliuice/Qogir-icon-theme),[cursor](https://github.com/vinceliuice/Qogir-icon-theme/tree/master/src/cursors) theme
@@ -147,18 +152,18 @@ doas ./install.sh
 ```
 Laptop
 ```bash
-emerge -av tlp powertop
+emerge -qav tlp powertop
 ```
 > **Note**
 > To poweroff the computer use loginctl poweroff/reboot in order when closing of the leds the command finish
 
 Nvidia
 ```bash
-emerge -av x11-drivers/nvidia-drivers dev-util/nvidia-cuda-toolkit
+emerge -qav x11-drivers/nvidia-drivers dev-util/nvidia-cuda-toolkit
 ```
 Nvidia Optimus 
 ```bash
-emerge -av prime-run
+emerge -qav prime-run
 ```
 Gaming 
 
