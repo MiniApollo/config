@@ -4,7 +4,7 @@ app-editor/vim gpm -sound
 sys-boot/grub mount
 sys-kernel/installkernel-gentoo grub
 gnome-extra/nm-applet appindicator -modemmanager 
-x11-drivers/nvidia-drivers tools abi_x86_32
+x11-drivers/nvidia-drivers tools abi_x86_32 kernel-open
 media-video/ffmpeg nvenc
 
 ### Pipewire
