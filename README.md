@@ -101,7 +101,7 @@ Open /etc/rc.conf and change to rc_parallel="YES" and rc_logger="YES"
 Core
 ```bash
 emerge -av gentoolkit app-admin/doas sys-process/dcron app-admin/sysklogd net-misc/networkmanager
-efibootmgr grub sys-boot/os-prober
+efibootmgr grub sys-boot/os-prober app-shells/bash-completion
 ```
 > **Note**
 > Enable [Guru](https://wiki.gentoo.org/wiki/Project:GURU/Information_for_End_Users) for swaylock-effects <br>
