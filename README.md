@@ -108,7 +108,8 @@ efibootmgr grub sys-boot/os-prober app-shells/bash-completion
 > For [Librewolf](https://wiki.gentoo.org/wiki/LibreWolf) select the librewolf repository 
 
 > **Warning**
-> Don't forget /etc/doas.conf [wiki](https://wiki.gentoo.org/wiki/Doas)
+> Don't forget /etc/doas.conf [wiki](https://wiki.gentoo.org/wiki/Doas)  <br>
+> Don't forget in .bashrc doas autocompletion (complete -F _root_command doas)
 
 Window manager
 ```bash
