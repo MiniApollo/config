@@ -7,7 +7,7 @@ HISTFILESIZE=10000
 
 alias vim='nvim'
 alias sudo='doas'
-complete -cf doas
+complete -F _root_command doas
 
 alias ls='ls --color=auto'
 alias ll='ls -lav --ignore=..'   # show long listing of all except ".."
