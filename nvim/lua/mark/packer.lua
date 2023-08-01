@@ -52,5 +52,5 @@ return require('packer').startup(function(use)
         }
     }
     use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async' }
-    use 'm4xshen/autoclose.nvim'
+    use ('m4xshen/autoclose.nvim')
 end)

@@ -1,8 +1,3 @@
---    The Godot editor must be running when you connect with LSP.
---    The default port in nvim-lspconfig for Godot is 6008, but if you're running Godot 4.0 then that's configured to use 6005 (you can change this in the settings).
---    Thank to Greyly on reddit
---    https://www.reddit.com/r/godot/comments/sexkij/state_of_neovim_support_in_2022/
-
 local lsp = require("lsp-zero")
 
 lsp.preset("recommended")
@@ -10,6 +5,8 @@ lsp.preset("recommended")
 lsp.ensure_installed({
     'lua_ls',
     'rust_analyzer',
+    'csharp_ls',
+    'clangd',
 })
 
 -- Fix Undefined global 'vim'
@@ -22,7 +19,11 @@ lsp.configure('lua_ls', {
         }
     }
 })
---gdscript lsp
+-- Gdscript lsp
+--    The Godot editor must be running when you connect with LSP.
+--    The default port in nvim-lspconfig for Godot is 6008, but if you're running Godot 4.0 then that's configured to use 6005 (you can change this in the settings).
+--    Thank to Greyly on reddit
+--    https://www.reddit.com/r/godot/comments/sexkij/state_of_neovim_support_in_2022/
 require 'lspconfig'.gdscript.setup { capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol
     .make_client_capabilities()) }
 
