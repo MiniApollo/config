@@ -109,7 +109,7 @@ efibootmgr grub sys-boot/os-prober app-shells/bash-completion
 
 > **Warning**
 > Don't forget /etc/doas.conf [wiki](https://wiki.gentoo.org/wiki/Doas)  <br>
-> Don't forget in .bashrc doas autocompletion (complete -F _root_command doas)
+> Don't forget to install app-shells/bash-completion and add to .bashrc (complete -F _root_command doas) for doas bash completion
 
 Window manager
 ```bash
