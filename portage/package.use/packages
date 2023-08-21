@@ -11,10 +11,10 @@ media-video/ffmpeg nvenc
 media-sound/pulseaudio -daemon
 media-video/pipewire sound-server readline ssl v4l pipewire-alsa dbus extra
 
-### steam
+### Steam
 sys-libs/ncurses -gpm
 
-### blender 
+### Blender 
 media-libs/opencolorio -opengl
 media-libs/freetype brotli
 media-video/ffmpeg theora opus vpx
@@ -23,7 +23,7 @@ media-gfx/blender collada jemalloc openal cuda
 
 media-libs/openpgl cpu_flags_x86_sse4_2 cpu_flags_x86_avx2
 
-### hyprland
+### Hyprland
 dev-qt/qtbase egl 
 sys-apps/xdg-desktop-portal screencast
 gui-apps/waybar experimental tray network pipewire wifi -upower
@@ -31,3 +31,28 @@ gui-libs/wlroots x11-backend
 
 ### PrismLauchner
 sys-libs/zlib minizip
+
+### Ios
+app-pda/gtkpod gstreamer
+gnome-base/gvfs afp archive gphoto2 mtp
+
+### Printing
+net-print/cups zeroconf
+net-print/cups-filters zeroconf
+
+# Avahi wireless printing
+net-dns/avahi abi_x86_32
+dev-libs/libevent abi_x86_32
+sys-libs/gdbm abi_x86_32
+x11-libs/gtk+ abi_x86_32
+app-accessibility/at-spi2-core abi_x86_32
+media-libs/libepoxy abi_x86_32
+x11-libs/gdk-pixbuf abi_x86_32
+x11-libs/libXdamage abi_x86_32
+gnome-base/librsvg abi_x86_32
+media-libs/tiff abi_x86_32
+x11-libs/libXtst abi_x86_32
+sys-libs/readline abi_x86_32
+dev-libs/openssl abi_x86_32
+virtual/rust abi_x86_32
+dev-lang/rust-bin abi_x86_32
