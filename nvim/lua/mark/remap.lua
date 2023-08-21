@@ -49,25 +49,8 @@ vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><
 -- Make bash script executable
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
---Edit Packer File
-vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.config/nvim/lua/mark/packer.lua<CR>");
+--Edit Lazy File
+vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.config/nvim/lua/mark/lazy.lua<CR>");
 
 -- UndoTree
 vim.keymap.set('n', '<leader>u', ":UndoTreeShow<CR>")
-
---Folding
---Use za to fold
-vim.keymap.set('n', '<leader>zR', require('ufo').openAllFolds)
-vim.keymap.set('n', '<leader>zM', require('ufo').closeAllFolds)
-
--- lsp diagnostic toggle and float viewing
-vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float)
-local diagnostics_active = true
-vim.keymap.set('n', '<leader>c', function()
-    diagnostics_active = not diagnostics_active
-    if diagnostics_active then
-        vim.diagnostic.show(nil, 0)
-    else
-        vim.diagnostic.hide()
-    end
-end)

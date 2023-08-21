@@ -24,16 +24,30 @@ lsp.configure('lua_ls', {
 --    The default port in nvim-lspconfig for Godot is 6008, but if you're running Godot 4.0 then that's configured to use 6005 (you can change this in the settings).
 --    Thank to Greyly on reddit
 --    https://www.reddit.com/r/godot/comments/sexkij/state_of_neovim_support_in_2022/
+
 require 'lspconfig'.gdscript.setup { capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol
     .make_client_capabilities()) }
+
+-- lsp diagnostic toggle and float viewing
+vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float)
+local diagnostics_active = true
+-- toggle warnings errors in editor
+vim.keymap.set('n', '<leader>c', function()
+    diagnostics_active = not diagnostics_active
+    if diagnostics_active then
+        vim.diagnostic.show(nil, 0)
+    else
+        vim.diagnostic.hide()
+    end
+end)
 
 local cmp = require('cmp')
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = lsp.defaults.cmp_mappings({
-        ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-        ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-        ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-        ["<C-Space>"] = cmp.mapping.complete(),
+    ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+    ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+    ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+    ["<C-Space>"] = cmp.mapping.complete(),
 })
 
 cmp_mappings['<Tab>'] = nil
