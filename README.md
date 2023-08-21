@@ -53,6 +53,7 @@ cp -r .* ~/.config
 - Night light: [Gammastep](https://wiki.archlinux.org/title/backlight#Wayland)
 - Brightness: [brightnessctl](https://wiki.archlinux.org/title/backlight#Backlight_utilities)
 - Network-manager-applet: [nm-applet](https://wiki.archlinux.org/title/NetworkManager)
+- Notifier: [dunst](https://dunst-project.org)
 - Wallpaper: [dynamic-wallpaper-wayland](https://github.com/SMark5/dynamic-wallpaper-wayland)
 
 > Font: [noto fonts](https://wiki.gentoo.org/wiki/Fonts)
