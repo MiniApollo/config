@@ -10,6 +10,7 @@ location = /var/db/repos/steam-overlay
 sync-type = git
 sync-uri = https://github.com/gentoo-mirror/steam-overlay.git
 
+
 [guru]
 location = /var/db/repos/guru
 sync-type = git
