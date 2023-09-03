@@ -2,8 +2,9 @@
 # ~/.bashrc
 #
 
+HISTCONTROL=erasedups
 HISTSIZE=10000
-HISTFILESIZE=10000
+HISTFILESIZE=-1
 
 alias vim='nvim'
 alias sudo='doas'
@@ -23,6 +24,11 @@ PS1="\[\033[38;5;9m\][\[$(tput sgr0)\]\[\033[38;5;214m\]\u\[$(tput sgr0)\]\[\033
 bind '"\e[A":history-search-backward'
 bind '"\e[B":history-search-forward'
 bind '"\C-l": clear;'
-stty -ixon #disable ctrl-s and ctrl-q
+bind -x '"\C-q": . ~/.config/tmux/sessionizer-tmux.sh'
+
+stty -ixon #disables ctrl-s and ctrl-q
+shopt -s autocd
+
 export TERM=xterm-256color
 export EDITOR=nvim
+export TERMINAL=alacritty
