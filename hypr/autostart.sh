@@ -13,3 +13,4 @@ run gammastep -l 47.55:19.09
 run gentoo-pipewire-launcher restart
 run thunar --daemon 
 run ~/SystemFiles/dynamic-wallpaper-wayland/wallpaper.sh
+run nm-applet
