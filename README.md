@@ -44,7 +44,7 @@ cp -r .* ~/.config
 
 ### <samp>Dev</samp>
 
-- Text Editor: [NeoVim](https://neovim.io)
+- Text Editor: [Gnu Emacs](https://www.gnu.org/software/emacs/)
 
 ### <samp>Other Utilities</samp>
 
@@ -61,9 +61,9 @@ cp -r .* ~/.config
 > **Note**
 > If you don't want any of the programs just delete it or change it in autostart.sh or hyprland.conf 
 
-### <samp>NeoVim</samp>
+### <samp>Emacs</samp>
 
-- Plugin Manager: [packer](https://github.com/wbthomason/packer.nvim)
+- Plugin Manager: [Elpaca](https://github.com/progfolio/elpaca)
 
 > **Note**
 > The Godot editor must be running when you connect with LSP.
@@ -101,7 +101,7 @@ Open /etc/rc.conf and change to rc_parallel="YES" and rc_logger="YES"
 
 Core
 ```bash
-emerge -av gentoolkit app-admin/doas sys-process/dcron app-admin/sysklogd net-misc/networkmanager
+doas emerge -av gentoolkit app-admin/doas sys-process/dcron app-admin/sysklogd net-misc/networkmanager
 efibootmgr grub sys-boot/os-prober app-shells/bash-completion
 ```
 > **Note**
@@ -114,8 +114,8 @@ efibootmgr grub sys-boot/os-prober app-shells/bash-completion
 
 Window manager
 ```bash
-doas emerge -qav nvim vim hyprland waybar alacritty htop gammastep
-nm-applet rofi dmenu gui-apps/swaylock-effects swayidle swaybg gui-apps/wl-clipboard
+doas emerge -qav vim hyprland waybar alacritty htop gammastep
+nm-applet rofi gui-apps/swaylock-effects swayidle swaybg gui-apps/wl-clipboard
 gui-apps/foot gui-apps/slurp gui-apps/grim media-sound/playerctl app-misc/brightnessctl gui-libs/xdg-desktop-portal-hyprland
 media-sound/alsa-utils gnome-extra/polkit-gnome x11-misc/dunst
 ```
@@ -128,7 +128,7 @@ app-admin/keepassxc ristretto galgulator celluloid app-arch/file-roller net-misc
 
 Editor Emacs
 ```bash
-doas emerge -qav sys-apps/ripgrep sys-apps/fd
+doas emerge -qav sys-apps/ripgrep sys-apps/fd app-emacs/ebuild-mode
 ```
 
 Heavy Programs
@@ -139,7 +139,7 @@ gimp
 ```
 Themes
 ```bash
-emerge -qav x11-themes/arc-theme
+doas emerge -qav x11-themes/arc-theme
 ```
 > **Note**
 > I personaly install Qogir [icon](https://github.com/vinceliuice/Qogir-icon-theme),[cursor](https://github.com/vinceliuice/Qogir-icon-theme/tree/master/src/cursors) theme
@@ -154,18 +154,18 @@ doas ./install.sh
 ```
 Laptop
 ```bash
-emerge -qav tlp powertop
+doas emerge -qav tlp powertop
 ```
 > **Note**
 > To poweroff the computer use loginctl poweroff/reboot in order when closing of the leds the command finish
 
 Nvidia
 ```bash
-emerge -qav x11-drivers/nvidia-drivers dev-util/nvidia-cuda-toolkit
+doas emerge -qav x11-drivers/nvidia-drivers dev-util/nvidia-cuda-toolkit
 ```
 Nvidia Optimus 
 ```bash
-emerge -qav prime-run
+doas emerge -qav prime-run
 ```
 Gaming 
 
