@@ -114,7 +114,7 @@ efibootmgr grub sys-boot/os-prober app-shells/bash-completion
 
 Window manager
 ```bash
-doas emerge -qav neofetch nvim vim hyprland waybar alacritty htop gammastep
+doas emerge -qav nvim vim hyprland waybar alacritty htop gammastep
 nm-applet rofi dmenu gui-apps/swaylock-effects swayidle swaybg gui-apps/wl-clipboard
 gui-apps/foot gui-apps/slurp gui-apps/grim media-sound/playerctl app-misc/brightnessctl gui-libs/xdg-desktop-portal-hyprland
 media-sound/alsa-utils gnome-extra/polkit-gnome x11-misc/dunst
