@@ -126,9 +126,9 @@ doas emerge -qav gparted thunar xfce-base/tumbler xfce-base/thunar-volman media-
 app-admin/keepassxc ristretto galgulator celluloid app-arch/file-roller net-misc/yt-dlp cmus
 ```
 
-Editor Neovim
+Editor Emacs
 ```bash
-doas emerge -qav sys-apps/ripgrep
+doas emerge -qav sys-apps/ripgrep sys-apps/fd
 ```
 
 Heavy Programs
