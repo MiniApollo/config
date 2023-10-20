@@ -14,6 +14,8 @@ media-video/pipewire sound-server readline ssl v4l pipewire-alsa dbus extra
 ### Steam
 sys-libs/ncurses -gpm
 
+x11-base/xwayland libei
+
 ### Blender 
 media-libs/opencolorio -opengl
 media-libs/freetype brotli
@@ -40,7 +42,7 @@ gnome-base/gvfs afp archive gphoto2 mtp
 net-print/cups zeroconf
 net-print/cups-filters zeroconf
 
-# Avahi wireless printing
+### Avahi wireless printing
 net-dns/avahi abi_x86_32
 dev-libs/libevent abi_x86_32
 sys-libs/gdbm abi_x86_32
@@ -56,3 +58,15 @@ sys-libs/readline abi_x86_32
 dev-libs/openssl abi_x86_32
 virtual/rust abi_x86_32
 dev-lang/rust-bin abi_x86_32
+
+### NodeJs
+app-misc/mime-types nginx
+
+### Emacs
+app-editors/emacs gui gtk json jit dynamic-loading sqlite tree-sitter -X -athena -Xaw3d -motif
+sys-devel/gcc jit
+
+### vaapi
+media-libs/libva abi_x86_32
+media-plugins/gst-plugins-vaapi abi_x86_32
+media-libs/mesa -vaapi -vdpau
