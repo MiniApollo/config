@@ -33,6 +33,7 @@ Title: MiniApollo Gnu Emacs Config
   - [[#company][Company]]
   - [[#ivy-counsel][Ivy (counsel)]]
   - [[#diminish][DIMINISH]]
+  - [[#undotree][UndoTree]]
   - [[#rainbow-delimiters][RAINBOW DELIMITERS]]
   - [[#rainbow-mode][RAINBOW MODE]]
   - [[#which-key][WHICH-KEY]]
@@ -78,7 +79,7 @@ Evil is an extensible vi/vim layer for Emacs.  Because…let’s face it.  The V
       (setq evil-want-C-i-jump nil)
       (setq evil-vsplit-window-right t)
       (setq evil-split-window-below t)
-      (setq evil-undo-system 'undo-redo) ;; ctrl r to work (redo)
+      (setq evil-undo-system 'undo-tree) ;; ctrl r to work (redo) with UndoTree for stock Emacs undo-redo
       (setq org-return-follows-link  t) ;; Setting RETURN key in org-mode to follow links
       (evil-mode))
     (use-package evil-collection
@@ -104,97 +105,104 @@ Evil is an extensible vi/vim layer for Emacs.  Because…let’s face it.  The V
       (general-evil-setup)
       ;; set up 'SPC' as the global leader key
       (general-create-definer mark/leader-keys
-	:states '(normal insert visual emacs)
-	:keymaps 'override
-	:prefix "SPC" ;; set leader
-	:global-prefix "C-SPC") ;; access leader in insert mode
+        :states '(normal insert visual emacs)
+        :keymaps 'override
+        :prefix "SPC" ;; set leader
+        :global-prefix "C-SPC") ;; access leader in insert mode
 
       (mark/leader-keys
-	"." '(find-file :wk "Find file")
-	"TAB" '(comment-line :wk "Comment lines")
-	"p" '(projectile-command-map :wk "Projectile command map"))
+        "." '(find-file :wk "Find file")
+        "TAB" '(comment-line :wk "Comment lines")
+        "p" '(projectile-command-map :wk "Projectile command map"))
 
       (mark/leader-keys 
-	"f" '(:ignore t :wk "Find")
-	"f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
-	"f u"' ((lambda () (interactive) (find-file "/doas::/")) :wk "Root find file")
-	"f r" '(counsel-recentf :wk "Recent files"))
+        "f" '(:ignore t :wk "Find")
+        "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
+        "f u"' ((lambda () (interactive) (find-file "/doas::/")) :wk "Root find file")
+        "f r" '(counsel-recentf :wk "Recent files"))
+      
+      (mark/leader-keys 
+        "u" '(:ignore t :wk "UndoTree")
+        "u u" '(undo-tree-visualize :wk "Show Undo-Tree")
+        "u l" '(undo-tree-visualize-switch-branch-left :wk "Left on branch")
+        "u r" '(undo-tree-visualize-switch-branch-right :wk "Right on branch"))
 
       (mark/leader-keys
-	"b" '(:ignore t :wk "Buffer")
-	"b b" '(switch-to-buffer :wk "Switch buffer")
-	"b k" '(kill-this-buffer :wk "Kill this buffer")
-	"b i" '(ibuffer :wk "Ibuffer")  
-	"b n" '(next-buffer :wk "Next buffer")
-	"b p" '(previous-buffer :wk "Previous buffer")
-	"b r" '(revert-buffer :wk "Reload buffer")
-	"b R" '(rename-buffer :wk "Rename buffer"))
+        "b" '(:ignore t :wk "Buffer Bookmarks")
+        "b b" '(switch-to-buffer :wk "Switch buffer")
+        "b k" '(kill-this-buffer :wk "Kill this buffer")
+        "b i" '(ibuffer :wk "Ibuffer")  
+        "b n" '(next-buffer :wk "Next buffer")
+        "b p" '(previous-buffer :wk "Previous buffer")
+        "b r" '(revert-buffer :wk "Reload buffer")
+        "b R" '(rename-buffer :wk "Rename buffer")
+        "b j" '(bookmark-jump :wk "Bookmark jump"))
 
       (mark/leader-keys
-	"d" '(:ignore t :wk "Dired")
-	"d v" '(dired :wk "Open dired")
-	"d j" '(dired-jump :wk "Dired jump to current"))
+        "d" '(:ignore t :wk "Dired")
+        "d v" '(dired :wk "Open dired")
+        "d j" '(dired-jump :wk "Dired jump to current"))
 
       (mark/leader-keys
-	"e" '(:ignore t :wk "Evaluate")    
-	"e b" '(eval-buffer :wk "Evaluate elisp in buffer")
-	"e d" '(eval-defun :wk "Evaluate defun containing or after point")
-	"e e" '(eval-expression :wk "Evaluate and elisp expression")
-	"e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
-	"e r" '(eval-region :wk "Evaluate elisp in region")) 
+        "e" '(:ignore t :wk "Evaluate")    
+        "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
+        "e d" '(eval-defun :wk "Evaluate defun containing or after point")
+        "e e" '(eval-expression :wk "Evaluate and elisp expression")
+        "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
+        "e r" '(eval-region :wk "Evaluate elisp in region")) 
 
       (mark/leader-keys
-	"g" '(:ignore t :wk "Git")    
-	"g /" '(magit-displatch :wk "Magit dispatch")
-	"g ." '(magit-file-displatch :wk "Magit file dispatch")
-	"g b" '(magit-branch-checkout :wk "Switch branch")
-	"g c" '(:ignore t :wk "Create") 
-	"g c b" '(magit-branch-and-checkout :wk "Create branch and checkout")
-	"g c c" '(magit-commit-create :wk "Create commit")
-	"g c f" '(magit-commit-fixup :wk "Create fixup commit")
-	"g C" '(magit-clone :wk "Clone repo")
-	"g f" '(:ignore t :wk "Find") 
-	"g f c" '(magit-show-commit :wk "Show commit")
-	"g f f" '(magit-find-file :wk "Magit find file")
-	"g f g" '(magit-find-git-config-file :wk "Find gitconfig file")
-	"g F" '(magit-fetch :wk "Git fetch")
-	"g g" '(magit-status :wk "Magit status")
-	"g i" '(magit-init :wk "Initialize git repo")
-	"g l" '(magit-log-buffer-file :wk "Magit buffer log")
-	"g r" '(vc-revert :wk "Git revert file")
-	"g s" '(magit-stage-file :wk "Git stage file")
-	"g u" '(magit-stage-file :wk "Git unstage file"))
+        "g" '(:ignore t :wk "Git")    
+        "g /" '(magit-displatch :wk "Magit dispatch")
+        "g ." '(magit-file-displatch :wk "Magit file dispatch")
+        "g b" '(magit-branch-checkout :wk "Switch branch")
+        "g c" '(:ignore t :wk "Create") 
+        "g c b" '(magit-branch-and-checkout :wk "Create branch and checkout")
+        "g c c" '(magit-commit-create :wk "Create commit")
+        "g c f" '(magit-commit-fixup :wk "Create fixup commit")
+        "g C" '(magit-clone :wk "Clone repo")
+        "g f" '(:ignore t :wk "Find") 
+        "g f c" '(magit-show-commit :wk "Show commit")
+        "g f f" '(magit-find-file :wk "Magit find file")
+        "g f g" '(magit-find-git-config-file :wk "Find gitconfig file")
+        "g F" '(magit-fetch :wk "Git fetch")
+        "g g" '(magit-status :wk "Magit status")
+        "g i" '(magit-init :wk "Initialize git repo")
+        "g l" '(magit-log-buffer-file :wk "Magit buffer log")
+        "g r" '(vc-revert :wk "Git revert file")
+        "g s" '(magit-stage-file :wk "Git stage file")
+        "g u" '(magit-stage-file :wk "Git unstage file"))
 
       (mark/leader-keys
-	"h" '(:ignore t :wk "Help")
-	"h f" '(describe-function :wk "Describe function")
-	"h v" '(describe-variable :wk "Describe variable")
-	"h r" '((lambda () (interactive)
-		  (load-file "~/.config/emacs/init.el"))
-		:wk "Reload emacs config"))
+        "h" '(:ignore t :wk "Help")
+        "h f" '(describe-function :wk "Describe function")
+        "h v" '(describe-variable :wk "Describe variable")
+        "h r" '((lambda () (interactive)
+                  (load-file "~/.config/emacs/init.el"))
+                :wk "Reload emacs config"))
 
       (mark/leader-keys
-	"t" '(:ignore t :wk "Toggle")
-	"t l" '(display-line-numbers-mode :wk "Toggle line numbers")
-	"t t" '(visual-line-mode :wk "Toggle truncated lines")
-	"t v" '(vterm :wk "Toggle vterm"))
+        "t" '(:ignore t :wk "Toggle")
+        "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
+        "t t" '(visual-line-mode :wk "Toggle truncated lines")
+        "t v" '(vterm :wk "Toggle vterm"))
 
       (mark/leader-keys
-	"m" '(:ignore t :wk "Org")
-	"m a" '(org-agenda :wk "Org agenda")
-	"m e" '(org-export-dispatch :wk "Org export dispatch")
-	"m i" '(org-toggle-item :wk "Org toggle item")
-	"m t" '(org-todo :wk "Org todo")
-	"m B" '(org-babel-tangle :wk "Org babel tangle")
-	"m T" '(org-todo-list :wk "Org todo list"))
+        "m" '(:ignore t :wk "Org")
+        "m a" '(org-agenda :wk "Org agenda")
+        "m e" '(org-export-dispatch :wk "Org export dispatch")
+        "m i" '(org-toggle-item :wk "Org toggle item")
+        "m t" '(org-todo :wk "Org todo")
+        "m B" '(org-babel-tangle :wk "Org babel tangle")
+        "m T" '(org-todo-list :wk "Org todo list"))
 
       (mark/leader-keys
-	"m b" '(:ignore t :wk "Tables")
-	"m b -" '(org-table-insert-hline :wk "Insert hline in table"))
+        "m b" '(:ignore t :wk "Tables")
+        "m b -" '(org-table-insert-hline :wk "Insert hline in table"))
 
       (mark/leader-keys
-	"m d" '(:ignore t :wk "Date/deadline")
-	"m d t" '(org-time-stamp :wk "Org time stamp")))
+        "m d" '(:ignore t :wk "Date/deadline")
+        "m d t" '(org-time-stamp :wk "Org time stamp")))
 	#+end_src
 
 * SANE DEFAULTS
@@ -309,7 +317,7 @@ Projectile is a project interaction library for Emacs.
       :init
       (setq projectile-switch-project-action #'projectile-dired)
       (setq projectile-project-search-path '(("~/Projects/" . 1) ("/mnt/Ext4D/Manca/Projektek/" . 1) ("/mnt/Ext4D/Manca/Game_Projects/" . 1))))
-    ;; Bookmarks and registers for not git projects maybe
+    ;; Bookmarks for non git projects
 #+end_src
 
 * Language support + Lsp
@@ -432,7 +440,6 @@ For doom modeline
 
     (use-package nerd-icons-dired
       :hook (dired-mode . (lambda () (nerd-icons-dired-mode t))))
-
 #+end_src
 
 ** Magit
@@ -512,6 +519,14 @@ This package implements hiding or abbreviation of the modeline displays (lighter
     (use-package diminish)
 #+end_src
 
+** UndoTree
+#+begin_src emacs-lisp
+    (use-package undo-tree
+      :init 
+      (global-undo-tree-mode)
+      ;; Prevent undo tree files from polluting your git repo
+      (setq undo-tree-history-directory-alist '(("." . "~/.config/emacs/undo"))))
+#+end_src
 
 ** RAINBOW DELIMITERS
 Add colors to brackets
