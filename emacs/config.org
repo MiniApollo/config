@@ -62,7 +62,7 @@ Make startup faster by reducing the frequency of garbage collection and then use
     (unless package-archive-contents
       (package-refresh-contents))
 
-      ;; Initialize use-package on non-Linux platforms
+    ;; Initialize use-package on non-Linux platforms
     (unless (package-installed-p 'use-package)
       (package-install 'use-package))
 #+end_src
@@ -120,7 +120,7 @@ Evil is an extensible vi/vim layer for Emacs.  Because…let’s face it.  The V
         "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
         "f u"' ((lambda () (interactive) (find-file "/doas::/")) :wk "Root find file")
         "f r" '(counsel-recentf :wk "Recent files"))
-      
+
       (mark/leader-keys 
         "u" '(:ignore t :wk "UndoTree")
         "u u" '(undo-tree-visualize :wk "Show Undo-Tree")
@@ -203,7 +203,7 @@ Evil is an extensible vi/vim layer for Emacs.  Because…let’s face it.  The V
       (mark/leader-keys
         "m d" '(:ignore t :wk "Date/deadline")
         "m d t" '(org-time-stamp :wk "Org time stamp")))
-	#+end_src
+#+end_src
 
 * SANE DEFAULTS
 #+begin_src emacs-lisp
@@ -255,9 +255,9 @@ With Emacs version 29, true transparency has been added.
 ** Setting fonts
 #+begin_src emacs-lisp
     (set-face-attribute 'default nil
-			:font "JetBrains Mono"
-			:height 120
-			:weight 'medium)
+                        :font "JetBrains Mono"
+                        :height 120
+                        :weight 'medium)
     ;; This sets the default font on all graphical frames created after restarting Emacs.
     ;; Does the same thing as 'set-face-attribute default' above, but emacsclient fonts
     ;; are not right unless I also add this method of setting the default font.
@@ -281,9 +281,9 @@ You can use the bindings CTRL plus =/- for zooming in/out.  You can also use CTR
       :init (doom-modeline-mode 1)
       :config
       (setq doom-modeline-height 25      ;; sets modeline height
-	    doom-modeline-bar-width 5    ;; sets right bar width
-	    doom-modeline-persp-name t   ;; adds perspective name to modeline
-	    doom-modeline-persp-icon t)) ;; adds folder icon next to persp name
+            doom-modeline-bar-width 5    ;; sets right bar width
+            doom-modeline-persp-name t   ;; adds perspective name to modeline
+            doom-modeline-persp-icon t)) ;; adds folder icon next to persp name
 #+end_src
 
 * DashBoard
@@ -297,13 +297,13 @@ You can use the bindings CTRL plus =/- for zooming in/out.  You can also use CTR
       (setq dashboard-banner-logo-title "Emacs Is More Than A Text Editor!")
       (setq dashboard-center-content nil) ;; set to 't' for centered content
       (setq dashboard-items '((recents . 5)
-			      (agenda . 5 )
-			      (bookmarks . 3)
-			      (projects . 3)
-			      (registers . 3)))
+                              (agenda . 5 )
+                              (bookmarks . 3)
+                              (projects . 3)
+                              (registers . 3)))
       :custom
       (dashboard-modify-heading-icons '((recents . "file-text")
-					(bookmarks . "book")))
+                                        (bookmarks . "book")))
       :config
       (dashboard-setup-startup-hook))
 #+end_src
