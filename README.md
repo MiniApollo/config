@@ -63,7 +63,7 @@ cp -r .* ~/.config
 
 ### <samp>Emacs</samp>
 
-- Plugin Manager: [Elpaca](https://github.com/progfolio/elpaca)
+- Package Manager: Use-package with Package.el
 
 > **Note**
 > The Godot editor must be running when you connect with LSP.

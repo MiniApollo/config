@@ -236,6 +236,7 @@ Evil is an extensible vi/vim layer for Emacs.  Because…let’s face it.  The V
     (setq make-backup-files nil) ; Stop creating ~ backup files
     (blink-cursor-mode 0) ;; Don't blink cursor
     (add-hook 'prog-mode-hook (lambda () (hs-minor-mode t))) ;; Enable folding hide show globally
+    (setq dired-kill-when-opening-new-dired-buffer t) ;; Dired don't create new buffer
 #+end_src
 
 * Set Theme
