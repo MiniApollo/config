@@ -1,4 +1,4 @@
-Title: MiniApollo Gnu Emacs Config
+#+Title: MiniApollo Gnu Emacs Config
 #+Author: MiniApollo
 #+Description: My personal emacs configuration
 #+Startup: showeverything
