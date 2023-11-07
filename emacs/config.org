@@ -21,6 +21,7 @@
 - [[#projectile][Projectile]]
 - [[#language-support--lsp][Language support + Lsp]]
   - [[#treesiter][Treesiter]]
+  - [[#flycheck][Flycheck]]
   - [[#lsp-mode][Lsp Mode]]
   - [[#yasnippet][Yasnippet]]
   - [[#language-modes][Language modes]]
@@ -34,6 +35,7 @@
   - [[#ivy-counsel][Ivy (counsel)]]
   - [[#diminish][DIMINISH]]
   - [[#undotree][UndoTree]]
+  - [[#drag-stuff][Drag Stuff]]
   - [[#rainbow-delimiters][RAINBOW DELIMITERS]]
   - [[#rainbow-mode][RAINBOW MODE]]
   - [[#which-key][WHICH-KEY]]
@@ -69,17 +71,17 @@ Make startup faster by reducing the frequency of garbage collection and then use
 
 ** Load Evil Mode
 Evil is an extensible vi/vim layer for Emacs.  Because…let’s face it.  The Vim keybindings are just plain better.
+Note: To paste without copy(yank) selected text use P (shift P evil-paste-before), because default is evil-paste-after 
 #+begin_src emacs-lisp
     (use-package evil
       :init ;; tweak evil's configuration before loading it
-      (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
       (setq evil-want-keybinding nil)
       (setq evil-want-C-u-scroll t)
       (setq evil-want-C-i-jump nil)
       (setq evil-want-C-i-jump nil)
       (setq evil-vsplit-window-right t)
       (setq evil-split-window-below t)
-      (setq evil-undo-system 'undo-tree) ;; ctrl r to work (redo) with UndoTree for stock Emacs undo-redo
+      (setq evil-undo-system 'undo-tree) ;; ctrl r to work (redo) with UndoTree for stock Emacs use 'undo-redo
       (setq org-return-follows-link  t) ;; Setting RETURN key in org-mode to follow links
       (evil-mode))
     (use-package evil-collection
@@ -175,8 +177,8 @@ Evil is an extensible vi/vim layer for Emacs.  Because…let’s face it.  The V
 
       (mark/leader-keys
         "h" '(:ignore t :wk "Help")
-        "h f" '(describe-function :wk "Describe function")
-        "h v" '(describe-variable :wk "Describe variable")
+        "h f" '(flycheck-list-errors :wk "Flycheck list errors buffer")
+        "h c" '(company-manual-begin :wk "Company completion at point")
         "h r" '((lambda () (interactive)
                   (load-file "~/.config/emacs/init.el"))
                 :wk "Reload emacs config"))
@@ -237,6 +239,7 @@ Evil is an extensible vi/vim layer for Emacs.  Because…let’s face it.  The V
     (blink-cursor-mode 0) ;; Don't blink cursor
     (add-hook 'prog-mode-hook (lambda () (hs-minor-mode t))) ;; Enable folding hide show globally
     (setq dired-kill-when-opening-new-dired-buffer t) ;; Dired don't create new buffer
+    (setq-default tab-width 4)
 #+end_src
 
 * Set Theme
@@ -341,6 +344,7 @@ Projectile is a project interaction library for Emacs.
             (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
             (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
             (yaml "https://github.com/ikatyang/tree-sitter-yaml")
+            (gdscript "https://github.com/PrestonKnopp/tree-sitter-gdscript")
             ))
     (setq major-mode-remap-alist
           '((yaml-mode . yaml-ts-mode)
@@ -350,8 +354,19 @@ Projectile is a project interaction library for Emacs.
             (json-mode . json-ts-mode)
             (css-mode . css-ts-mode)
             (python-mode . python-ts-mode)
+            (gdscript-mode . gdscript-ts-mode)
             ))
     (setq treesit-font-lock-level 4) ;; To highlight everything default 3
+#+end_src
+
+** Flycheck 
+Flycheck is recommended by lsp-mode for better error handling
+#+begin_src emacs-lisp
+    (use-package flycheck
+      :ensure t
+      :defer t
+      :diminish
+      :init (global-flycheck-mode))
 #+end_src
 
 ** Lsp Mode
@@ -362,8 +377,16 @@ Language Server Protocol Support for Emacs
       :init
       ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
       (setq lsp-keymap-prefix "C-c l")
+      ;; Disable unneeded features
       (setq lsp-lens-enable nil) ;; Disable references count 
       (setq lsp-headerline-breadcrumb-enable nil) ;; Disable Header line
+      (setq lsp-ui-sideline-show-code-actions nil) ;; Hide right side code actions
+      (setq lsp-ui-sideline-show-hover nil) ;; Hide right hover symbols
+      (setq lsp-modeline-code-actions-enable nil) ;; Disable modeline code actions
+      (setq lsp-eldoc-enable-hover nil) ;; Disable eldoc (echo area info)
+      (setq lsp-modeline-diagnostics-enable nil) ;; Disable Modeline diagnostic status
+      (setq lsp-signature-auto-activate nil) ;; Disable Signature help you could manually request them via `lsp-signature-activate`
+      (setq lsp-completion-show-detail nil) ;; Disable Completion item detail
       :hook (;; Automatic Language Modes
              (prog-mode . lsp)
              ;; if you want which-key integration
@@ -387,6 +410,23 @@ Language Server Protocol Support for Emacs
 #+begin_src emacs-lisp
     (use-package lua-mode
       :mode "\\.lua\\'")
+#+end_src
+*** GDScript mode
+#+begin_src emacs-lisp
+    (use-package gdscript-mode
+      :mode "\\.gd\\'")
+    (defun lsp--gdscript-ignore-errors (original-function &rest args)
+      "Ignore the error message resulting from Godot not replying to the `JSONRPC' request."
+      (if (string-equal major-mode "gdscript-mode")
+          (let ((json-data (nth 0 args)))
+            (if (and (string= (gethash "jsonrpc" json-data "") "2.0")
+                     (not (gethash "id" json-data nil))
+                     (not (gethash "method" json-data nil)))
+                nil ; (message "Method not found")
+              (apply original-function args)))
+        (apply original-function args)))
+    ;; Runs the function `lsp--gdscript-ignore-errors` around `lsp--get-message-type` to suppress unknown notification errors.
+    (advice-add #'lsp--get-message-type :around #'lsp--gdscript-ignore-errors)
 #+end_src
 
 *** ORG MODE
@@ -529,6 +569,15 @@ This package implements hiding or abbreviation of the modeline displays (lighter
       (setq undo-tree-history-directory-alist '(("." . "~/.config/emacs/undo"))))
 #+end_src
 
+** Drag Stuff
+Makes it possible to move selected text, regions, lines
+#+begin_src emacs-lisp
+    (use-package drag-stuff
+      :init
+      (drag-stuff-global-mode 1)
+      (drag-stuff-define-keys))
+#+end_src
+
 ** RAINBOW DELIMITERS
 Add colors to brackets
 #+begin_src emacs-lisp
@@ -566,8 +615,10 @@ Display the actual color as a background for any hex color value (ex. #ffffff). 
             which-key-separator " → " ))
 #+end_src
 * Runtime Performance
-Dial the GC threshold back down so that garbage collection happens more frequently but in less time.
+Dial the GC threshold back down so that garbage collection happens more frequently but in less time and increase Read Process Output Max so emacs can read more data
 #+begin_src emacs-lisp
     ;; Make gc pauses faster by decreasing the threshold.
     (setq gc-cons-threshold (* 2 1000 1000))
+    ;; Increase the amount of data which Emacs reads from the process
+    (setq read-process-output-max (* 1024 1024)) ;; 1mb
 #+end_src
