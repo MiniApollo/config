@@ -1,13 +1,15 @@
-#+Title: MiniApollo Gnu Emacs Config
+#+Title: Emacs Kickstarter
 #+Author: MiniApollo
-#+Description: My personal emacs configuration
+#+Description: A starting point for Gnu Emacs with good defaults and packages that most people may want to use.
+#+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes
 #+Startup: showeverything
 #+Options: toc:2
 
-* Table Of Content :toc:
+* Table Of Contents :toc:
 - [[#important-programs-to-load-first][IMPORTANT PROGRAMS TO LOAD FIRST]]
   - [[#startup-performance][Startup Performance]]
-  - [[#use-package-setup][Use Package setup]]
+  - [[#auto-tangle-configuration-file][Auto-tangle Configuration file]]
+  - [[#use-package][Use Package]]
   - [[#load-evil-mode][Load Evil Mode]]
   - [[#general-keybindings][General Keybindings]]
 - [[#sane-defaults][SANE DEFAULTS]]
@@ -20,87 +22,106 @@
 - [[#dashboard][DashBoard]]
 - [[#projectile][Projectile]]
 - [[#language-support--lsp][Language support + Lsp]]
-  - [[#treesiter][Treesiter]]
-  - [[#flycheck][Flycheck]]
-  - [[#lsp-mode][Lsp Mode]]
+  - [[#eglot][Eglot]]
   - [[#yasnippet][Yasnippet]]
   - [[#language-modes][Language modes]]
 - [[#terminal][Terminal]]
-  - [[#vterm][Vterm]]
+  - [[#eat][Eat]]
 - [[#other-packages][Other Packages]]
-  - [[#all-the-icons][ALL THE ICONS]]
   - [[#nerd-icons][Nerd Icons]]
-  - [[#magit][Magit]]
-  - [[#company][Company]]
+  - [[#git][Git]]
+  - [[#corfu][Corfu]]
   - [[#ivy-counsel][Ivy (counsel)]]
+  - [[#vundo-with-undo-fu-session][Vundo with undo-fu-session]]
+  - [[#sudo-edit][Sudo edit]]
   - [[#diminish][DIMINISH]]
-  - [[#undotree][UndoTree]]
   - [[#drag-stuff][Drag Stuff]]
-  - [[#rainbow-delimiters][RAINBOW DELIMITERS]]
+  - [[#rainbow-delimiters][Rainbow Delimiters]]
   - [[#rainbow-mode][RAINBOW MODE]]
   - [[#which-key][WHICH-KEY]]
+  - [[#ws-butler][Ws-butler]]
 - [[#runtime-performance][Runtime Performance]]
 
 * IMPORTANT PROGRAMS TO LOAD FIRST
-To keep this config.org a reasonable length, I have moved a lot of code to individual scripts that will be sourced by this config.  These scripts are found in “~/.config/emacs/scripts” and do not contain any code that most people are likely to need to edit.
-** Startup Performance 
-Make startup faster by reducing the frequency of garbage collection and then use a hook to measure Emacs startup time.
+** Startup Performance
+Make startup faster by reducing the frequency of garbage collection. This will be set back when startup finishes.
 #+begin_src emacs-lisp
     ;; The default is 800 kilobytes.  Measured in bytes.
     (setq gc-cons-threshold (* 50 1000 1000))
 #+end_src
 
-** Use Package setup 
+** Auto-tangle Configuration file
+Auto-Tangle Org configuration file for better startup times.
+If you want to use this don't forget to add this to the top of the org document (#+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes)
+
+*Remember*, if this code can't be loaded (errors before this code). The init.el file won't update on change!
+To fix this you need to find this file (C-x C-f), fix the error and press C-c C-v t to tangle it manually.
+
+This snippet adds a hook to org-mode buffers so that efs/org-babel-tangle-config gets executed each time such a buffer gets saved.
+This function checks to see if the file being saved is the Emacs.org file you’re looking at right now, and if so,
+automatically exports the configuration here to the associated output files.
+#+begin_src emacs-lisp
+    (defun efs/org-babel-tangle-config ()
+      "Automatically tangle our Emacs.org config file when we save it. Credit to Emacs From Scratch for this one!"
+      (when (string-equal (file-name-directory (buffer-file-name))
+                          (expand-file-name user-emacs-directory))
+        ;; Dynamic scoping to the rescue
+        (let ((org-confirm-babel-evaluate nil))
+          (org-babel-tangle))))
+
+    (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
+#+end_src
+
+** Use Package
+I used the default package manager package.el with use-package. Alternative package managers (straight.el, elpaca, etc..) are useful if you want to
+install packages from github, if you want a specific, not very popular package that is not available on elpa or melpa.
+or you want UI (elpaca) and other things.
+
+If you are interested in these other package managers, check out their github repositories or search for more package managers.
+In my experience Package.el is not slow and gets the job done.
+
+To update/upgrade packages, use the package-upgrade-all command.
+With Emacs 29 use-package is now build in.
 #+begin_src emacs-lisp
     (require 'package)
-    (require 'use-package)
-    (setq use-package-always-ensure t)
-
-    (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+    (require 'use-package) ;; requires package.el and use-package so we can use it
+    (setq use-package-always-ensure t) ;; always ensures that a package is installed
+    (setq package-archives '(("melpa" . "https://melpa.org/packages/") ;; Sets default package repositories
                              ("org" . "https://orgmode.org/elpa/")
-                             ("elpa" . "https://elpa.gnu.org/packages/")))
-
-    (package-initialize)
-    (unless package-archive-contents
-      (package-refresh-contents))
-
-    ;; Initialize use-package on non-Linux platforms
-    (unless (package-installed-p 'use-package)
-      (package-install 'use-package))
+                             ("elpa" . "https://elpa.gnu.org/packages/")
+                             ("nongnu" . "https://elpa.nongnu.org/nongnu/"))) ;; For Eat Terminal
 #+end_src
 
 ** Load Evil Mode
 Evil is an extensible vi/vim layer for Emacs.  Because…let’s face it.  The Vim keybindings are just plain better.
-Note: To paste without copy(yank) selected text use P (shift P evil-paste-before), because default is evil-paste-after 
+Note: To paste without copy (yank) selected text use P (shift P evil-paste-before), because default is evil-paste-after.
+You can toggle evil mode with C-z (emacs-mode)
 #+begin_src emacs-lisp
     (use-package evil
       :init ;; tweak evil's configuration before loading it
-      (setq evil-want-keybinding nil)
-      (setq evil-want-C-u-scroll t)
-      (setq evil-want-C-i-jump nil)
-      (setq evil-want-C-i-jump nil)
-      (setq evil-vsplit-window-right t)
-      (setq evil-split-window-below t)
-      (setq evil-undo-system 'undo-tree) ;; ctrl r to work (redo) with UndoTree for stock Emacs use 'undo-redo
-      (setq org-return-follows-link  t) ;; Setting RETURN key in org-mode to follow links
+      (setq evil-want-keybinding nil) ;; Disable evil bindings in other modes (It's not consistent and not good)
+      (setq evil-want-C-u-scroll t) ;; Set  C-u to scrool up
+      (setq evil-want-C-i-jump nil) ;; Disables C-i jump
+      (setq evil-undo-system 'undo-redo) ;; C-r to redo
+      (setq org-return-follows-link  t) ;; Sets RETURN key in org-mode to follow links
       (evil-mode))
     (use-package evil-collection
       :after evil
       :config
       ;; Setting where to use evil-collection
-      (setq evil-collection-mode-list '(dashboard dired ibuffer magit))
+      (setq evil-collection-mode-list '(dashboard dired ibuffer magit corfu vundo))
       (evil-collection-init))
-    ;; Unmap keys in 'evil-maps if not done, (setq org-return-follows-link t) will not work
+    ;; Unmap keys in 'evil-maps. If not done, (setq org-return-follows-link t) will not work
     (with-eval-after-load 'evil-maps
       (define-key evil-motion-state-map (kbd "SPC") nil)
       (define-key evil-motion-state-map (kbd "RET") nil)
-      (define-key evil-motion-state-map (kbd "TAB") nil)
-      ;; When line wrap is on don't jump lines but visual lines 
-      (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-      (evil-global-set-key 'motion "k" 'evil-previous-visual-line))
+      (define-key evil-motion-state-map (kbd "TAB") nil))
 #+end_src
 
 ** General Keybindings
+General is a keybinding framework to set keybindings easily.
+The Leader key is what you will press when you want to access your keybindings (Space + . Find file).
+To search and replace start use query-replace-regexp one by one C-M-% (SPACE to replace n to skip) [[https://stackoverflow.com/questions/270930/using-emacs-to-recursively-find-and-replace-in-text-files-not-already-open][Source]]
 #+begin_src emacs-lisp
     (use-package general
       :config
@@ -117,23 +138,18 @@ Note: To paste without copy(yank) selected text use P (shift P evil-paste-before
         "TAB" '(comment-line :wk "Comment lines")
         "p" '(projectile-command-map :wk "Projectile command map"))
 
-      (mark/leader-keys 
+      (mark/leader-keys
         "f" '(:ignore t :wk "Find")
         "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
-        "f u"' ((lambda () (interactive) (find-file "/doas::/")) :wk "Root find file")
+        "f e"' (sudo-edit :wk "Root edit current file")
+        "f u"' (sudo-edit-find-file :wk "Root find file")
         "f r" '(counsel-recentf :wk "Recent files"))
-
-      (mark/leader-keys 
-        "u" '(:ignore t :wk "UndoTree")
-        "u u" '(undo-tree-visualize :wk "Show Undo-Tree")
-        "u l" '(undo-tree-visualize-switch-branch-left :wk "Left on branch")
-        "u r" '(undo-tree-visualize-switch-branch-right :wk "Right on branch"))
 
       (mark/leader-keys
         "b" '(:ignore t :wk "Buffer Bookmarks")
         "b b" '(switch-to-buffer :wk "Switch buffer")
         "b k" '(kill-this-buffer :wk "Kill this buffer")
-        "b i" '(ibuffer :wk "Ibuffer")  
+        "b i" '(ibuffer :wk "Ibuffer")
         "b n" '(next-buffer :wk "Next buffer")
         "b p" '(previous-buffer :wk "Previous buffer")
         "b r" '(revert-buffer :wk "Reload buffer")
@@ -146,65 +162,30 @@ Note: To paste without copy(yank) selected text use P (shift P evil-paste-before
         "d j" '(dired-jump :wk "Dired jump to current"))
 
       (mark/leader-keys
-        "e" '(:ignore t :wk "Evaluate")    
+        "e" '(:ignore t :wk "Evaluate")
         "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
-        "e d" '(eval-defun :wk "Evaluate defun containing or after point")
-        "e e" '(eval-expression :wk "Evaluate and elisp expression")
-        "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
-        "e r" '(eval-region :wk "Evaluate elisp in region")) 
+        "e r" '(eval-region :wk "Evaluate elisp in region"))
 
       (mark/leader-keys
-        "g" '(:ignore t :wk "Git")    
-        "g /" '(magit-displatch :wk "Magit dispatch")
-        "g ." '(magit-file-displatch :wk "Magit file dispatch")
-        "g b" '(magit-branch-checkout :wk "Switch branch")
-        "g c" '(:ignore t :wk "Create") 
-        "g c b" '(magit-branch-and-checkout :wk "Create branch and checkout")
-        "g c c" '(magit-commit-create :wk "Create commit")
-        "g c f" '(magit-commit-fixup :wk "Create fixup commit")
-        "g C" '(magit-clone :wk "Clone repo")
-        "g f" '(:ignore t :wk "Find") 
-        "g f c" '(magit-show-commit :wk "Show commit")
-        "g f f" '(magit-find-file :wk "Magit find file")
-        "g f g" '(magit-find-git-config-file :wk "Find gitconfig file")
-        "g F" '(magit-fetch :wk "Git fetch")
-        "g g" '(magit-status :wk "Magit status")
-        "g i" '(magit-init :wk "Initialize git repo")
-        "g l" '(magit-log-buffer-file :wk "Magit buffer log")
-        "g r" '(vc-revert :wk "Git revert file")
-        "g s" '(magit-stage-file :wk "Git stage file")
-        "g u" '(magit-stage-file :wk "Git unstage file"))
+        "g" '(:ignore t :wk "Git")
+        "g g" '(magit-status :wk "Magit status"))
 
       (mark/leader-keys
         "h" '(:ignore t :wk "Help")
-        "h f" '(flycheck-list-errors :wk "Flycheck list errors buffer")
         "h c" '(company-manual-begin :wk "Company completion at point")
         "h r" '((lambda () (interactive)
                   (load-file "~/.config/emacs/init.el"))
                 :wk "Reload emacs config"))
 
       (mark/leader-keys
+        "s" '(:ignore t :wk "Show")
+        "s e" '(eat :wk "Show Eat")
+        "s v" '(vundo :wk "Show Vundo"))
+
+      (mark/leader-keys
         "t" '(:ignore t :wk "Toggle")
         "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
-        "t t" '(visual-line-mode :wk "Toggle truncated lines")
-        "t v" '(vterm :wk "Toggle vterm"))
-
-      (mark/leader-keys
-        "m" '(:ignore t :wk "Org")
-        "m a" '(org-agenda :wk "Org agenda")
-        "m e" '(org-export-dispatch :wk "Org export dispatch")
-        "m i" '(org-toggle-item :wk "Org toggle item")
-        "m t" '(org-todo :wk "Org todo")
-        "m B" '(org-babel-tangle :wk "Org babel tangle")
-        "m T" '(org-todo-list :wk "Org todo list"))
-
-      (mark/leader-keys
-        "m b" '(:ignore t :wk "Tables")
-        "m b -" '(org-table-insert-hline :wk "Insert hline in table"))
-
-      (mark/leader-keys
-        "m d" '(:ignore t :wk "Date/deadline")
-        "m d t" '(org-time-stamp :wk "Org time stamp")))
+        "t t" '(visual-line-mode :wk "Toggle truncated lines (wrap)")))
 #+end_src
 
 * SANE DEFAULTS
@@ -212,41 +193,46 @@ Note: To paste without copy(yank) selected text use P (shift P evil-paste-before
     (delete-selection-mode 1)    ;; You can select text and delete it by typing.
     (electric-indent-mode -1)    ;; Turn off the weird indenting that Emacs does by default.
     (electric-pair-mode 1)       ;; Turns on automatic parens pairing
+
+    (global-auto-revert-mode t)  ;; Automatically reload file and show changes if the file has changed
+    (global-display-line-numbers-mode 1) ;; Display line numbers
+    (global-visual-line-mode t)  ;; Enable truncated lines
+    (menu-bar-mode -1)           ;; Disable the menu bar
+    (scroll-bar-mode -1)         ;; Disable the scroll bar
+    (tool-bar-mode -1)           ;; Disable the tool bar
+
     ;; The following prevents <> from auto-pairing when electric-pair-mode is on.
     ;; Otherwise, org-tempo is broken when you try to <s TAB...
     (add-hook 'org-mode-hook (lambda ()
                                (setq-local electric-pair-inhibit-predicate
                                            `(lambda (c)
                                               (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
-    (global-auto-revert-mode t)  ;; Automatically show changes if the file has changed
-    (global-display-line-numbers-mode 1) ;; Display line numbers
-    (global-visual-line-mode t)  ;; Enable truncated lines
-    (menu-bar-mode -1)           ;; Disable the menu bar 
-    (scroll-bar-mode -1)         ;; Disable the scroll bar
-    (tool-bar-mode -1)           ;; Disable the tool bar
-
-    (setq org-edit-src-content-indentation 4) ;; Set src block automatic indent to 4 instead of 2.
     (setq display-line-numbers-type 'relative) ;; Relative line numbers
     (global-display-line-numbers-mode)
 
-    (setq mouse-wheel-progressive-speed nil) ;; Disable progressive speed when scrolling 
-
-    (setq scroll-conservatively 10) ;; Smooth scrolling when going down
+    (setq mouse-wheel-progressive-speed nil) ;; Disable progressive speed when scrolling
+    (setq scroll-conservatively 10) ;; Smooth scrolling when going down with scroll margin
     (setq scroll-margin 8)
 
-    (global-set-key [escape] 'keyboard-escape-quit) ;; Minibuffer Escape
     (setq make-backup-files nil) ; Stop creating ~ backup files
+    ;; Move customization variables to a separate file and load it, avoid filling up init.el with unnecessary variables
+    (setq custom-file (locate-user-emacs-file "custom-vars.el"))
+    (load custom-file 'noerror 'nomessage)
+
+    (global-set-key [escape] 'keyboard-escape-quit) ;; Makes Escape quit prompts (Minibuffer Escape)
     (blink-cursor-mode 0) ;; Don't blink cursor
-    (add-hook 'prog-mode-hook (lambda () (hs-minor-mode t))) ;; Enable folding hide show globally
-    (setq dired-kill-when-opening-new-dired-buffer t) ;; Dired don't create new buffer
+    (add-hook 'prog-mode-hook (lambda () (hs-minor-mode t))) ;; Enable folding hide/show globally
+
+    (setq org-edit-src-content-indentation 4) ;; Set src block automatic indent to 4 instead of 2.
     (setq-default tab-width 4)
 #+end_src
 
 * Set Theme
+Set gruvbox theme if you want some themes to try out doom-themes
 #+begin_src emacs-lisp
     (use-package gruvbox-theme
       :init
-      (load-theme 'gruvbox-dark-medium t))
+      (load-theme 'gruvbox-dark-medium t)) ;; We need to add t to trust this package
 #+end_src
 
 * Transparency
@@ -255,22 +241,22 @@ With Emacs version 29, true transparency has been added.
     (add-to-list 'default-frame-alist '(alpha-background . 90)) ; For all new frames henceforth
 #+end_src
 
-* Fonts 
+* Fonts
 ** Setting fonts
 #+begin_src emacs-lisp
     (set-face-attribute 'default nil
-                        :font "JetBrains Mono"
+                        :font "JetBrains Mono" ;; Set your favorite type of font or download JetBrains Mono
                         :height 120
                         :weight 'medium)
     ;; This sets the default font on all graphical frames created after restarting Emacs.
     ;; Does the same thing as 'set-face-attribute default' above, but emacsclient fonts
     ;; are not right unless I also add this method of setting the default font.
-    (add-to-list 'default-frame-alist '(font . "JetBrains Mono"))
+    (add-to-list 'default-frame-alist '(font . "JetBrains Mono")) ;; Set your favorite font
     (setq-default line-spacing 0.12)
 #+end_src
 
-** Zooming In/Out 
-You can use the bindings CTRL plus =/- for zooming in/out.  You can also use CTRL plus the mouse wheel for zooming in/out.
+** Zooming In/Out
+You can use the bindings C-+ C-- for zooming in/out. You can also use CTRL plus the mouse wheel for zooming in/out.
 #+begin_src emacs-lisp
     (global-set-key (kbd "C-+") 'text-scale-increase)
     (global-set-key (kbd "C--") 'text-scale-decrease)
@@ -279,9 +265,9 @@ You can use the bindings CTRL plus =/- for zooming in/out.  You can also use CTR
 #+end_src
 
 * Modeline
+Replace the default modeline with a pretier more useful.
 #+begin_src emacs-lisp
     (use-package doom-modeline
-      :ensure t
       :init (doom-modeline-mode 1)
       :config
       (setq doom-modeline-height 25      ;; sets modeline height
@@ -293,7 +279,7 @@ You can use the bindings CTRL plus =/- for zooming in/out.  You can also use CTR
 * DashBoard
 #+begin_src emacs-lisp
     (use-package dashboard
-      :ensure t 
+      :ensure t
       :init
       (setq initial-buffer-choice 'dashboard-open)
       (setq dashboard-set-heading-icons t)
@@ -312,7 +298,7 @@ You can use the bindings CTRL plus =/- for zooming in/out.  You can also use CTR
       (dashboard-setup-startup-hook))
 #+end_src
 
-* Projectile 
+* Projectile
 Projectile is a project interaction library for Emacs.
 #+begin_src emacs-lisp
     (use-package projectile
@@ -321,96 +307,48 @@ Projectile is a project interaction library for Emacs.
       :init
       (setq projectile-switch-project-action #'projectile-dired)
       (setq projectile-project-search-path '(("~/Projects/" . 1) ("/mnt/Ext4D/Manca/Projektek/" . 1) ("/mnt/Ext4D/Manca/Game_Projects/" . 1))))
-    ;; Bookmarks for non git projects
+    ;; Use Bookmarks for non git projects
 #+end_src
 
 * Language support + Lsp
-** Treesiter
+** Eglot
+Language Server Protocol Support for Emacs. The build in is now Eglot (with emacs 29).
+Eglot is fast and minimal, but requires manual setup for LSP servers (downloading).
+For more [[https://www.gnu.org/software/emacs/manual/html_mono/eglot.html][information how to use.]] One altertative to Eglot is Lsp-mode, check out the [[https://github.com/MiniApollo/kickstart.emacs/wiki][project wiki]] page for more information.
+
+Eglot is easy to set up, but the only difficult part is downloading and setting up the lsp servers.
+After that just add-hook with eglot-ensure to automatically start eglot for a given file type. And you are done.
+
+As an example to use C, C++ you need to install clangd(or ccls) and uncomment the following lines. Now the language server will start automatically when opening any c,c++ file.
+Another harder example is Lua. Download lua-language-server from their git repository, add it to your PATH (lua-language-server/bin, make it executable lua-language-server)
+and add a hook (or use a package manager).
+
+If you can use a package manager just install it and add a hook
 #+begin_src emacs-lisp
-    ;;(mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
-    (setq treesit-language-source-alist
-          '((bash "https://github.com/tree-sitter/tree-sitter-bash")
-            (cmake "https://github.com/uyha/tree-sitter-cmake")
-            (css "https://github.com/tree-sitter/tree-sitter-css")
-            (elisp "https://github.com/Wilfred/tree-sitter-elisp")
-            (go "https://github.com/tree-sitter/tree-sitter-go")
-            (html "https://github.com/tree-sitter/tree-sitter-html")
-            (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-            (json "https://github.com/tree-sitter/tree-sitter-json")
-            (make "https://github.com/alemuller/tree-sitter-make")
-            (markdown "https://github.com/ikatyang/tree-sitter-markdown")
-            (python "https://github.com/tree-sitter/tree-sitter-python")
-            (toml "https://github.com/tree-sitter/tree-sitter-toml")
-            (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-            (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-            (yaml "https://github.com/ikatyang/tree-sitter-yaml")
-            (gdscript "https://github.com/PrestonKnopp/tree-sitter-gdscript")
-            ))
-    (setq major-mode-remap-alist
-          '((yaml-mode . yaml-ts-mode)
-            (bash-mode . bash-ts-mode)
-            (js2-mode . js-ts-mode)
-            (typescript-mode . typescript-ts-mode)
-            (json-mode . json-ts-mode)
-            (css-mode . css-ts-mode)
-            (python-mode . python-ts-mode)
-            (gdscript-mode . gdscript-ts-mode)
-            ))
-    (setq treesit-font-lock-level 4) ;; To highlight everything default 3
+    ;; Automatically start eglot for a given file type.
+    ;; (add-hook 'c-mode-hook 'eglot-ensure)
+    ;; (add-hook 'c++-mode-hook 'eglot-ensure)
+    ;; (add-hook 'lua-mode-hook 'eglot-ensure)
 #+end_src
 
-** Flycheck 
-Flycheck is recommended by lsp-mode for better error handling
-#+begin_src emacs-lisp
-    (use-package flycheck
-      :ensure t
-      :defer t
-      :diminish
-      :init (global-flycheck-mode))
-#+end_src
-
-** Lsp Mode
-Language Server Protocol Support for Emacs
-*** Setup
-#+begin_src emacs-lisp
-    (use-package lsp-mode
-      :init
-      ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-      (setq lsp-keymap-prefix "C-c l")
-      ;; Disable unneeded features
-      (setq lsp-lens-enable nil) ;; Disable references count 
-      (setq lsp-headerline-breadcrumb-enable nil) ;; Disable Header line
-      (setq lsp-ui-sideline-show-code-actions nil) ;; Hide right side code actions
-      (setq lsp-ui-sideline-show-hover nil) ;; Hide right hover symbols
-      (setq lsp-modeline-code-actions-enable nil) ;; Disable modeline code actions
-      (setq lsp-eldoc-enable-hover nil) ;; Disable eldoc (echo area info)
-      (setq lsp-modeline-diagnostics-enable nil) ;; Disable Modeline diagnostic status
-      (setq lsp-signature-auto-activate nil) ;; Disable Signature help you could manually request them via `lsp-signature-activate`
-      (setq lsp-completion-show-detail nil) ;; Disable Completion item detail
-      :hook (;; Automatic Language Modes
-             (prog-mode . lsp)
-             ;; if you want which-key integration
-             (lsp-mode . lsp-enable-which-key-integration))
-      :commands lsp)
-    ;; optionally
-    (use-package lsp-ui 
-      :commands lsp-ui-mode)
-    ;; if you are ivy user
-    (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
-#+end_src
-
-** Yasnippet 
+** Yasnippet
+YASnippet is a template system for Emacs. And yasnippet-snippets is a snippet collection package.
+To use it write out the full keyword (or use autocompletion) and press Tab
 #+begin_src emacs-lisp
     (use-package yasnippet-snippets
       :hook (prog-mode . yas-minor-mode))
 #+end_src
 
 ** Language modes
+Its not required for every language like C,C++,C#,Java,Javascript etc.. to download language mode packages, but for more specific languages it is necessary for syntax highlighting.
+If you want to use TreeSitter. Check out this [[https://www.masteringemacs.org/article/how-to-get-started-tree-sitter][website]].
+Currently its tedious to use Treesitter because emacs has not yet fully migrated to it.
 *** Lua mode
-#+begin_src emacs-lisp
-    (use-package lua-mode
-      :mode "\\.lua\\'")
-#+end_src
+Example how to setup a language mode (if you don't want it feel free to delete it)
+# #+begin_src emacs-lisp
+#     (use-package lua-mode
+#       :mode "\\.lua\\'") ;; Only start in a lua file
+# #+end_src
 *** GDScript mode
 #+begin_src emacs-lisp
     (use-package gdscript-mode
@@ -430,86 +368,120 @@ Language Server Protocol Support for Emacs
 #+end_src
 
 *** ORG MODE
+Org mode is one of the things that emacs is loved for.
+Once you've used it for a bit, you'll understand why people love it. Even reading about it can be inspiring!
+For example, this document is effectively the source code and descriptions bound into the one document,
+much like the literate programming ideas that Donald Knuth made famous.
+**** Useful tweaks
+#+begin_src emacs-lisp
+    (add-hook 'org-mode-hook 'org-indent-mode) ;; Indent text
+#+end_src
+
 **** Enabling Table of Contents
 #+begin_src emacs-lisp
-    (use-package toc-org
-      :commands toc-org-enable
-      :init (add-hook 'org-mode-hook 'toc-org-enable))
+	(use-package toc-org
+	  :commands toc-org-enable
+	  :init (add-hook 'org-mode-hook 'toc-org-enable))
 #+end_src
 
 **** Enabling Org Bullets
 Org-bullets gives us attractive bullets rather than asterisks.
 #+begin_src emacs-lisp
-    (add-hook 'org-mode-hook 'org-indent-mode)
-    (use-package org-bullets)
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+    (use-package org-bullets
+      :hook (org-mode . org-bullets-mode)
+      :after org)
 #+end_src
 
 **** Source Code Block Tag Expansion
-Org-tempo is not a separate package but a module within org that can be enabled.  Org-tempo allows for '<s' followed by TAB to expand to a begin_src tag.  Other expansions available include:
+Org-tempo is not a separate package but a module within org that can be enabled.
+Org-tempo allows for '<s' followed by TAB to expand to a begin_src tag.
 #+begin_src emacs-lisp
     (with-eval-after-load 'org
       (require 'org-tempo))
 #+end_src
 
 * Terminal
-** Vterm
-Vterm is a terminal emulator within Emacs.  The 'shell-file-name' setting sets the shell to be used in M-x shell, M-x term, M-x ansi-term and M-x vterm.  By default, the shell is set to 'fish' but could change it to 'bash' or 'zsh' if you prefer.
+** Eat
+Eat(Emulate A Terminal) is a terminal emulator within Emacs.
+Its more portable and less overhead for users over like vterm or eshell.
+We setup eat with eshell if you want to use bash, zsh etc.. Check out their git [[https://codeberg.org/akib/emacs-eat][repository]] how to do it.
 #+begin_src emacs-lisp
-    (use-package vterm
-      :commands (vterm))
-    (setq shell-file-name "/bin/bash"
-          vterm-max-scrollback 10000)
+    (use-package eat
+      :hook ('eshell-load-hook #'eat-eshell-mode))
 #+end_src
 
 * Other Packages
-All the package setups that don't need tweaking
-** ALL THE ICONS
-This is an icon set that can be used with dashboard, dired, ibuffer and other Emacs programs.
-#+begin_src emacs-lisp
-    (use-package all-the-icons
-      :ensure t
-      :if (display-graphic-p))
-#+end_src
-
+All the package setups that don't need much tweaking
 ** Nerd Icons
-For doom modeline
+For icons and more helpful ui.
+This is an icon set that can be used with dired, ibuffer and other Emacs programs.
+
+Don't forget to use nerd-icons-install-fonts.
+
+We use Nerd icons because it has more, better icons and all-the-icons only supports GUI.
+While nerd-icons supports both GUI and TUI.
 #+begin_src emacs-lisp
     (use-package nerd-icons
-      :ensure t
       :if (display-graphic-p))
 
     (use-package nerd-icons-dired
       :hook (dired-mode . (lambda () (nerd-icons-dired-mode t))))
+
+    (use-package nerd-icons-ibuffer
+      :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
 #+end_src
 
-** Magit
-Complete text-based user interface to Git
+** Git
+*** Magit
+Complete text-based user interface to Git.
 #+begin_src emacs-lisp
     (use-package magit
       :commands magit-status)
 #+end_src
 
-** Company  
-Company is a text completion framework for Emacs. The name stands for “complete anything”.  Completion will start automatically after you type a few letters. Use M-n and M-p to select, <return> to complete or <tab> to complete the common part.
+*** Diff-hl
+Highlights uncommitted changes on the left side of the window (area also known as the "gutter"), allows you to jump between and revert them selectively.
 #+begin_src emacs-lisp
-    (use-package company
-      :defer 2
-      :diminish
-      :bind (:map company-active-map
-                  ("<tab>" . company-complete-selection))
-      :custom
-      (company-begin-commands '(self-insert-command))
-      (company-idle-delay 0.0)
-      (company-minimum-prefix-length 1)
-      (company-show-numbers t)
-      (company-tooltip-align-annotations 't)
-      (global-company-mode t))
+    (use-package diff-hl
+      :hook ((magit-pre-refresh-hook . diff-hl-magit-pre-refresh)
+             (magit-post-refresh-hook . diff-hl-magit-post-refresh))
+      :init (global-diff-hl-mode))
+#+end_src
 
-    (use-package company-box
-      :after compan
-      :diminish
-      :hook (company-mode . company-box-mode))
+** Corfu
+Enhances in-buffer completion with a small completion popup.
+Corfu is a small package, which relies on the Emacs completion facilities and concentrates on providing a polished completion.
+For more configuration options check out their [[https://github.com/minad/corfu][git repository]]
+#+begin_src emacs-lisp
+    (use-package corfu
+      ;; Optional customizations
+      :custom
+      (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+      (corfu-auto t)                 ;; Enable auto completion
+      (corfu-auto-prefix 2)          ;; Minimum length of prefix for auto completion.
+      ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
+      ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
+      ;; (corfu-preview-current nil)    ;; Disable current candidate preview
+      ;; (corfu-preselect 'prompt)      ;; Preselect the prompt
+      ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
+
+      ;; Recommended: Enable Corfu globally.  This is recommended since Dabbrev can
+      ;; be used globally (M-/).  See also the customization variable
+      ;; `global-corfu-modes' to exclude certain modes.
+      :init
+      (global-corfu-mode))
+
+    ;; A few more useful configurations...
+    (use-package emacs
+      :init
+      ;; Enable indentation+completion using the TAB key.
+      ;; `completion-at-point' is often bound to M-TAB.
+      (setq tab-always-indent 'complete))
+
+    (use-package nerd-icons-corfu
+      :after corfu
+      :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+
 #+end_src
 
 ** Ivy (counsel)
@@ -535,13 +507,13 @@ Ivy-rich allows us to add descriptions alongside the commands in M-x.
       :config
       (ivy-mode))
 
-    (use-package all-the-icons-ivy-rich
-      :ensure t
-      :init (all-the-icons-ivy-rich-mode 1))
+    (use-package nerd-icons-ivy-rich
+      :init
+      (nerd-icons-ivy-rich-mode 1)
+      (ivy-rich-mode 1))
 
     (use-package ivy-rich
       :after ivy
-      :ensure t
       :init (ivy-rich-mode 1) ;; this gets us descriptions in M-x.
       :custom
       (ivy-virtual-abbreviate 'full
@@ -554,23 +526,34 @@ Ivy-rich allows us to add descriptions alongside the commands in M-x.
       :config (counsel-projectile-mode))
 #+end_src
 
-** DIMINISH 
-This package implements hiding or abbreviation of the modeline displays (lighters) of minor-modes.  With this package installed, you can add ‘:diminish’ to any use-package block to hide that particular mode in the modeline.
+** Vundo with undo-fu-session
+Visualizes the undo history with more emacs native features (alternative undotree).
+#+begin_src emacs-lisp
+    (use-package vundo)
+    (use-package undo-fu-session
+      :init
+      (undo-fu-session-global-mode)
+
+      :custom
+      (undo-fu-session-file-limit 100000))
+#+end_src
+
+** Sudo edit
+Utilities for opening files with root privileges (also works with doas).
+#+begin_src emacs-lisp
+        (use-package sudo-edit
+          :config (setq sudo-edit-local-method "doas")) ;; To use doas
+#+end_src
+
+** DIMINISH
+This package implements hiding or abbreviation of the modeline displays (lighters) of minor-modes.
+With this package installed, you can add ‘:diminish’ to any use-package block to hide that particular mode in the modeline.
 #+begin_src emacs-lisp
     (use-package diminish)
 #+end_src
 
-** UndoTree
-#+begin_src emacs-lisp
-    (use-package undo-tree
-      :init 
-      (global-undo-tree-mode)
-      ;; Prevent undo tree files from polluting your git repo
-      (setq undo-tree-history-directory-alist '(("." . "~/.config/emacs/undo"))))
-#+end_src
-
 ** Drag Stuff
-Makes it possible to move selected text, regions, lines
+Makes it possible to move selected text, regions, lines.
 #+begin_src emacs-lisp
     (use-package drag-stuff
       :init
@@ -578,23 +561,24 @@ Makes it possible to move selected text, regions, lines
       (drag-stuff-define-keys))
 #+end_src
 
-** RAINBOW DELIMITERS
-Add colors to brackets
+** Rainbow Delimiters
+Add colors to brackets.
 #+begin_src emacs-lisp
     (use-package rainbow-delimiters
       :hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
 
 ** RAINBOW MODE
-Display the actual color as a background for any hex color value (ex. #ffffff).  The code block below enables rainbow-mode in all programming modes (prog-mode) as well as org-mode, which is why rainbow works in this document.  
+Display the actual color as a background for any hex color value (ex. #ffffff).  The code block below enables rainbow-mode in all programming modes (prog-mode) as well as org-mode, which is why rainbow works in this document.
 #+begin_src emacs-lisp
     (use-package rainbow-mode
       :diminish
-      :hook 
+      :hook
       ((org-mode prog-mode) . rainbow-mode))
 #+end_src
 
 ** WHICH-KEY
+Which-key is a helper utility for keychords (which key to press)
 #+begin_src emacs-lisp
     (use-package which-key
       :init
@@ -614,8 +598,16 @@ Display the actual color as a background for any hex color value (ex. #ffffff). 
             which-key-allow-imprecise-window-fit nil
             which-key-separator " → " ))
 #+end_src
+
+** Ws-butler
+Removes whitespace from the ends of lines.
+#+begin_src emacs-lisp
+    (use-package ws-butler
+      :hook (prog-mode . ws-butler-mode))
+#+end_src
+
 * Runtime Performance
-Dial the GC threshold back down so that garbage collection happens more frequently but in less time and increase Read Process Output Max so emacs can read more data
+Dial the GC threshold back down so that garbage collection happens more frequently but in less time. We also increase Read Process Output Max so emacs can read more data.
 #+begin_src emacs-lisp
     ;; Make gc pauses faster by decreasing the threshold.
     (setq gc-cons-threshold (* 2 1000 1000))
