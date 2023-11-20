@@ -169,7 +169,6 @@
         doom-modeline-persp-icon t)) ;; adds folder icon next to persp name
 
 (use-package dashboard
-  :ensure t
   :init
   (setq initial-buffer-choice 'dashboard-open)
   (setq dashboard-set-heading-icons t)
