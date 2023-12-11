@@ -83,8 +83,7 @@ In my experience Package.el is not slow and gets the job done.
 To update/upgrade packages, use the package-upgrade-all command.
 With Emacs 29 use-package is now build in.
 #+begin_src emacs-lisp
-    (require 'package)
-    (require 'use-package) ;; requires package.el and use-package so we can use it
+    (require 'use-package-ensure) ;; This line is currenly needed, there is a bug with always-ensure, it doesn't get loaded if we just setq t
     (setq use-package-always-ensure t) ;; always ensures that a package is installed
     (setq package-archives '(("melpa" . "https://melpa.org/packages/") ;; Sets default package repositories
                              ("org" . "https://orgmode.org/elpa/")
@@ -222,6 +221,7 @@ To search and replace start use query-replace-regexp one by one C-M-% (SPACE to 
     (global-set-key [escape] 'keyboard-escape-quit) ;; Makes Escape quit prompts (Minibuffer Escape)
     (blink-cursor-mode 0) ;; Don't blink cursor
     (add-hook 'prog-mode-hook (lambda () (hs-minor-mode t))) ;; Enable folding hide/show globally
+    (setq dired-kill-when-opening-new-dired-buffer t) ;; Dired don't create new buffer
 
     (setq org-edit-src-content-indentation 4) ;; Set src block automatic indent to 4 instead of 2.
     (setq-default tab-width 4)
@@ -312,22 +312,37 @@ Projectile is a project interaction library for Emacs.
 * Language support + Lsp
 ** Eglot
 Language Server Protocol Support for Emacs. The build in is now Eglot (with emacs 29).
+
 Eglot is fast and minimal, but requires manual setup for LSP servers (downloading).
-For more [[https://www.gnu.org/software/emacs/manual/html_mono/eglot.html][information how to use.]] One altertative to Eglot is Lsp-mode, check out the [[https://github.com/MiniApollo/kickstart.emacs/wiki][project wiki]] page for more information.
+For more [[https://www.gnu.org/software/emacs/manual/html_mono/eglot.html][information how to use.]] One altertative to Eglot is Lsp-mode, check out [[https://github.com/MiniApollo/kickstart.emacs/wiki][kickstart.emacs wiki]] page for more information.
 
 Eglot is easy to set up, but the only difficult part is downloading and setting up the lsp servers.
-After that just add-hook with eglot-ensure to automatically start eglot for a given file type. And you are done.
+After that just add a hook with eglot-ensure to automatically start eglot for a given file type. And you are done.
 
 As an example to use C, C++ you need to install clangd(or ccls) and uncomment the following lines. Now the language server will start automatically when opening any c,c++ file.
-Another harder example is Lua. Download lua-language-server from their git repository, add it to your PATH (lua-language-server/bin, make it executable lua-language-server)
-and add a hook (or use a package manager).
 
-If you can use a package manager just install it and add a hook
+A harder example is Lua. Download the lua-language-server from their git repository, make the lua-language-server file executable at lua-language-server/bin.
+Uncomment the following lines and change the path to the language server executable. Now the language server will work.
+
+If you can use a package manager just install the lsp server and add a hook.
 #+begin_src emacs-lisp
     ;; Automatically start eglot for a given file type.
-    ;; (add-hook 'c-mode-hook 'eglot-ensure)
-    ;; (add-hook 'c++-mode-hook 'eglot-ensure)
-    ;; (add-hook 'lua-mode-hook 'eglot-ensure)
+    (use-package eglot
+      :ensure nil
+      :hook (('c-mode . 'eglot-ensure)
+             ('c++-mode . 'eglot-ensure)
+             ('csharp-mode . 'eglot-ensure))
+      :config
+      ;; No event buffers, disable providers cause a lot of hover traffic. Shutdown unused servers.
+      (setq eglot-events-buffer-size 0
+            eglot-ignored-server-capabilities '(:hoverProvider
+                                                :documentHighlightProvider)
+            eglot-autoshutdown t)
+      (add-to-list 'eglot-server-programs
+                   `(csharp-mode . ("~/.config/emacs/lspServers/omnisharp-linux-x64-net6.0/OmniSharp" "-lsp")))
+      (add-to-list 'eglot-server-programs
+                   `(lua-mode . ("~/.config/emacs/lspServers/lua-language-server-3.7.3-linux-x64/bin/lua-language-server" "-lsp")))
+      )
 #+end_src
 
 ** Yasnippet
@@ -335,19 +350,18 @@ YASnippet is a template system for Emacs. And yasnippet-snippets is a snippet co
 To use it write out the full keyword (or use autocompletion) and press Tab
 #+begin_src emacs-lisp
     (use-package yasnippet-snippets
-      :hook (prog-mode . yas-minor-mode))
+      :hook (prog-mode . yas-minor-mode)) ;; prog-mode means Programing mode
 #+end_src
 
 ** Language modes
 Its not required for every language like C,C++,C#,Java,Javascript etc.. to download language mode packages, but for more specific languages it is necessary for syntax highlighting.
 If you want to use TreeSitter. Check out this [[https://www.masteringemacs.org/article/how-to-get-started-tree-sitter][website]].
 Currently its tedious to use Treesitter because emacs has not yet fully migrated to it.
-*** Lua mode
-Example how to setup a language mode (if you don't want it feel free to delete it)
-# #+begin_src emacs-lisp
-#     (use-package lua-mode
-#       :mode "\\.lua\\'") ;; Only start in a lua file
-# #+end_src
+*** Lua mode 
+#+begin_src emacs-lisp
+    (use-package lua-mode)
+#+end_src
+
 *** GDScript mode
 #+begin_src emacs-lisp
     (use-package gdscript-mode
@@ -378,9 +392,9 @@ much like the literate programming ideas that Donald Knuth made famous.
 
 **** Enabling Table of Contents
 #+begin_src emacs-lisp
-	(use-package toc-org
-	  :commands toc-org-enable
-	  :init (add-hook 'org-mode-hook 'toc-org-enable))
+    (use-package toc-org
+      :commands toc-org-enable
+      :init (add-hook 'org-mode-hook 'toc-org-enable))
 #+end_src
 
 **** Enabling Org Bullets
@@ -458,29 +472,21 @@ For more configuration options check out their [[https://github.com/minad/corfu]
       (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
       (corfu-auto t)                 ;; Enable auto completion
       (corfu-auto-prefix 2)          ;; Minimum length of prefix for auto completion.
-      ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
-      ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
-      ;; (corfu-preview-current nil)    ;; Disable current candidate preview
-      ;; (corfu-preselect 'prompt)      ;; Preselect the prompt
-      ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
-
-      ;; Recommended: Enable Corfu globally.  This is recommended since Dabbrev can
-      ;; be used globally (M-/).  See also the customization variable
-      ;; `global-corfu-modes' to exclude certain modes.
-      :init
-      (global-corfu-mode))
-
-    ;; A few more useful configurations...
-    (use-package emacs
-      :init
+      :config
+      (setq completion-ignore-case  t)
       ;; Enable indentation+completion using the TAB key.
       ;; `completion-at-point' is often bound to M-TAB.
-      (setq tab-always-indent 'complete))
+      (setq tab-always-indent 'complete)
+
+    ;; Recommended: Enable Corfu globally.  This is recommended since Dabbrev can
+    ;; be used globally (M-/).  See also the customization variable
+    ;; `global-corfu-modes' to exclude certain modes.
+    :init
+    (global-corfu-mode))
 
     (use-package nerd-icons-corfu
       :after corfu
       :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
-
 #+end_src
 
 ** Ivy (counsel)
@@ -540,8 +546,8 @@ Visualizes the undo history with more emacs native features (alternative undotre
 ** Sudo edit
 Utilities for opening files with root privileges (also works with doas).
 #+begin_src emacs-lisp
-        (use-package sudo-edit
-          :config (setq sudo-edit-local-method "doas")) ;; To use doas
+    (use-package sudo-edit
+      :config (setq sudo-edit-local-method "doas")) ;; To use doas
 #+end_src
 
 ** DIMINISH

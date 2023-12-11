@@ -11,8 +11,7 @@
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
 
-(require 'package)
-(require 'use-package) ;; requires package.el and use-package so we can use it
+(require 'use-package-ensure) ;; This line is currenly needed, there is a bug with always-ensure, it doesn't get loaded if we just setq t
 (setq use-package-always-ensure t) ;; always ensures that a package is installed
 (setq package-archives '(("melpa" . "https://melpa.org/packages/") ;; Sets default package repositories
                          ("org" . "https://orgmode.org/elpa/")
@@ -135,6 +134,7 @@
 (global-set-key [escape] 'keyboard-escape-quit) ;; Makes Escape quit prompts (Minibuffer Escape)
 (blink-cursor-mode 0) ;; Don't blink cursor
 (add-hook 'prog-mode-hook (lambda () (hs-minor-mode t))) ;; Enable folding hide/show globally
+(setq dired-kill-when-opening-new-dired-buffer t) ;; Dired don't create new buffer
 
 (setq org-edit-src-content-indentation 4) ;; Set src block automatic indent to 4 instead of 2.
 (setq-default tab-width 4)
@@ -195,12 +195,27 @@
 ;; Use Bookmarks for non git projects
 
 ;; Automatically start eglot for a given file type.
-;; (add-hook 'c-mode-hook 'eglot-ensure)
-;; (add-hook 'c++-mode-hook 'eglot-ensure)
-;; (add-hook 'lua-mode-hook 'eglot-ensure)
+(use-package eglot
+  :ensure nil
+  :hook (('c-mode . 'eglot-ensure)
+         ('c++-mode . 'eglot-ensure)
+         ('csharp-mode . 'eglot-ensure))
+  :config
+  ;; No event buffers, disable providers cause a lot of hover traffic. Shutdown unused servers.
+  (setq eglot-events-buffer-size 0
+        eglot-ignored-server-capabilities '(:hoverProvider
+                                            :documentHighlightProvider)
+        eglot-autoshutdown t)
+  (add-to-list 'eglot-server-programs
+               `(csharp-mode . ("~/.config/emacs/lspServers/omnisharp-linux-x64-net6.0/OmniSharp" "-lsp")))
+  (add-to-list 'eglot-server-programs
+               `(lua-mode . ("~/.config/emacs/lspServers/lua-language-server-3.7.3-linux-x64/bin/lua-language-server" "-lsp")))
+  )
 
 (use-package yasnippet-snippets
-  :hook (prog-mode . yas-minor-mode))
+  :hook (prog-mode . yas-minor-mode)) ;; prog-mode means Programing mode
+
+(use-package lua-mode)
 
 (use-package gdscript-mode
   :mode "\\.gd\\'")
@@ -256,24 +271,17 @@
   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
   (corfu-auto t)                 ;; Enable auto completion
   (corfu-auto-prefix 2)          ;; Minimum length of prefix for auto completion.
-  ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
-  ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
-  ;; (corfu-preview-current nil)    ;; Disable current candidate preview
-  ;; (corfu-preselect 'prompt)      ;; Preselect the prompt
-  ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
-
-  ;; Recommended: Enable Corfu globally.  This is recommended since Dabbrev can
-  ;; be used globally (M-/).  See also the customization variable
-  ;; `global-corfu-modes' to exclude certain modes.
-  :init
-  (global-corfu-mode))
-
-;; A few more useful configurations...
-(use-package emacs
-  :init
+  :config
+  (setq completion-ignore-case  t)
   ;; Enable indentation+completion using the TAB key.
   ;; `completion-at-point' is often bound to M-TAB.
-  (setq tab-always-indent 'complete))
+  (setq tab-always-indent 'complete)
+
+;; Recommended: Enable Corfu globally.  This is recommended since Dabbrev can
+;; be used globally (M-/).  See also the customization variable
+;; `global-corfu-modes' to exclude certain modes.
+:init
+(global-corfu-mode))
 
 (use-package nerd-icons-corfu
   :after corfu
