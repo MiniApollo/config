@@ -6,10 +6,12 @@ sys-kernel/installkernel-gentoo grub
 gnome-extra/nm-applet appindicator -modemmanager 
 x11-drivers/nvidia-drivers tools abi_x86_32 kernel-open
 media-video/ffmpeg nvenc
+sys-devel/clang abi_x86_32
+gui-apps/rofi-wayland drun
 
 ### Pipewire
 media-sound/pulseaudio -daemon
-media-video/pipewire sound-server readline ssl v4l pipewire-alsa dbus extra
+media-video/pipewire sound-server readline ssl v4l pipewire-alsa dbus extra jack-sdk
 
 ### Steam
 sys-libs/ncurses -gpm
@@ -21,7 +23,7 @@ media-libs/opencolorio -opengl
 media-libs/freetype brotli
 media-video/ffmpeg theora opus vpx
 app-arch/brotli abi_x86_32
-media-gfx/blender collada jemalloc openal cuda
+media-gfx/blender collada jemalloc openal cuda optix
 
 media-libs/openpgl cpu_flags_x86_sse4_2 cpu_flags_x86_avx2
 
@@ -70,3 +72,6 @@ sys-devel/gcc jit
 media-libs/libva abi_x86_32
 media-plugins/gst-plugins-vaapi abi_x86_32
 media-libs/mesa -vaapi -vdpau
+
+### Krita
+dev-python/PyQt5 declarative

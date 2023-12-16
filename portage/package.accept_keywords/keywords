@@ -1,13 +1,14 @@
 x11-drivers/nvidia-drivers ~amd64
 dev-util/nvidia-cuda-toolkit ~amd64
-media-gfx/raw-thumbnailer ~amd64
 
+media-gfx/raw-thumbnailer ~amd64
+games-action/prismlauncher ~amd64
+gui-apps/rofi-wayland ~amd64
+
+### Dotnet
 dev-dotnet/dotnet-sdk-bin ~amd64
 app-eselect/eselect-dotnet ~amd64
 dev-dotnet/dotnet-runtime-nugets ~amd64
-
-games-action/prismlauncher ~amd64
-games-util/heroic-bin ~amd64
 
 ### Emacs
 app-editors/emacs ~amd64
@@ -19,6 +20,7 @@ dev-util/anjuta ~amd64
 ### Blender
 media-gfx/blender ~amd64
 media-libs/openpgl ~amd64
+media-libs/opensubdiv ~amd64
 
 ### Lutris
 games-util/lutris  ~amd64
@@ -41,19 +43,24 @@ dev-libs/libei ~amd64
 sys-apps/xdg-desktop-portal ~amd64
 
 ### Hyprland
-# Gcc version is old 13 needed 14 so masked
-=gui-wm/hyprland-0.29.1 ~amd64
+gui-wm/hyprland ~amd64
 dev-libs/libliftoff ~amd64
 media-libs/libdisplay-info ~amd64
 dev-libs/hyprland-protocols ~amd64
 dev-libs/wayland-protocols ~amd64
+x11-libs/libdrm ~amd64
+# Alacritty crash fix 
+x11-terms/alacritty ~amd64
 
 gui-apps/waybar ~amd64
 dev-libs/date ~amd64
 
-=gui-libs/xdg-desktop-portal-hyprland-0.5.0 ~amd64
+gui-libs/xdg-desktop-portal-hyprland ~amd64
+dev-cpp/sdbus-c++ ~amd64
 
 dev-qt/qtbase ~amd64
 dev-qt/qtwayland ~amd64
 dev-qt/qtdeclarative ~amd64
 dev-qt/qtshadertools ~amd64
+dev-qt/qttranslations ~amd64
+dev-qt/qttools ~amd64
