@@ -1,21 +1,22 @@
 {
+	// Basic settings
     "layer": "top", // Waybar at top layer
     "position": "bottom", // Waybar position (top|bottom|left|right)
     "height": 34, // Waybar height (to be removed for auto height)
-    // "width": 1280, // Waybar width
-    "spacing": 4, // Gaps between modules (4px)
-    // Choose the order of the modules
-    "modules-left": ["hyprland/workspaces","hyprland/window"],
+	"spacing": 4, // Gaps between modules (4px)
+	"output": "eDP-1", // Only display on the first screen
+
+    // Order of the modules
+	// hyprland/workspaces causes the warning
+    "modules-left": ["hyprland/workspaces", "hyprland/window"],
     "modules-center": [],
     "modules-right": ["tray", "pulseaudio", "backlight", "battery", "clock", "custom/powermenu"],
+
     // Modules configuration
      "hyprland/workspaces": {
          "on-scroll-up": "hyprctl dispatch workspace m-1 > /dev/null",
          "on-scroll-down": "hyprctl dispatch workspace m+1 > /dev/null",
      },
-    "hyprland/window": {
-        "separate-outputs": true
-    },
     "tray": {
         "icon-size": 21,
         "spacing": 1
@@ -23,7 +24,29 @@
     "clock": {
         "format": "{:%b %d %A %R}",
         "format-alt": "{:%Y - %b %d %A %R:%S}",
-        "on-click-right": "alacritty --hold -e cal -y"
+
+		"tooltip-format": "<tt><small>{calendar}</small></tt>",
+		"calendar": {
+		"mode"          : "year",
+		"mode-mon-col"  : 3,
+		"weeks-pos"     : "right",
+		"on-scroll"     : 1,
+		"on-click-right": "mode",
+		"format": {
+			"months":     "<span color='#E2D72C'><b>{}</b></span>",
+			"days":       "<span color='#92C73E'><b>{}</b></span>",
+			"weeks":      "<span color='#60BDB0'><b>W{}</b></span>",
+			"weekdays":   "<span color='#FFCC66'><b>{}</b></span>",
+			"today":      "<span color='#E2652F'><b><u>{}</u></b></span>"
+			}
+		},
+		"actions":  {
+		"on-click-right": "mode",
+		"on-click-forward": "tz_up",
+		"on-click-backward": "tz_down",
+		"on-scroll-up": "shift_up",
+		"on-scroll-down": "shift_down"
+		}
     },
     "backlight": {
         "format": " {icon} {percent}% ",
