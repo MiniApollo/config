@@ -25,7 +25,9 @@
   (setq evil-want-C-i-jump nil) ;; Disables C-i jump
   (setq evil-undo-system 'undo-redo) ;; C-r to redo
   (setq org-return-follows-link  t) ;; Sets RETURN key in org-mode to follow links
-  (evil-mode))
+  (evil-mode)
+  :config
+  (evil-set-initial-state 'eat-mode 'insert)) ;; Set Initial state in eat termianal to insert mode
 (use-package evil-collection
   :after evil
   :config
@@ -271,21 +273,47 @@
   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
   (corfu-auto t)                 ;; Enable auto completion
   (corfu-auto-prefix 2)          ;; Minimum length of prefix for auto completion.
+  (corfu-popupinfo-mode t)       ;; Enable popup information
+  (corfu-popupinfo-delay 0.5)    ;; Lower popupinfo delay to 0.5 seconds from 2 seconds
   :config
   (setq completion-ignore-case  t)
   ;; Enable indentation+completion using the TAB key.
   ;; `completion-at-point' is often bound to M-TAB.
   (setq tab-always-indent 'complete)
+  (setq corfu-preview-current nil) ;; Don't insert completion without conformation
 
-;; Recommended: Enable Corfu globally.  This is recommended since Dabbrev can
-;; be used globally (M-/).  See also the customization variable
-;; `global-corfu-modes' to exclude certain modes.
-:init
-(global-corfu-mode))
+  ;; Recommended: Enable Corfu globally.  This is recommended since Dabbrev can
+  ;; be used globally (M-/).  See also the customization variable
+  ;; `global-corfu-modes' to exclude certain modes.
+  :init
+  (global-corfu-mode))
 
 (use-package nerd-icons-corfu
   :after corfu
   :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+
+(use-package cape
+  :after corfu
+  :init
+  ;; Add to the global default value of `completion-at-point-functions' which is
+  ;; used by `completion-at-point'.  The order of the functions matters, the
+  ;; first function returning a result wins.  Note that the list of buffer-local
+  ;; completion functions takes precedence over the global list.
+  (add-to-list 'completion-at-point-functions #'cape-file) ;; Path completion
+  (add-to-list 'completion-at-point-functions #'cape-elisp-block) ;; Complete elisp in Org or Markdown mode
+  (add-to-list 'completion-at-point-functions #'cape-keyword) ;; Keyword/Snipet completion
+  (add-to-list 'completion-at-point-functions #'cape-dict) ;; Dictionary completion
+  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster) ;; Eglot refresh on every change
+
+  ;;(add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  ;;(add-to-list 'completion-at-point-functions #'cape-history)
+  ;;(add-to-list 'completion-at-point-functions #'cape-tex)
+  ;;(add-to-list 'completion-at-point-functions #'cape-sgml)
+  ;;(add-to-list 'completion-at-point-functions #'cape-rfc1345)
+  ;;(add-to-list 'completion-at-point-functions #'cape-abbrev)
+  ;;(add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
+  ;;(add-to-list 'completion-at-point-functions #'cape-line)
+  )
 
 (use-package counsel
   :after ivy
