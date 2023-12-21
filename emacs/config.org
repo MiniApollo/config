@@ -277,6 +277,7 @@ Replace the default modeline with a pretier more useful.
 #+end_src
 
 * DashBoard
+An extensible emacs startup screen showing you what’s most important.
 #+begin_src emacs-lisp
     (use-package dashboard
       :init
@@ -323,6 +324,7 @@ As an example to use C, C++ you need to install clangd(or ccls) and uncomment th
 
 A harder example is Lua. Download the lua-language-server from their git repository, make the lua-language-server file executable at lua-language-server/bin.
 Uncomment the following lines and change the path to the language server executable. Now the language server will work.
+Or add the lua-language-server executable to your path.
 
 If you can use a package manager just install the lsp server and add a hook.
 #+begin_src emacs-lisp
