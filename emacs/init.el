@@ -1,4 +1,4 @@
-;; The default is 800 kilobytes.  Measured in bytes.
+;; The default is 800 kilobytes. Measured in bytes.
 (setq gc-cons-threshold (* 50 1000 1000))
 
 (defun efs/org-babel-tangle-config ()
@@ -12,14 +12,14 @@
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
 
 (require 'use-package-ensure) ;; This line is currenly needed, there is a bug with always-ensure, it doesn't get loaded if we just setq t
-(setq use-package-always-ensure t) ;; always ensures that a package is installed
+(setq use-package-always-ensure t) ;; Always ensures that a package is installed
 (setq package-archives '(("melpa" . "https://melpa.org/packages/") ;; Sets default package repositories
                          ("org" . "https://orgmode.org/elpa/")
                          ("elpa" . "https://elpa.gnu.org/packages/")
                          ("nongnu" . "https://elpa.nongnu.org/nongnu/"))) ;; For Eat Terminal
 
 (use-package evil
-  :init ;; tweak evil's configuration before loading it
+  :init ;; Tweak evil's configuration before loading it
   (setq evil-want-keybinding nil) ;; Disable evil bindings in other modes (It's not consistent and not good)
   (setq evil-want-C-u-scroll t) ;; Set  C-u to scrool up
   (setq evil-want-C-i-jump nil) ;; Disables C-i jump
@@ -27,7 +27,7 @@
   (setq org-return-follows-link  t) ;; Sets RETURN key in org-mode to follow links
   (evil-mode)
   :config
-  (evil-set-initial-state 'eat-mode 'insert)) ;; Set Initial state in eat termianal to insert mode
+  (evil-set-initial-state 'eat-mode 'insert)) ;; Set initial state in eat terminal to insert mode
 (use-package evil-collection
   :after evil
   :config
@@ -47,8 +47,8 @@
   (general-create-definer mark/leader-keys
     :states '(normal insert visual emacs)
     :keymaps 'override
-    :prefix "SPC" ;; set leader
-    :global-prefix "C-SPC") ;; access leader in insert mode
+    :prefix "SPC" ;; Set leader
+    :global-prefix "C-SPC") ;; Access leader in insert mode
 
   (mark/leader-keys
     "." '(find-file :wk "Find file")
@@ -165,10 +165,10 @@
 (use-package doom-modeline
   :init (doom-modeline-mode 1)
   :config
-  (setq doom-modeline-height 25      ;; sets modeline height
-        doom-modeline-bar-width 5    ;; sets right bar width
-        doom-modeline-persp-name t   ;; adds perspective name to modeline
-        doom-modeline-persp-icon t)) ;; adds folder icon next to persp name
+  (setq doom-modeline-height 25      ;; Sets modeline height
+        doom-modeline-bar-width 5    ;; Sets right bar width
+        doom-modeline-persp-name t   ;; Adds perspective name to modeline
+        doom-modeline-persp-icon t)) ;; Adds folder icon next to persp name
 
 (use-package dashboard
   :init
@@ -198,7 +198,7 @@
 
 ;; Automatically start eglot for a given file type.
 (use-package eglot
-  :ensure nil
+  :ensure nil ;; Don't install eglot because it's now built-in
   :hook (('c-mode . 'eglot-ensure)
          ('c++-mode . 'eglot-ensure)
          ('csharp-mode . 'eglot-ensure))
@@ -217,7 +217,8 @@
 (use-package yasnippet-snippets
   :hook (prog-mode . yas-minor-mode)) ;; prog-mode means Programing mode
 
-(use-package lua-mode)
+(use-package lua-mode
+  :mode "\\.lua\\'") ;; Only start in a lua file
 
 (use-package gdscript-mode
   :mode "\\.gd\\'")
@@ -280,7 +281,7 @@
   ;; Enable indentation+completion using the TAB key.
   ;; `completion-at-point' is often bound to M-TAB.
   (setq tab-always-indent 'complete)
-  (setq corfu-preview-current nil) ;; Don't insert completion without conformation
+  (setq corfu-preview-current nil) ;; Don't insert completion without confirmation
 
   ;; Recommended: Enable Corfu globally.  This is recommended since Dabbrev can
   ;; be used globally (M-/).  See also the customization variable
@@ -339,7 +340,7 @@
 
 (use-package ivy-rich
   :after ivy
-  :init (ivy-rich-mode 1) ;; this gets us descriptions in M-x.
+  :init (ivy-rich-mode 1) ;; This gets us descriptions in M-x.
   :custom
   (ivy-virtual-abbreviate 'full
                           ivy-rich-switch-buffer-align-virtual-buffer t
