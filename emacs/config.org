@@ -638,7 +638,7 @@ Which-key is a helper utility for keychords (which key to press)
 Removes whitespace from the ends of lines.
 #+begin_src emacs-lisp
     (use-package ws-butler
-      :hook (prog-mode . ws-butler-mode))
+      :init (ws-butler-global-mode))
 #+end_src
 
 * Runtime Performance

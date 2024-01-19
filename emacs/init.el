@@ -379,7 +379,7 @@
         which-key-max-description-length 25))
 
 (use-package ws-butler
-  :hook (prog-mode . ws-butler-mode))
+  :init (ws-butler-global-mode))
 
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
