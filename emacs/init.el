@@ -200,19 +200,15 @@
 ;; Automatically start eglot for a given file type.
 (use-package eglot
   :ensure nil ;; Don't install eglot because it's now built-in
-  :hook (('c-mode . 'eglot-ensure)
+  :hook (('c-mode . 'eglot-ensure) ;; Autostart lsp servers
          ('c++-mode . 'eglot-ensure)
-         ('csharp-mode . 'eglot-ensure))
+         ('csharp-mode . 'eglot-ensure)
+         ('lua-mode . 'eglot-ensure)) ;; Lua-mode needs to be installed
   :config
-  ;; No event buffers, disable providers cause a lot of hover traffic. Shutdown unused servers.
-  (setq eglot-events-buffer-size 0
-        eglot-ignored-server-capabilities '(:hoverProvider
-                                            :documentHighlightProvider)
-        eglot-autoshutdown t)
   (add-to-list 'eglot-server-programs
-               `(csharp-mode . ("~/.config/emacs/lspServers/omnisharp-linux-x64-net6.0/OmniSharp" "-lsp")))
+               `(lua-mode . ("~/.config/emacs/lsp-servers/lua-language-server-3.7.4-linux-x64/bin/lua-language-server" "-lsp"))) ;; Adds our lua lsp server to eglot's server list
   (add-to-list 'eglot-server-programs
-               `(lua-mode . ("~/.config/emacs/lspServers/lua-language-server-3.7.3-linux-x64/bin/lua-language-server" "-lsp")))
+               `(csharp-mode . ("/usr/share/omnisharp-roslyn-1.39.11/OmniSharp" "-lsp")))
   )
 
 (use-package yasnippet-snippets
