@@ -194,7 +194,7 @@
   (projectile-mode 1)
   :init
   (setq projectile-switch-project-action #'projectile-dired)
-  (setq projectile-project-search-path '(("~/Projects/" . 1) ("/mnt/Ext4D/Manca/Projektek/" . 1) ("/mnt/Ext4D/Manca/Game_Projects/" . 1))))
+  (setq projectile-project-search-path '(("~/Projects/" . 1) ("/mnt/Ext4D/Mark/Projektek/" . 1) ("/mnt/Ext4D/Mark/Game_Projects/" . 1))))
 ;; Use Bookmarks for non git projects
 
 ;; Automatically start eglot for a given file type.
