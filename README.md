@@ -35,7 +35,7 @@ cp -r .* ~/.config
 ## :bookmark_tabs: <samp>DETAILS</samp>
 
 
-- Linux Kernel: [Linux](https://www.kernel.org)
+- Linux Kernel: [Linux LTS](https://www.kernel.org)
 - Distro: [Gentoo](https://www.gentoo.org)
 - Window Manager - Compositor: [Hyprland](https://hyprland.org/)
 - Terminal Emulator: [Alacritty](https://github.com/alacritty/alacritty)
