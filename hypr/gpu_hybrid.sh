@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # credit to NinaPirate on reddit
 # https://github.com/AbdelrhmanNile/nvidia-rofi-launcher
 
