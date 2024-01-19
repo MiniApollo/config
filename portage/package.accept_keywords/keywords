@@ -13,6 +13,8 @@ dev-dotnet/dotnet-runtime-nugets ~amd64
 ### Emacs
 app-editors/emacs ~amd64
 
+dev-dotnet/omnisharp-roslyn ~amd64
+
 ### Ios
 app-pda/gtkpod ~amd64
 dev-util/anjuta ~amd64
@@ -51,6 +53,7 @@ dev-libs/wayland-protocols ~amd64
 x11-libs/libdrm ~amd64
 # Alacritty crash fix 
 x11-terms/alacritty ~amd64
+dev-cpp/tomlplusplus ~amd64
 
 gui-apps/waybar ~amd64
 dev-libs/date ~amd64
@@ -58,9 +61,13 @@ dev-libs/date ~amd64
 gui-libs/xdg-desktop-portal-hyprland ~amd64
 dev-cpp/sdbus-c++ ~amd64
 
+dev-qt/qtcore ~amd64
 dev-qt/qtbase ~amd64
 dev-qt/qtwayland ~amd64
 dev-qt/qtdeclarative ~amd64
 dev-qt/qtshadertools ~amd64
 dev-qt/qttranslations ~amd64
 dev-qt/qttools ~amd64
+
+### Obs
+media-video/obs-studio ~amd64
