@@ -347,6 +347,17 @@ To use it write out the full keyword (or use autocompletion) and press Tab
 ** Language modes
 It's not required for every language like C,C++,C#,Java,Javascript etc. to install language mode packages, but for more specific languages it is necessary for syntax highlighting. If you want to use TreeSitter, check out this [[https://www.masteringemacs.org/article/how-to-get-started-tree-sitter][website]] or try out [[https://github.com/renzmann/treesit-auto][Treesit-auto]].
 Currently it's tedious to use Treesitter, because emacs has not yet fully migrated to it.
+*** Treesit-Auto
+Automatically install and use tree-sitter major modes in Emacs 29+.
+If the tree-sitter version can’t be used, fall back to the original major mode.
+# #+begin_src emacs-lisp
+#     (use-package treesit-auto
+#       :custom
+#       (treesit-auto-install 'prompt)
+#       :config
+#       (treesit-auto-add-to-auto-mode-alist 'all)
+#       (global-treesit-auto-mode))
+# #+end_src
 
 *** Lua mode
 Example, how to setup a language mode (if you don't want it, feel free to delete it)
