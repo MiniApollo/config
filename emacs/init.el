@@ -180,7 +180,6 @@
   (setq dashboard-banner-logo-title "Emacs Is More Than A Text Editor!")
   (setq dashboard-center-content nil) ;; set to 't' for centered content
   (setq dashboard-items '((recents . 5)
-                          (agenda . 5 )
                           (bookmarks . 3)
                           (projects . 3)
                           (registers . 3)))
@@ -243,8 +242,8 @@
   :commands toc-org-enable
   :init (add-hook 'org-mode-hook 'toc-org-enable))
 
-(use-package org-bullets
-  :hook (org-mode . org-bullets-mode)
+(use-package org-superstar
+  :hook (org-mode . org-superstar-mode)
   :after org)
 
 (with-eval-after-load 'org

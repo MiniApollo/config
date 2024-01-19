@@ -293,7 +293,6 @@ An extensible emacs startup screen showing you what’s most important.
       (setq dashboard-banner-logo-title "Emacs Is More Than A Text Editor!")
       (setq dashboard-center-content nil) ;; set to 't' for centered content
       (setq dashboard-items '((recents . 5)
-                              (agenda . 5 )
                               (bookmarks . 3)
                               (projects . 3)
                               (registers . 3)))
@@ -402,8 +401,8 @@ much like the literate programming ideas that Donald Knuth made famous.
 **** Org Superstar
 Prettify headings and plain lists in Org mode. Modern version of org-bullets.
 #+begin_src emacs-lisp
-    (use-package org-bullets
-      :hook (org-mode . org-bullets-mode)
+    (use-package org-superstar
+      :hook (org-mode . org-superstar-mode)
       :after org)
 #+end_src
 
