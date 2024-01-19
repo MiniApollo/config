@@ -233,7 +233,7 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
 #+end_src
 
 * Set Theme
-Set gruvbox theme if you want some themes to try out doom-themes
+Set gruvbox theme, if you want some themes try out doom-themes.
 #+begin_src emacs-lisp
     (use-package gruvbox-theme
       :init
@@ -243,7 +243,7 @@ Set gruvbox theme if you want some themes to try out doom-themes
 * Transparency
 With Emacs version 29, true transparency has been added.
 #+begin_src emacs-lisp
-    (add-to-list 'default-frame-alist '(alpha-background . 90)) ; For all new frames henceforth
+    (add-to-list 'default-frame-alist '(alpha-background . 90)) ;; For all new frames henceforth
 #+end_src
 
 * Fonts
@@ -256,6 +256,7 @@ With Emacs version 29, true transparency has been added.
     ;; This sets the default font on all graphical frames created after restarting Emacs.
     ;; Does the same thing as 'set-face-attribute default' above, but emacsclient fonts
     ;; are not right unless I also add this method of setting the default font.
+
     (add-to-list 'default-frame-alist '(font . "JetBrains Mono")) ;; Set your favorite font
     (setq-default line-spacing 0.12)
 #+end_src
@@ -345,13 +346,16 @@ A template system for Emacs. And yasnippet-snippets is a snippet collection pack
 To use it write out the full keyword (or use autocompletion) and press Tab
 #+begin_src emacs-lisp
     (use-package yasnippet-snippets
-      :hook (prog-mode . yas-minor-mode)) ;; prog-mode means Programing mode
+      :hook (prog-mode . yas-minor-mode))
 #+end_src
 
 ** Language modes
 It's not required for every language like C,C++,C#,Java,Javascript etc. to install language mode packages, but for more specific languages it is necessary for syntax highlighting. If you want to use TreeSitter, check out this [[https://www.masteringemacs.org/article/how-to-get-started-tree-sitter][website]] or try out [[https://github.com/renzmann/treesit-auto][Treesit-auto]].
 Currently it's tedious to use Treesitter, because emacs has not yet fully migrated to it.
-*** Lua mode 
+
+*** Lua mode
+Example, how to setup a language mode (if you don't want it, feel free to delete it)
+Use SPC-tab to uncomment the lines.
 #+begin_src emacs-lisp
     (use-package lua-mode
       :mode "\\.lua\\'") ;; Only start in a lua file
