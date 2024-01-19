@@ -10,7 +10,7 @@
   - [[#startup-performance][Startup Performance]]
   - [[#auto-tangle-configuration-file][Auto-tangle Configuration file]]
   - [[#use-package][Use Package]]
-  - [[#load-evil-mode][Load Evil Mode]]
+  - [[#evil-mode][Evil Mode]]
   - [[#general-keybindings][General Keybindings]]
 - [[#sane-defaults][SANE DEFAULTS]]
 - [[#set-theme][Set Theme]]
@@ -32,14 +32,14 @@
   - [[#git][Git]]
   - [[#corfu][Corfu]]
   - [[#cape][Cape]]
-  - [[#ivy-counsel][Ivy (counsel)]]
+  - [[#ivy-counsel][Ivy (Counsel)]]
   - [[#vundo-with-undo-fu-session][Vundo with undo-fu-session]]
   - [[#sudo-edit][Sudo edit]]
-  - [[#diminish][DIMINISH]]
   - [[#drag-stuff][Drag Stuff]]
+  - [[#diminish][Diminish]]
   - [[#rainbow-delimiters][Rainbow Delimiters]]
-  - [[#rainbow-mode][RAINBOW MODE]]
-  - [[#which-key][WHICH-KEY]]
+  - [[#rainbow-mode][Rainbow Mode]]
+  - [[#which-key][Which-key]]
   - [[#ws-butler][Ws-butler]]
 - [[#runtime-performance][Runtime Performance]]
 
@@ -78,7 +78,7 @@ I used the default package manager package.el with use-package. Alternative pack
 install packages from git repositories, if you want a specific, not very popular package that is not available on elpa or melpa,
 or you want UI (elpaca) and other things.
 
-If you are interested in these other package managers, check out their github repositories or search for more package managers.
+If you are interested in these other package managers, check out their git repositories or search for more package managers.
 In my experience Package.el is not slow and gets the job done.
 
 To update/upgrade packages, use the package-upgrade-all command.
@@ -92,11 +92,11 @@ With Emacs 29 use-package is now built-in.
                              ("nongnu" . "https://elpa.nongnu.org/nongnu/"))) ;; For Eat Terminal
 #+end_src
 
-** Load Evil Mode
-Evil is an extensible vi/vim layer for Emacs.  Because…let’s face it.  The Vim keybindings are just plain better.
-
-Note: To paste without copy (yank) selected text use P (shift P evil-paste-before), because default is evil-paste-after.
-You can toggle evil mode with C-z (emacs-mode)
+** Evil Mode
+An extensible vi/vim layer for Emacs. Because…let’s face it. The Vim keybindings are just plain better.
+Notes:
+- You can toggle evil mode with C-z.
+- To paste without copy (yank) select the text and use P (shift-p).
 #+begin_src emacs-lisp
     (use-package evil
       :init ;; Tweak evil's configuration before loading it
@@ -122,9 +122,9 @@ You can toggle evil mode with C-z (emacs-mode)
 #+end_src
 
 ** General Keybindings
-General is a keybinding framework to set keybindings easily.
-The Leader key is what you will press when you want to access your keybindings (Space + . Find file).
-To search and replace start use query-replace-regexp one by one C-M-% (SPACE to replace n to skip) [[https://stackoverflow.com/questions/270930/using-emacs-to-recursively-find-and-replace-in-text-files-not-already-open][Source]]
+A keybinding framework to set keybindings easily.
+The Leader key is what you will press when you want to access your keybindings (SPC + . Find file).
+To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC to replace n to skip).
 #+begin_src emacs-lisp
     (use-package general
       :config
@@ -303,7 +303,7 @@ An extensible emacs startup screen showing you what’s most important.
 #+end_src
 
 * Projectile
-Projectile is a project interaction library for Emacs.
+Project interaction library for Emacs.
 #+begin_src emacs-lisp
     (use-package projectile
       :config
@@ -318,19 +318,7 @@ Projectile is a project interaction library for Emacs.
 ** Eglot
 Language Server Protocol Support for Emacs. The built-in is now Eglot (with emacs 29).
 
-Eglot is fast and minimal, but requires manual setup for LSP servers (downloading).
-For more [[https://www.gnu.org/software/emacs/manual/html_mono/eglot.html][information how to use.]] One alternative to Eglot is Lsp-mode, check out [[https://github.com/MiniApollo/kickstart.emacs/wiki][kickstart.emacs wiki]] page for more information.
-
-Eglot is easy to set up, but the only difficult part is downloading and setting up the lsp servers.
-After that just add a hook with eglot-ensure to automatically start eglot for a given file type. And you are done.
-
-As an example to use C, C++ you need to install clangd(or ccls) and uncomment the following lines. Now the language server will start automatically when opening any c,c++ file.
-
-A harder example is Lua. Download the lua-language-server from their git repository, make the lua-language-server file executable at lua-language-server/bin.
-Uncomment the following lines and change the path to the language server executable. Now the language server will work.
-Or add the lua-language-server executable to your path.
-
-If you can use a package manager just install the lsp server and add a hook.
+If a project is in an another project add the project with this command: projectile-add-known-project
 #+begin_src emacs-lisp
     ;; Automatically start eglot for a given file type.
     (use-package eglot
@@ -360,8 +348,7 @@ To use it write out the full keyword (or use autocompletion) and press Tab
 #+end_src
 
 ** Language modes
-It's not required for every language like C,C++,C#,Java,Javascript etc. to download language mode packages, but for more specific languages it is necessary for syntax highlighting.
-If you want to use TreeSitter, check out this [[https://www.masteringemacs.org/article/how-to-get-started-tree-sitter][website]].
+It's not required for every language like C,C++,C#,Java,Javascript etc. to install language mode packages, but for more specific languages it is necessary for syntax highlighting. If you want to use TreeSitter, check out this [[https://www.masteringemacs.org/article/how-to-get-started-tree-sitter][website]] or try out [[https://github.com/renzmann/treesit-auto][Treesit-auto]].
 Currently it's tedious to use Treesitter, because emacs has not yet fully migrated to it.
 *** Lua mode 
 #+begin_src emacs-lisp
@@ -391,7 +378,8 @@ For Godot C# don't forget to open up the Project.sln file to add it to the proje
 
 *** ORG MODE
 Org mode is one of the things that emacs is loved for.
-Once you've used it for a bit, you'll understand why people love it. Even reading about it can be inspiring!
+Once you've used it for a bit, you'll understand why people love
+it. Even reading about it can be inspiring!
 For example, this document is effectively the source code and descriptions bound into the one document,
 much like the literate programming ideas that Donald Knuth made famous.
 **** Useful tweaks
@@ -399,15 +387,15 @@ much like the literate programming ideas that Donald Knuth made famous.
     (add-hook 'org-mode-hook 'org-indent-mode) ;; Indent text
 #+end_src
 
-**** Enabling Table of Contents
+**** Table of Contents
 #+begin_src emacs-lisp
     (use-package toc-org
       :commands toc-org-enable
       :init (add-hook 'org-mode-hook 'toc-org-enable))
 #+end_src
 
-**** Enabling Org Bullets
-Org-bullets gives us attractive bullets rather than asterisks.
+**** Org Superstar
+Prettify headings and plain lists in Org mode. Modern version of org-bullets.
 #+begin_src emacs-lisp
     (use-package org-bullets
       :hook (org-mode . org-bullets-mode)
@@ -503,6 +491,11 @@ For more configuration options check out their [[https://github.com/minad/corfu]
 
 ** Cape
 Provides Completion At Point Extensions which can be used in combination with Corfu, Company or the default completion UI.
+Notes:
+- The functions that are added later will be the first in the completion list.
+- Take care when adding Capfs (Completion-at-point-functions) to the list since each of the Capfs adds a small runtime cost.
+Read the [[https://github.com/minad/cape#configuration][configuration section]] in Cape's readme for more information.
+
 #+begin_src emacs-lisp
     (use-package cape
       :after corfu
@@ -527,9 +520,8 @@ Provides Completion At Point Extensions which can be used in combination with Co
       )
 #+end_src
 
-** Ivy (counsel)
+** Ivy (Counsel)
 Ivy, a generic completion mechanism for Emacs.
-Counsel, a collection of Ivy-enhanced versions of common Emacs commands.
 Ivy-rich allows us to add descriptions alongside the commands in M-x.
 #+begin_src emacs-lisp
     (use-package counsel
@@ -537,6 +529,8 @@ Ivy-rich allows us to add descriptions alongside the commands in M-x.
       :diminish
       :config (counsel-mode))
 
+Counsel, a collection of Ivy-enhanced versions of common Emacs commands.
+Counsel-projectile provides further ivy integration into projectile.
     (use-package ivy
       :bind
       ;; ivy-resume resumes the last Ivy-based completion.
@@ -588,13 +582,6 @@ Utilities for opening files with root privileges (also works with doas).
       :config (setq sudo-edit-local-method "doas")) ;; To use doas
 #+end_src
 
-** DIMINISH
-This package implements hiding or abbreviation of the modeline displays (lighters) of minor-modes.
-With this package installed, you can add ‘:diminish’ to any use-package block to hide that particular mode in the modeline.
-#+begin_src emacs-lisp
-    (use-package diminish)
-#+end_src
-
 ** Drag Stuff
 Makes it possible to move selected text, regions, lines.
 #+begin_src emacs-lisp
@@ -604,14 +591,21 @@ Makes it possible to move selected text, regions, lines.
       (drag-stuff-define-keys))
 #+end_src
 
+** Diminish
+This package implements hiding or abbreviation of the modeline displays (lighters) of minor-modes.
+With this package installed, you can add ‘:diminish’ to any use-package block to hide that particular mode in the modeline.
+#+begin_src emacs-lisp
+    (use-package diminish)
+#+end_src
+
 ** Rainbow Delimiters
-Add colors to brackets.
+Adds colors to brackets.
 #+begin_src emacs-lisp
     (use-package rainbow-delimiters
       :hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
 
-** RAINBOW MODE
+** Rainbow Mode
 Display the actual color as a background for any hex color value (ex. #ffffff).  The code block below enables rainbow-mode in all programming modes (prog-mode) as well as org-mode, which is why rainbow works in this document.
 #+begin_src emacs-lisp
     (use-package rainbow-mode
@@ -620,7 +614,7 @@ Display the actual color as a background for any hex color value (ex. #ffffff). 
       ((org-mode prog-mode) . rainbow-mode))
 #+end_src
 
-** WHICH-KEY
+** Which-key
 Which-key is a helper utility for keychords (which key to press)
 #+begin_src emacs-lisp
     (use-package which-key

@@ -362,12 +362,12 @@
 (use-package sudo-edit
   :config (setq sudo-edit-local-method "doas")) ;; To use doas
 
-(use-package diminish)
-
 (use-package drag-stuff
   :init
   (drag-stuff-global-mode 1)
   (drag-stuff-define-keys))
+
+(use-package diminish)
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
