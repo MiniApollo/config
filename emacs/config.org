@@ -85,8 +85,7 @@ With Emacs 29 use-package is now built-in.
     (setq use-package-always-ensure t) ;; Always ensures that a package is installed
     (setq package-archives '(("melpa" . "https://melpa.org/packages/") ;; Sets default package repositories
                              ("org" . "https://orgmode.org/elpa/")
-                             ("elpa" . "https://elpa.gnu.org/packages/")
-                             ("nongnu" . "https://elpa.nongnu.org/nongnu/"))) ;; For Eat Terminal
+                             ("elpa" . "https://elpa.gnu.org/packages/")))
 #+end_src
 
 ** Evil Mode
@@ -102,9 +101,7 @@ Notes:
       (setq evil-want-C-i-jump nil) ;; Disables C-i jump
       (setq evil-undo-system 'undo-redo) ;; C-r to redo
       (setq org-return-follows-link  t) ;; Sets RETURN key in org-mode to follow links
-      (evil-mode)
-      :config
-      (evil-set-initial-state 'eat-mode 'insert)) ;; Set initial state in eat terminal to insert mode
+      (evil-mode))
     (use-package evil-collection
       :after evil
       :config
@@ -179,8 +176,8 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
 
       (mark/leader-keys
         "s" '(:ignore t :wk "Show")
-        "s e" '(eat :wk "Show Eat terminal")
         "s v" '(vundo :wk "Show Vundo"))
+        "s v" '(vterm :wk "Show vterm")
 
       (mark/leader-keys
         "t" '(:ignore t :wk "Toggle")
@@ -418,14 +415,15 @@ Org-tempo allows for '<s' followed by TAB to expand to a begin_src tag.
       (require 'org-tempo))
 #+end_src
 
-* Terminal
-** Eat
-Eat(Emulate A Terminal) is a terminal emulator within Emacs.
-It's more portable and less overhead for users over like vterm or eshell.
-We setup eat with eshell, if you want to use bash, zsh etc., check out their git [[https://codeberg.org/akib/emacs-eat][repository]] how to do it.
+** Terminal
+*** VTerm
+Fully-fledged terminal emulator inside GNU Emacs.
+Fast, POSIX compliant shell, handles UIs well.
+Eat don't support C-arrow key movement and don't work well with evil mode.
 #+begin_src emacs-lisp
-    (use-package eat
-      :hook ('eshell-load-hook #'eat-eshell-mode))
+    (use-package vterm
+      :config
+      (setq vterm-max-scrollback 5000))
 #+end_src
 
 * Other Packages

@@ -15,8 +15,7 @@
 (setq use-package-always-ensure t) ;; Always ensures that a package is installed
 (setq package-archives '(("melpa" . "https://melpa.org/packages/") ;; Sets default package repositories
                          ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")
-                         ("nongnu" . "https://elpa.nongnu.org/nongnu/"))) ;; For Eat Terminal
+                         ("elpa" . "https://elpa.gnu.org/packages/")))
 
 (use-package evil
   :init ;; Tweak evil's configuration before loading it
@@ -25,9 +24,7 @@
   (setq evil-want-C-i-jump nil) ;; Disables C-i jump
   (setq evil-undo-system 'undo-redo) ;; C-r to redo
   (setq org-return-follows-link  t) ;; Sets RETURN key in org-mode to follow links
-  (evil-mode)
-  :config
-  (evil-set-initial-state 'eat-mode 'insert)) ;; Set initial state in eat terminal to insert mode
+  (evil-mode))
 (use-package evil-collection
   :after evil
   :config
@@ -96,8 +93,8 @@
 
   (mark/leader-keys
     "s" '(:ignore t :wk "Show")
-    "s e" '(eat :wk "Show Eat terminal")
     "s v" '(vundo :wk "Show Vundo"))
+    "s v" '(vterm :wk "Show vterm")
 
   (mark/leader-keys
     "t" '(:ignore t :wk "Toggle")
@@ -245,8 +242,9 @@
 (with-eval-after-load 'org
   (require 'org-tempo))
 
-(use-package eat
-  :hook ('eshell-load-hook #'eat-eshell-mode))
+(use-package vterm
+  :config
+  (setq vterm-max-scrollback 5000))
 
 (use-package nerd-icons
   :if (display-graphic-p))
