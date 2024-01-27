@@ -29,7 +29,7 @@
   :after evil
   :config
   ;; Setting where to use evil-collection
-  (setq evil-collection-mode-list '(dashboard dired ibuffer magit corfu vundo))
+  (setq evil-collection-mode-list '(dired ibuffer flymake eglot magit diff-hl corfu ivy vterm))
   (evil-collection-init))
 ;; Unmap keys in 'evil-maps. If not done, (setq org-return-follows-link t) will not work
 (with-eval-after-load 'evil-maps
@@ -104,6 +104,7 @@
 (menu-bar-mode -1)           ;; Disable the menu bar
 (scroll-bar-mode -1)         ;; Disable the scroll bar
 (tool-bar-mode -1)           ;; Disable the tool bar
+(setq inhibit-startup-screen t) ;; Disable welcome screen
 
 (delete-selection-mode 1)    ;; You can select text and delete it by typing.
 (electric-indent-mode -1)    ;; Turn off the weird indenting that Emacs does by default.
@@ -200,12 +201,24 @@
   :hook (('c-mode . 'eglot-ensure) ;; Autostart lsp servers
          ('c++-mode . 'eglot-ensure)
          ('csharp-mode . 'eglot-ensure)
+         ('java-mode . 'eglot-ensure)
+         ('html-mode . 'eglot-ensure)
+         ('css-mode . 'eglot-ensure)
+         ('javascript-mode . 'eglot-ensure)
+         ('rust-mode . 'eglot-ensure)
          ('lua-mode . 'eglot-ensure)) ;; Lua-mode needs to be installed
   :config
+  ;; No event buffers, disable providers cause a lot of hover traffic. Shutdown unused servers.
+  (setq eglot-events-buffer-size 0
+        eglot-ignored-server-capabilities '(:hoverProvider
+                                            :documentHighlightProvider)
+        eglot-autoshutdown t)
   (add-to-list 'eglot-server-programs
                `(lua-mode . ("~/.config/emacs/lsp-servers/lua-language-server-3.7.4-linux-x64/bin/lua-language-server" "-lsp"))) ;; Adds our lua lsp server to eglot's server list
   (add-to-list 'eglot-server-programs
                `(csharp-mode . ("/usr/share/omnisharp-roslyn-1.39.11/OmniSharp" "-lsp")))
+  (add-to-list 'eglot-server-programs
+               `(java-mode . ("~/.config/emacs/lsp-servers/jdt-language-server-1.31.0/bin/jdtls" "-lsp")))
   )
 
 (use-package yasnippet-snippets
@@ -213,6 +226,9 @@
 
 (use-package lua-mode
   :mode "\\.lua\\'") ;; Only start in a lua file
+
+(use-package rust-mode
+  :mode "\\.rs\\'")
 
 (use-package gdscript-mode
   :mode "\\.gd\\'")
