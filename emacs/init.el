@@ -334,9 +334,6 @@
   :diminish
   :config (counsel-mode))
 
-(use-package counsel-projectile
-  :config (counsel-projectile-mode))
-
 (use-package undo-tree
   :init
   (global-undo-tree-mode)
