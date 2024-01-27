@@ -6,27 +6,24 @@
 #+Options: toc:2
 
 * Table Of Contents :toc:
-- [[#important-programs-to-load-first][IMPORTANT PROGRAMS TO LOAD FIRST]]
+- [[#important-to-load-first][Important to load first]]
   - [[#startup-performance][Startup Performance]]
   - [[#auto-tangle-configuration-file][Auto-tangle Configuration file]]
   - [[#use-package][Use Package]]
   - [[#evil-mode][Evil Mode]]
   - [[#general-keybindings][General Keybindings]]
-- [[#sane-defaults][SANE DEFAULTS]]
-- [[#set-theme][Set Theme]]
-- [[#transparency][Transparency]]
-- [[#fonts][Fonts]]
-  - [[#setting-fonts][Setting fonts]]
-  - [[#zooming-inout][Zooming In/Out]]
-- [[#modeline][Modeline]]
-- [[#dashboard][DashBoard]]
-- [[#projectile][Projectile]]
-- [[#language-support--lsp][Language support + Lsp]]
+  - [[#good-defaults][Good Defaults]]
+- [[#appearance][Appearance]]
+  - [[#set-theme][Set Theme]]
+  - [[#transparency][Transparency]]
+  - [[#fonts][Fonts]]
+  - [[#modeline][Modeline]]
+- [[#development][Development]]
+  - [[#projectile][Projectile]]
   - [[#eglot][Eglot]]
   - [[#yasnippet][Yasnippet]]
   - [[#language-modes][Language modes]]
-- [[#terminal][Terminal]]
-  - [[#eat][Eat]]
+  - [[#terminal][Terminal]]
 - [[#other-packages][Other Packages]]
   - [[#nerd-icons][Nerd Icons]]
   - [[#git][Git]]
@@ -43,7 +40,7 @@
   - [[#ws-butler][Ws-butler]]
 - [[#runtime-performance][Runtime Performance]]
 
-* IMPORTANT PROGRAMS TO LOAD FIRST
+* Important to load first
 ** Startup Performance
 Make startup faster by reducing the frequency of garbage collection. This will be set back when startup finishes.
 #+begin_src emacs-lisp
@@ -232,7 +229,8 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
     (add-hook 'prog-mode-hook (lambda () (hs-minor-mode t))) ;; Enable folding hide/show globally
 #+end_src
 
-* Set Theme
+* Appearance
+** Set Theme
 Set gruvbox theme, if you want some themes try out doom-themes.
 #+begin_src emacs-lisp
     (use-package gruvbox-theme
@@ -240,14 +238,14 @@ Set gruvbox theme, if you want some themes try out doom-themes.
       (load-theme 'gruvbox-dark-medium t)) ;; We need to add t to trust this package
 #+end_src
 
-* Transparency
+** Transparency
 With Emacs version 29, true transparency has been added.
 #+begin_src emacs-lisp
     (add-to-list 'default-frame-alist '(alpha-background . 90)) ;; For all new frames henceforth
 #+end_src
 
-* Fonts
-** Setting fonts
+** Fonts
+*** Setting fonts
 #+begin_src emacs-lisp
     (set-face-attribute 'default nil
                         :font "JetBrains Mono" ;; Set your favorite type of font or download JetBrains Mono
@@ -261,7 +259,7 @@ With Emacs version 29, true transparency has been added.
     (setq-default line-spacing 0.12)
 #+end_src
 
-** Zooming In/Out
+*** Zooming In/Out
 You can use the bindings C-+ C-- for zooming in/out. You can also use CTRL plus the mouse wheel for zooming in/out.
 #+begin_src emacs-lisp
     (global-set-key (kbd "C-+") 'text-scale-increase)
@@ -270,7 +268,7 @@ You can use the bindings C-+ C-- for zooming in/out. You can also use CTRL plus 
     (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
 #+end_src
 
-* Modeline
+** Modeline
 Replace the default modeline with a prettier more useful.
 #+begin_src emacs-lisp
     (use-package doom-modeline
@@ -303,7 +301,8 @@ An extensible emacs startup screen showing you what’s most important.
       (dashboard-setup-startup-hook))
 #+end_src
 
-* Projectile
+* Development
+** Projectile
 Project interaction library for Emacs.
 #+begin_src emacs-lisp
     (use-package projectile
@@ -315,10 +314,8 @@ Project interaction library for Emacs.
     ;; Use Bookmarks for non git projects
 #+end_src
 
-* Language support + Lsp
 ** Eglot
 Language Server Protocol Support for Emacs. The built-in is now Eglot (with emacs 29).
-
 If a project is in an another project add the project with this command: projectile-add-known-project
 #+begin_src emacs-lisp
     ;; Automatically start eglot for a given file type.
@@ -387,7 +384,7 @@ For Godot C# don't forget to open up the Project.sln file to add it to the proje
     (advice-add #'lsp--get-message-type :around #'lsp--gdscript-ignore-errors)
 #+end_src
 
-*** ORG MODE
+*** Org Mode
 Org mode is one of the things that emacs is loved for.
 Once you've used it for a bit, you'll understand why people love
 it. Even reading about it can be inspiring!
