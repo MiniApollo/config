@@ -158,7 +158,7 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
         "d j" '(dired-jump :wk "Dired jump to current"))
 
       (mark/leader-keys
-        "e" '(:ignore t :wk "Eglot Evaluate ")
+        "e" '(:ignore t :wk "Eglot Evaluate")
         "e e" '(eglot-reconnect :wk "Eglot Reconnect")
         "e f" '(eglot-format :wk "Eglot Format")
         "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
@@ -185,7 +185,7 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
         "t l" '(display-line-numbers-mode :wk "Toggle line numbers")))
 #+end_src
 
-* SANE DEFAULTS
+** Good Defaults
 #+begin_src emacs-lisp
     (menu-bar-mode -1)           ;; Disable the menu bar
     (scroll-bar-mode -1)         ;; Disable the scroll bar
@@ -304,10 +304,11 @@ Project interaction library for Emacs.
 #+begin_src emacs-lisp
     (use-package projectile
       :config
-      (projectile-mode 1)
+      (projectile-mode)
       :init
       (setq projectile-switch-project-action #'projectile-dired)
-      (setq projectile-project-search-path '(("~/Projects/" . 1) ("/mnt/Ext4D/Mark/Projektek/" . 1) ("/mnt/Ext4D/Mark/Game_Projects/" . 1))))
+      (setq projectile-run-use-comint-mode t) ;; Interactive run dialog
+      (setq projectile-project-search-path '(("~/Projects/" . 3) ("/mnt/Ext4D/Mark/Projektek/". 4))))
     ;; Use Bookmarks for non git projects
 #+end_src
 
@@ -339,7 +340,9 @@ To use it write out the full keyword (or use autocompletion) and press Tab
 #+end_src
 
 ** Language modes
-It's not required for every language like C,C++,C#,Java,Javascript etc. to install language mode packages, but for more specific languages it is necessary for syntax highlighting. If you want to use TreeSitter, check out this [[https://www.masteringemacs.org/article/how-to-get-started-tree-sitter][website]] or try out [[https://github.com/renzmann/treesit-auto][Treesit-auto]].
+It's not required for every language like C,C++,C#,Java,Javascript etc. to install language mode packages,
+but for more specific languages it is necessary for syntax highlighting.
+If you want to use TreeSitter,check out this [[https://www.masteringemacs.org/article/how-to-get-started-tree-sitter][website]] or try out [[https://github.com/renzmann/treesit-auto][Treesit-auto]].
 Currently it's tedious to use Treesitter, because emacs has not yet fully migrated to it.
 *** Treesit-Auto
 Automatically install and use tree-sitter major modes in Emacs 29+.
@@ -361,9 +364,10 @@ Use SPC-tab to uncomment the lines.
       :mode "\\.lua\\'") ;; Only start in a lua file
 #+end_src
 
+
 *** GDScript mode
-For Godot C# don't forget to open up the Project.sln file to add it to the projects list for eglot to work properly
-(if there is no Project.sln you need to create a C# file and build the project)
+For Godot C# don't forget to add the project to the projects list for eglot to work properly.
+(if there is no Project.sln file you need to create a C# file and build the project)
 #+begin_src emacs-lisp
     (use-package gdscript-mode
       :mode "\\.gd\\'")
@@ -602,7 +606,8 @@ Adds colors to brackets.
 #+end_src
 
 ** Rainbow Mode
-Display the actual color as a background for any hex color value (ex. #ffffff).  The code block below enables rainbow-mode in all programming modes (prog-mode) as well as org-mode, which is why rainbow works in this document.
+Display the actual color as a background for any hex color value (ex. #ffffff).
+The code block below enables rainbow-mode in all programming modes (prog-mode) as well as org-mode, which is why rainbow works in this document.
 #+begin_src emacs-lisp
     (use-package rainbow-mode
       :diminish
@@ -611,7 +616,7 @@ Display the actual color as a background for any hex color value (ex. #ffffff). 
 #+end_src
 
 ** Which-key
-Which-key is a helper utility for keychords (which key to press)
+Which-key is a helper utility for keychords (which key to press).
 #+begin_src emacs-lisp
     (use-package which-key
       :init

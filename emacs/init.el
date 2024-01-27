@@ -75,7 +75,7 @@
     "d j" '(dired-jump :wk "Dired jump to current"))
 
   (mark/leader-keys
-    "e" '(:ignore t :wk "Eglot Evaluate ")
+    "e" '(:ignore t :wk "Eglot Evaluate")
     "e e" '(eglot-reconnect :wk "Eglot Reconnect")
     "e f" '(eglot-format :wk "Eglot Format")
     "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
@@ -185,13 +185,13 @@
                                     (bookmarks . "book")))
   :config
   (dashboard-setup-startup-hook))
-
 (use-package projectile
   :config
-  (projectile-mode 1)
+  (projectile-mode)
   :init
   (setq projectile-switch-project-action #'projectile-dired)
-  (setq projectile-project-search-path '(("~/Projects/" . 1) ("/mnt/Ext4D/Mark/Projektek/" . 1) ("/mnt/Ext4D/Mark/Game_Projects/" . 1))))
+  (setq projectile-run-use-comint-mode t) ;; Interactive run dialog
+  (setq projectile-project-search-path '(("~/Projects/" . 3) ("/mnt/Ext4D/Mark/Projektek/". 4))))
 ;; Use Bookmarks for non git projects
 
 ;; Automatically start eglot for a given file type.
