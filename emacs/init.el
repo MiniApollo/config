@@ -22,7 +22,7 @@
   (setq evil-want-keybinding nil) ;; Disable evil bindings in other modes (It's not consistent and not good)
   (setq evil-want-C-u-scroll t) ;; Set  C-u to scroll up
   (setq evil-want-C-i-jump nil) ;; Disables C-i jump
-  (setq evil-undo-system 'undo-redo) ;; C-r to redo
+  (setq evil-undo-system 'undo-tree) ;; C-r to redo
   (setq org-return-follows-link  t) ;; Sets RETURN key in org-mode to follow links
   (evil-mode))
 (use-package evil-collection
@@ -93,8 +93,8 @@
 
   (mark/leader-keys
     "s" '(:ignore t :wk "Show")
-    "s v" '(vundo :wk "Show Vundo"))
     "s v" '(vterm :wk "Show vterm")
+    "s u" '(undo-tree-visualize :wk "Show Undotree"))
 
   (mark/leader-keys
     "t" '(:ignore t :wk "Toggle")
@@ -337,13 +337,11 @@
 (use-package counsel-projectile
   :config (counsel-projectile-mode))
 
-(use-package vundo)
-(use-package undo-fu-session
+(use-package undo-tree
   :init
-  (undo-fu-session-global-mode)
-
-  :custom
-  (undo-fu-session-file-limit 100000))
+  (global-undo-tree-mode)
+  ;; Use separate directory for undo history
+  (setq undo-tree-history-directory-alist '(("." . "~/.config/emacs/undoTree"))))
 
 (use-package sudo-edit
   :config (setq sudo-edit-local-method "doas")) ;; To use doas
