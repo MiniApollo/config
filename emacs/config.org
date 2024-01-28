@@ -82,7 +82,7 @@ In my experience Package.el is not slow and gets the job done.
 To update/upgrade packages, use the package-upgrade-all command.
 With Emacs 29 use-package is now built-in.
 #+begin_src emacs-lisp
-    (require 'use-package-ensure) ;; This line is currenly needed, there is a bug with always-ensure, it doesn't get loaded if we just setq t
+    (require 'use-package-ensure) ;; Load use-package-always-ensure
     (setq use-package-always-ensure t) ;; Always ensures that a package is installed
     (setq package-archives '(("melpa" . "https://melpa.org/packages/") ;; Sets default package repositories
                              ("org" . "https://orgmode.org/elpa/")
