@@ -115,9 +115,9 @@ efibootmgr grub sys-boot/os-prober app-shells/bash-completion
 Window manager
 ```bash
 doas emerge -qav vim hyprland waybar alacritty htop gammastep
-nm-applet rofi gui-apps/swaylock-effects swayidle swaybg gui-apps/wl-clipboard
+nm-applet gui-apps/rofi-wayland gui-apps/swaylock-effects swayidle swaybg gui-apps/wl-clipboard
 gui-apps/foot gui-apps/slurp gui-apps/grim media-sound/playerctl app-misc/brightnessctl gui-libs/xdg-desktop-portal-hyprland
-media-sound/alsa-utils gnome-extra/polkit-gnome x11-misc/dunst
+media-sound/alsa-utils gnome-extra/polkit-gnome x11-misc/dunst sys-apps/xdg-desktop-portal-gtk
 ```
 
 Lighter Programs
@@ -126,16 +126,16 @@ doas emerge -qav gparted thunar xfce-base/tumbler xfce-base/thunar-volman media-
 app-admin/keepassxc ristretto galgulator celluloid app-arch/file-roller net-misc/yt-dlp cmus
 ```
 
-Editor Emacs
+Development
 ```bash
-doas emerge -qav sys-apps/ripgrep sys-apps/fd app-emacs/ebuild-mode
+doas emerge -qav sys-apps/ripgrep sys-apps/fd dev-vcs/git dev-dotnet/dotnet-sdk-bin
 ```
 
 Heavy Programs
 
 ```bash
 doas emerge -qav librewolf-bin www-client/firefox-bin app-office/libreoffice-bin mail-client/thunderbird-bin
-gimp
+media-gfx/gimp
 ```
 Themes
 ```bash
@@ -159,9 +159,9 @@ doas emerge -qav tlp powertop
 > **Note**
 > To poweroff the computer use loginctl poweroff/reboot in order when closing of the leds the command finish
 
-Nvidia
+Drivers
 ```bash
-doas emerge -qav x11-drivers/nvidia-drivers dev-util/nvidia-cuda-toolkit
+doas emerge -qav x11-drivers/nvidia-drivers dev-util/nvidia-cuda-toolkit media-libs/libva-intel-media-driver
 ```
 Nvidia Optimus 
 ```bash
@@ -186,7 +186,7 @@ Install all three in the [gentoo wiki](https://wiki.gentoo.org/wiki/Fonts#Additi
  
 To update the system 
 ```bash
-doas emaint -a sync && doas emerge -qavuDN @world && doas emerge --ask --depclean && doas eclean-dist -d && doas eclean-pkg -d && doas eclean-kernel -n 2
+doas emaint -a sync && doas emerge -qavuDNg @world && doas emerge --ask --depclean && doas eclean-dist -d && doas eclean-pkg -d && doas eclean-kernel -n 2
 ```
 
 <h2>ntfs partition fstab</h2>
