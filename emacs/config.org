@@ -22,6 +22,7 @@
   - [[#projectile][Projectile]]
   - [[#eglot][Eglot]]
   - [[#yasnippet][Yasnippet]]
+  - [[#emmet-mode][Emmet-mode]]
   - [[#language-modes][Language modes]]
   - [[#terminal][Terminal]]
 - [[#other-packages][Other Packages]]
@@ -329,6 +330,14 @@ To use it write out the full keyword (or use autocompletion) and press Tab
 #+begin_src emacs-lisp
     (use-package yasnippet-snippets
       :hook (prog-mode . yas-minor-mode))
+#+end_src
+
+** Emmet-mode
+For HTML, CSS snippets.
+Use C-j to complete.
+#+begin_src emacs-lisp
+    (use-package emmet-mode
+      :hook ('html-mode . emmet-mode))
 #+end_src
 
 ** Language modes

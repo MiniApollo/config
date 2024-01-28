@@ -208,6 +208,9 @@
 (use-package yasnippet-snippets
   :hook (prog-mode . yas-minor-mode))
 
+(use-package emmet-mode
+  :hook ('html-mode . emmet-mode))
+
 (use-package lua-mode
   :mode "\\.lua\\'") ;; Only start in a lua file
 
