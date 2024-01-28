@@ -2,13 +2,13 @@
 
 # ❖ My Dotfiles ❖
 
-![GitHub Repo stars](https://img.shields.io/github/stars/SMark5/config?style=for-the-badge&labelColor=1B2330&color=807EDD) ![GitHub last commit](https://img.shields.io/github/last-commit/SMark5/config?style=for-the-badge&labelColor=1B2330&color=807EDD) ![GitHub repo size](https://img.shields.io/github/repo-size/SMark5/config?style=for-the-badge&labelColor=1B2330&color=807EDD)
+![GitHub Repo stars](https://img.shields.io/github/stars/MiniApollo/config?style=for-the-badge&labelColor=1B2330&color=807EDD) ![GitHub last commit](https://img.shields.io/github/last-commit/MiniApollo/config?style=for-the-badge&labelColor=1B2330&color=807EDD) ![GitHub repo size](https://img.shields.io/github/repo-size/MiniApollo/config?style=for-the-badge&labelColor=1B2330&color=807EDD)
 
 *Configuration files for my GNU+Linux system.*
 
 </div>
 
-![alt Hyprland](https://github.com/SMark5/config/blob/main/images/hyprland.png)
+![alt Hyprland](https://github.com/MiniApollo/config/blob/main/images/hyprland.png)
 
 ## :wrench: <samp>Config INSTALLATION</samp>
 
@@ -22,7 +22,7 @@
 > **Note**
 > I personally clone the repository to my home directory.
 ```bash
-git clone https://github.com/SMark5/config.git --recurse-submodules
+git clone https://github.com/MiniApollo/config.git
 cd config
 ```
 <kbd>2.</kbd> Copy the configuration.
@@ -54,7 +54,7 @@ cp -r .* ~/.config
 - Brightness: [brightnessctl](https://wiki.archlinux.org/title/backlight#Backlight_utilities)
 - Network-manager-applet: [nm-applet](https://wiki.archlinux.org/title/NetworkManager)
 - Notifier: [dunst](https://dunst-project.org)
-- Wallpaper: [dynamic-wallpaper-wayland](https://github.com/SMark5/dynamic-wallpaper-wayland)
+- Wallpaper: [dynamic-wallpaper-wayland](https://github.com/MiniApollo/dynamic-wallpaper-wayland)
 
 > Font: [noto fonts](https://wiki.gentoo.org/wiki/Fonts)
 ### <samp>Notes</samp>
