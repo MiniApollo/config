@@ -206,9 +206,6 @@
 (use-package emmet-mode
   :hook ('html-mode . emmet-mode))
 
-(use-package lua-mode
-  :mode "\\.lua\\'") ;; Only start in a lua file
-
 (use-package rust-mode
   :mode "\\.rs\\'")
 
