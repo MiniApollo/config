@@ -68,6 +68,7 @@ dev-qt/qtdeclarative ~amd64
 dev-qt/qtshadertools ~amd64
 dev-qt/qttranslations ~amd64
 dev-qt/qttools ~amd64
+dev-qt/linguist-tools ~amd64
 
 ### Obs
 media-video/obs-studio ~amd64
