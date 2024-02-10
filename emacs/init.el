@@ -179,10 +179,9 @@
   (setq projectile-project-search-path '(("~/Projects/" . 3) ("/mnt/Ext4D/Mark/Projektek/". 4))))
 ;; Use Bookmarks for smaller, not standard projects
 
-;; Automatically start eglot for a given file type.
 (use-package eglot
   :ensure nil ;; Don't install eglot because it's now built-in
-  :hook (('c-mode . 'eglot-ensure) ;; Autostart lsp servers
+  :hook (('c-mode . 'eglot-ensure) ;; Autostart lsp servers for a given mode
          ('c++-mode . 'eglot-ensure)
          ('csharp-mode . 'eglot-ensure)
          ('java-mode . 'eglot-ensure)

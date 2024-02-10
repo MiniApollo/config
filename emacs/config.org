@@ -297,10 +297,9 @@ Project interaction library for Emacs.
 Language Server Protocol Support for Emacs. The built-in is now Eglot (with emacs 29).
 If a project is in an another project add the project with this command: projectile-add-known-project
 #+begin_src emacs-lisp
-    ;; Automatically start eglot for a given file type.
     (use-package eglot
       :ensure nil ;; Don't install eglot because it's now built-in
-      :hook (('c-mode . 'eglot-ensure) ;; Autostart lsp servers
+      :hook (('c-mode . 'eglot-ensure) ;; Autostart lsp servers for a given mode
              ('c++-mode . 'eglot-ensure)
              ('csharp-mode . 'eglot-ensure)
              ('java-mode . 'eglot-ensure)
