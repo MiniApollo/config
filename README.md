@@ -8,7 +8,7 @@
 
 </div>
 
-![alt Hyprland](https://github.com/MiniApollo/config/blob/main/images/hyprland.png)
+![alt Hyprland](https://github.com/MiniApollo/config/blob/main/images/windowManager/4_hyprland.png)
 
 ## :wrench: <samp>Config INSTALLATION</samp>
 
@@ -71,7 +71,7 @@ cp -r .* ~/.config
 > The default port in nvim-lspconfig for Godot is 6008, but if you're running Godot 4.0 then that's configured to use 6005 (you can change this in the  settings).<br>
 > #### [Thanks to Greyly on reddit](https://www.reddit.com/r/godot/comments/sexkij/state_of_neovim_support_in_2022)
 
-![alt neovim](https://github.com/SMark5/config/blob/main/images/Neovim.png)
+![alt neovim](https://github.com/MiniApollo/config/blob/main/images/editor/3_Emacs.png)
 
 ## <samp>How to replicate</samp>
 
@@ -195,7 +195,6 @@ if you want to mount ntfs partion in fstab you need to use ntfs3 type
 ## <samp>Sources</samp>
 
 - Qtile config and EverForest theme(waybar): [luxirio/linux](https://github.com/luxirio/linux/tree/master/arco_dotfiles)
-- Neovim config: [ThePrimeagen](https://www.youtube.com/@ThePrimeagen)
 - Amazing Readme: [Sigmanificient/dotfiles](https://github.com/Sigmanificient/dotfiles)
 
 # <samp>Thanks for reading!</samp>
