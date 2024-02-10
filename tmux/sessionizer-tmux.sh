@@ -10,7 +10,7 @@ if [[ $# -eq 1 ]]; then
     # Adding support for simply pass the current working directory or a specified path
     selected="$1" && [[ "$selected" == '.' ]] && selected="$PWD"
 else
-    selected=$(find ~/Projects ~/.config /mnt/Ext4D/Manca/Game_Projects -mindepth 1 -maxdepth 1 -type d | fzf)
+    selected=$(find ~/Projects ~/.config -mindepth 1 -maxdepth 1 -type d | fzf)
 fi
 
 [[ -z $selected ]] && exit 0
