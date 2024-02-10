@@ -307,16 +307,11 @@ If a project is in an another project add the project with this command: project
              ('html-mode . 'eglot-ensure)
              ('css-mode . 'eglot-ensure)
              ('javascript-mode . 'eglot-ensure)
-             ('rust-mode . 'eglot-ensure)
-             ('lua-mode . 'eglot-ensure)) ;; Lua-mode needs to be installed
+             ('rust-mode . 'eglot-ensure))
       :config
-      ;; No event buffers, disable providers cause a lot of hover traffic. Shutdown unused servers.
-      (setq eglot-events-buffer-size 0
-            eglot-ignored-server-capabilities '(:hoverProvider
-                                                :documentHighlightProvider)
-            eglot-autoshutdown t)
-      (add-to-list 'eglot-server-programs
-                   `(lua-mode . ("~/.config/emacs/lsp-servers/lua-language-server-3.7.4-linux-x64/bin/lua-language-server" "-lsp"))) ;; Adds our lua lsp server to eglot's server list
+      ;; Good default
+      (setq eglot-events-buffer-size 0 ;; No event buffers (Lsp server logs)
+            eglot-autoshutdown t) ;; Shutdown unused servers.
       (add-to-list 'eglot-server-programs
                    `(csharp-mode . ("/usr/share/omnisharp-roslyn-1.39.11/OmniSharp" "-lsp")))
       (add-to-list 'eglot-server-programs
