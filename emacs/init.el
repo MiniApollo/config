@@ -177,7 +177,7 @@
   (setq projectile-switch-project-action #'projectile-dired)
   (setq projectile-run-use-comint-mode t) ;; Interactive run dialog
   (setq projectile-project-search-path '(("~/Projects/" . 3) ("/mnt/Ext4D/Mark/Projektek/". 4))))
-;; Use Bookmarks for non git projects
+;; Use Bookmarks for smaller, not standard projects
 
 ;; Automatically start eglot for a given file type.
 (use-package eglot
