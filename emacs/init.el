@@ -18,20 +18,21 @@
                          ("elpa" . "https://elpa.gnu.org/packages/")))
 
 (use-package evil
-  :init ;; Tweak evil's configuration before loading it
-  (setq evil-want-keybinding nil) ;; Disable evil bindings in other modes (It's not consistent and not good)
-  (setq evil-want-C-u-scroll t) ;; Set  C-u to scroll up
-  (setq evil-want-C-i-jump nil) ;; Disables C-i jump
-  (setq evil-undo-system 'undo-tree) ;; C-r to redo
-  (setq org-return-follows-link  t) ;; Sets RETURN key in org-mode to follow links
-  (evil-mode))
+  :init ;; Execute code Before a package is loaded
+  (evil-mode)
+  :custom ;; Customization of package custom variables
+  (evil-want-keybinding nil)    ;; Disable evil bindings in other modes (It's not consistent and not good)
+  (evil-want-C-u-scroll t)      ;; Set C-u to scroll up
+  (evil-want-C-i-jump nil)      ;; Disables C-i jump
+  (evil-undo-system 'undo-tree) ;; C-r to redo
+  (org-return-follows-link  t)) ;; Sets RETURN key in org-mode to follow links
 (use-package evil-collection
   :after evil
   :config
   ;; Setting where to use evil-collection
-  (setq evil-collection-mode-list '(dired ibuffer flymake eglot magit diff-hl corfu ivy vterm))
+  (setq evil-collection-mode-list '(dired ibuffer magit corfu vertico consult vterm))
   (evil-collection-init))
-;; Unmap keys in 'evil-maps. If not done, (setq org-return-follows-link t) will not work
+;; Unmap keys in 'evil-maps. If not done, org-return-follows-link will not work
 (with-eval-after-load 'evil-maps
   (define-key evil-motion-state-map (kbd "SPC") nil)
   (define-key evil-motion-state-map (kbd "RET") nil)
@@ -40,12 +41,12 @@
 (use-package general
   :config
   (general-evil-setup)
-  ;; set up 'SPC' as the global leader key
+  ;; Set up 'SPC' as the leader key
   (general-create-definer mark/leader-keys
     :states '(normal insert visual emacs)
     :keymaps 'override
-    :prefix "SPC" ;; Set leader
-    :global-prefix "C-SPC") ;; Access leader in insert mode
+    :prefix "SPC"           ;; Set leader key
+    :global-prefix "C-SPC") ;; Set global leader key
 
   (mark/leader-keys
     "." '(find-file :wk "Find file")
@@ -57,11 +58,16 @@
     "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
     "f e"' (sudo-edit :wk "Root edit current file")
     "f u"' (sudo-edit-find-file :wk "Root find file")
-    "f r" '(counsel-recentf :wk "Recent files"))
+    "f r" '(recentf :wk "Recent files")
+    "f f" '(consult-fd :wk "Fd search for files")
+    "f g" '(consult-ripgrep :wk "Ripgrep search in files")
+    "f l" '(consult-line :wk "Find line")
+    "f i" '(consult-imenu :wk "Imenu buffer locations"))
 
   (mark/leader-keys
     "b" '(:ignore t :wk "Buffer Bookmarks")
     "b b" '(switch-to-buffer :wk "Switch buffer")
+    "b b" '(consult-buffer :wk "Switch buffer")
     "b k" '(kill-this-buffer :wk "Kill this buffer")
     "b i" '(ibuffer :wk "Ibuffer")
     "b n" '(next-buffer :wk "Next buffer")
@@ -110,9 +116,9 @@
 (electric-indent-mode -1)    ;; Turn off the weird indenting that Emacs does by default.
 (electric-pair-mode 1)       ;; Turns on automatic parens pairing
 
-(global-auto-revert-mode t)  ;; Automatically reload file and show changes if the file has changed
+(global-auto-revert-mode t)          ;; Automatically reload file and show changes if the file has changed
 (global-display-line-numbers-mode 1) ;; Display line numbers
-(global-visual-line-mode t)  ;; Enable truncated lines
+(global-visual-line-mode t)          ;; Enable truncated lines
 
 ;; The following prevents <> from auto-pairing when electric-pair-mode is on.
 ;; Otherwise, org-tempo is broken when you try to <s TAB...
@@ -143,7 +149,7 @@
 (add-hook 'prog-mode-hook (lambda () (hs-minor-mode t))) ;; Enable folding hide/show globally
 
 (use-package gruvbox-theme
-  :init
+  :config
   (load-theme 'gruvbox-dark-medium t)) ;; We need to add t to trust this package
 
 (add-to-list 'default-frame-alist '(alpha-background . 90)) ;; For all new frames henceforth
@@ -166,19 +172,19 @@
 
 (use-package doom-modeline
   :init (doom-modeline-mode 1)
-  :config
-  (setq doom-modeline-height 25      ;; Sets modeline height
-        doom-modeline-bar-width 5    ;; Sets right bar width
-        doom-modeline-persp-name t   ;; Adds perspective name to modeline
-        doom-modeline-persp-icon t)) ;; Adds folder icon next to persp name
+  :custom
+  (doom-modeline-height 25)     ;; Sets modeline height
+  (doom-modeline-bar-width 5)   ;; Sets right bar width
+  (doom-modeline-persp-name t)  ;; Adds perspective name to modeline
+  (doom-modeline-persp-icon t)) ;; Adds folder icon next to persp name
 
 (use-package projectile
-  :config
-  (projectile-mode)
   :init
-  (setq projectile-switch-project-action #'projectile-dired)
-  (setq projectile-run-use-comint-mode t) ;; Interactive run dialog
-  (setq projectile-project-search-path '(("~/Projects/" . 3) ("/mnt/Ext4D/Mark/Projektek/". 4))))
+  (projectile-mode)
+  :custom
+  (projectile-run-use-comint-mode t) ;; Interactive run dialog when running projects inside emacs (like giving input)
+  (projectile-switch-project-action #'projectile-dired)
+  (projectile-project-search-path '(("~/Projects/" . 3) ("/mnt/Ext4D/Mark/Projektek/". 4))))
 ;; Use Bookmarks for smaller, not standard projects
 
 (use-package eglot
@@ -229,11 +235,11 @@
 
 (use-package toc-org
   :commands toc-org-enable
-  :init (add-hook 'org-mode-hook 'toc-org-enable))
+  :hook ('org-mode-hook . 'toc-org-enable))
 
 (use-package org-superstar
-  :hook (org-mode . org-superstar-mode)
-  :after org)
+  :after org
+  :hook (org-mode . org-superstar-mode))
 
 (with-eval-after-load 'org
   (require 'org-tempo))
@@ -267,13 +273,12 @@
   (corfu-auto-prefix 2)          ;; Minimum length of prefix for auto completion.
   (corfu-popupinfo-mode t)       ;; Enable popup information
   (corfu-popupinfo-delay 0.5)    ;; Lower popupinfo delay to 0.5 seconds from 2 seconds
-  :config
-  (setq completion-ignore-case  t)
+
+  (completion-ignore-case  t)
   ;; Enable indentation+completion using the TAB key.
   ;; `completion-at-point' is often bound to M-TAB.
-  (setq tab-always-indent 'complete)
-  (setq corfu-preview-current nil) ;; Don't insert completion without confirmation
-
+  (tab-always-indent 'complete)
+  (corfu-preview-current nil) ;; Don't insert completion without confirmation
   ;; Recommended: Enable Corfu globally.  This is recommended since Dabbrev can
   ;; be used globally (M-/).  See also the customization variable
   ;; `global-corfu-modes' to exclude certain modes.
@@ -308,36 +313,62 @@
   ;;(add-to-list 'completion-at-point-functions #'cape-rfc1345) ;; Complete Unicode char using RFC 1345 mnemonics
   )
 
-(use-package ivy
-  :bind
-  (("C-c C-r" . ivy-resume) ;; Resumes the last Ivy-based completion.
-   ("C-x B" . ivy-switch-buffer-other-window))
-  :diminish
+(use-package orderless
   :custom
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-count-format "(%d/%d) ")
-  (setq enable-recursive-minibuffers t)
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+
+(use-package vertico
+  :init
+  (vertico-mode))
+
+(savehist-mode) ;; Enables save history mode
+
+(use-package marginalia
+  :after vertico
+  :init
+  (marginalia-mode))
+
+(use-package nerd-icons-completion
+  :after marginalia
   :config
-  (ivy-mode))
+  (nerd-icons-completion-mode)
+  :hook
+  ('marginalia-mode-hook . 'nerd-icons-completion-marginalia-setup))
 
-(use-package ivy-rich ;; This gets us descriptions in M-x.
-  :init (ivy-rich-mode 1))
+(use-package consult
+  ;; Enable automatic preview at point in the *Completions* buffer. This is
+  ;; relevant when you use the default completion UI.
+  :hook (completion-list-mode . consult-preview-at-point-mode)
+  :init
+  ;; Optionally configure the register formatting. This improves the register
+  ;; preview for `consult-register', `consult-register-load',
+  ;; `consult-register-store' and the Emacs built-ins.
+  (setq register-preview-delay 0.5
+        register-preview-function #'consult-register-format)
 
-(use-package nerd-icons-ivy-rich ;; Adds icons to M-x.
-  :init (nerd-icons-ivy-rich-mode 1))
+  ;; Optionally tweak the register preview window.
+  ;; This adds thin lines, sorting and hides the mode line of the window.
+  (advice-add #'register-preview :override #'consult-register-window)
 
-(use-package counsel
-  :diminish
-  :config (counsel-mode))
+  ;; Use Consult to select xref locations with preview
+  (setq xref-show-xrefs-function #'consult-xref
+        xref-show-definitions-function #'consult-xref)
+  :config
+   ;;;; 4. projectile.el (projectile-project-root)
+  (autoload 'projectile-project-root "projectile")
+  (setq consult-project-function (lambda (_) (projectile-project-root)))
+  )
 
 (use-package undo-tree
   :init
   (global-undo-tree-mode)
+  :custom
   ;; Use separate directory for undo history
-  (setq undo-tree-history-directory-alist '(("." . "~/.config/emacs/undoTree"))))
+  (undo-tree-history-directory-alist '(("." . "~/.config/emacs/undoTree"))))
 
 (use-package sudo-edit
-  :config (setq sudo-edit-local-method "doas")) ;; To use doas
+  :custom (sudo-edit-local-method "doas")) ;; To use doas
 
 (use-package drag-stuff
   :init
@@ -358,14 +389,14 @@
   :init
   (which-key-mode 1)
   :diminish
-  :config
-  (setq which-key-side-window-location 'bottom
-        which-key-sort-order #'which-key-key-order-alpha ;; Same as default, except single characters are sorted alphabetically
-        which-key-sort-uppercase-first nil
-        which-key-add-column-padding 1 ;; Number of spaces to add to the left of each column
-        which-key-min-display-lines 6  ;; Increase the minimum lines to display, because the default is only 1
-        which-key-idle-delay 0.8 ;; Set the time delay (in seconds) for the which-key popup to appear
-        which-key-max-description-length 25))
+  :custom
+  (which-key-side-window-location 'bottom)
+  (which-key-sort-order #'which-key-key-order-alpha) ;; Same as default, except single characters are sorted alphabetically
+  (which-key-sort-uppercase-first nil)
+  (which-key-add-column-padding 1) ;; Number of spaces to add to the left of each column
+  (which-key-min-display-lines 6)  ;; Increase the minimum lines to display, because the default is only 1
+  (which-key-idle-delay 0.8)       ;; Set the time delay (in seconds) for the which-key popup to appear
+  (which-key-max-description-length 25))
 
 (use-package ws-butler
   :init (ws-butler-global-mode))

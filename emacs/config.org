@@ -30,7 +30,9 @@
   - [[#git][Git]]
   - [[#corfu][Corfu]]
   - [[#cape][Cape]]
-  - [[#ivy-and-counsel][Ivy and Counsel]]
+  - [[#orderless][Orderless]]
+  - [[#vertico-and-marginalia][Vertico and Marginalia]]
+  - [[#consult][Consult]]
   - [[#undotree][UndoTree]]
   - [[#sudo-edit][Sudo edit]]
   - [[#drag-stuff][Drag Stuff]]
@@ -72,7 +74,7 @@ automatically exports the configuration here to the associated output files.
 #+end_src
 
 ** Use Package
-I used the default package manager package.el with use-package. Alternative package managers (straight.el, elpaca, etc.) are useful if you want to
+We use the default package manager package.el with use-package. Alternative package managers (straight.el, elpaca, etc.) are useful if you want to
 install packages from git repositories, if you want a specific, not very popular package that is not available on elpa or melpa,
 or you want UI (elpaca) and other things.
 
@@ -80,6 +82,7 @@ If you are interested in these other package managers, check out their git repos
 In my experience Package.el is not slow and gets the job done.
 
 To update/upgrade packages, use the package-upgrade-all command.
+Check out the use-package [[https://www.gnu.org/software/emacs/manual/use-package.html][documentation]] to see how to use it.
 With Emacs 29 use-package is now built-in.
 #+begin_src emacs-lisp
     (require 'use-package-ensure) ;; Load use-package-always-ensure
@@ -96,20 +99,21 @@ Notes:
 - To paste without copy (yank) select the text and use P (shift-p).
 #+begin_src emacs-lisp
     (use-package evil
-      :init ;; Tweak evil's configuration before loading it
-      (setq evil-want-keybinding nil) ;; Disable evil bindings in other modes (It's not consistent and not good)
-      (setq evil-want-C-u-scroll t) ;; Set  C-u to scroll up
-      (setq evil-want-C-i-jump nil) ;; Disables C-i jump
-      (setq evil-undo-system 'undo-tree) ;; C-r to redo
-      (setq org-return-follows-link  t) ;; Sets RETURN key in org-mode to follow links
-      (evil-mode))
+      :init ;; Execute code Before a package is loaded
+      (evil-mode)
+      :custom ;; Customization of package custom variables
+      (evil-want-keybinding nil)    ;; Disable evil bindings in other modes (It's not consistent and not good)
+      (evil-want-C-u-scroll t)      ;; Set C-u to scroll up
+      (evil-want-C-i-jump nil)      ;; Disables C-i jump
+      (evil-undo-system 'undo-tree) ;; C-r to redo
+      (org-return-follows-link  t)) ;; Sets RETURN key in org-mode to follow links
     (use-package evil-collection
       :after evil
       :config
       ;; Setting where to use evil-collection
-      (setq evil-collection-mode-list '(dired ibuffer flymake eglot magit diff-hl corfu ivy vterm))
+      (setq evil-collection-mode-list '(dired ibuffer magit corfu vertico consult vterm))
       (evil-collection-init))
-    ;; Unmap keys in 'evil-maps. If not done, (setq org-return-follows-link t) will not work
+    ;; Unmap keys in 'evil-maps. If not done, org-return-follows-link will not work
     (with-eval-after-load 'evil-maps
       (define-key evil-motion-state-map (kbd "SPC") nil)
       (define-key evil-motion-state-map (kbd "RET") nil)
@@ -124,12 +128,12 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
     (use-package general
       :config
       (general-evil-setup)
-      ;; set up 'SPC' as the global leader key
+      ;; Set up 'SPC' as the leader key
       (general-create-definer mark/leader-keys
         :states '(normal insert visual emacs)
         :keymaps 'override
-        :prefix "SPC" ;; Set leader
-        :global-prefix "C-SPC") ;; Access leader in insert mode
+        :prefix "SPC"           ;; Set leader key
+        :global-prefix "C-SPC") ;; Set global leader key
 
       (mark/leader-keys
         "." '(find-file :wk "Find file")
@@ -141,11 +145,16 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
         "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
         "f e"' (sudo-edit :wk "Root edit current file")
         "f u"' (sudo-edit-find-file :wk "Root find file")
-        "f r" '(counsel-recentf :wk "Recent files"))
+        "f r" '(recentf :wk "Recent files")
+        "f f" '(consult-fd :wk "Fd search for files")
+        "f g" '(consult-ripgrep :wk "Ripgrep search in files")
+        "f l" '(consult-line :wk "Find line")
+        "f i" '(consult-imenu :wk "Imenu buffer locations"))
 
       (mark/leader-keys
         "b" '(:ignore t :wk "Buffer Bookmarks")
         "b b" '(switch-to-buffer :wk "Switch buffer")
+        "b b" '(consult-buffer :wk "Switch buffer")
         "b k" '(kill-this-buffer :wk "Kill this buffer")
         "b i" '(ibuffer :wk "Ibuffer")
         "b n" '(next-buffer :wk "Next buffer")
@@ -197,9 +206,9 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
     (electric-indent-mode -1)    ;; Turn off the weird indenting that Emacs does by default.
     (electric-pair-mode 1)       ;; Turns on automatic parens pairing
 
-    (global-auto-revert-mode t)  ;; Automatically reload file and show changes if the file has changed
+    (global-auto-revert-mode t)          ;; Automatically reload file and show changes if the file has changed
     (global-display-line-numbers-mode 1) ;; Display line numbers
-    (global-visual-line-mode t)  ;; Enable truncated lines
+    (global-visual-line-mode t)          ;; Enable truncated lines
 
     ;; The following prevents <> from auto-pairing when electric-pair-mode is on.
     ;; Otherwise, org-tempo is broken when you try to <s TAB...
@@ -235,7 +244,7 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
 Set gruvbox theme, if you want some themes try out doom-themes.
 #+begin_src emacs-lisp
     (use-package gruvbox-theme
-      :init
+      :config
       (load-theme 'gruvbox-dark-medium t)) ;; We need to add t to trust this package
 #+end_src
 
@@ -274,11 +283,11 @@ Replace the default modeline with a prettier more useful.
 #+begin_src emacs-lisp
     (use-package doom-modeline
       :init (doom-modeline-mode 1)
-      :config
-      (setq doom-modeline-height 25      ;; Sets modeline height
-            doom-modeline-bar-width 5    ;; Sets right bar width
-            doom-modeline-persp-name t   ;; Adds perspective name to modeline
-            doom-modeline-persp-icon t)) ;; Adds folder icon next to persp name
+      :custom
+      (doom-modeline-height 25)     ;; Sets modeline height
+      (doom-modeline-bar-width 5)   ;; Sets right bar width
+      (doom-modeline-persp-name t)  ;; Adds perspective name to modeline
+      (doom-modeline-persp-icon t)) ;; Adds folder icon next to persp name
 #+end_src
 
 * Development
@@ -286,12 +295,12 @@ Replace the default modeline with a prettier more useful.
 Project interaction library for Emacs.
 #+begin_src emacs-lisp
     (use-package projectile
-      :config
-      (projectile-mode)
       :init
-      (setq projectile-switch-project-action #'projectile-dired)
-      (setq projectile-run-use-comint-mode t) ;; Interactive run dialog
-      (setq projectile-project-search-path '(("~/Projects/" . 3) ("/mnt/Ext4D/Mark/Projektek/". 4))))
+      (projectile-mode)
+      :custom
+      (projectile-run-use-comint-mode t) ;; Interactive run dialog when running projects inside emacs (like giving input)
+      (projectile-switch-project-action #'projectile-dired)
+      (projectile-project-search-path '(("~/Projects/" . 3) ("/mnt/Ext4D/Mark/Projektek/". 4))))
     ;; Use Bookmarks for smaller, not standard projects
 #+end_src
 
@@ -322,7 +331,7 @@ If a project is in an another project add the project with this command: project
 
 ** Yasnippet
 A template system for Emacs. And yasnippet-snippets is a snippet collection package.
-To use it write out the full keyword (or use autocompletion) and press Tab
+To use it write out the full keyword (or use autocompletion) and press Tab.
 #+begin_src emacs-lisp
     (use-package yasnippet-snippets
       :hook (prog-mode . yas-minor-mode))
@@ -394,15 +403,15 @@ much like the literate programming ideas that Donald Knuth made famous.
 #+begin_src emacs-lisp
     (use-package toc-org
       :commands toc-org-enable
-      :init (add-hook 'org-mode-hook 'toc-org-enable))
+      :hook ('org-mode-hook . 'toc-org-enable))
 #+end_src
 
 **** Org Superstar
 Prettify headings and plain lists in Org mode. Modern version of org-bullets.
 #+begin_src emacs-lisp
     (use-package org-superstar
-      :hook (org-mode . org-superstar-mode)
-      :after org)
+      :after org
+      :hook (org-mode . org-superstar-mode))
 #+end_src
 
 **** Source Code Block Tag Expansion
@@ -425,9 +434,9 @@ Eat don't support C-arrow key movement and don't work well with evil mode.
 #+end_src
 
 * Other Packages
-All the package setups that don't need much tweaking
+All the package setups that don't need much tweaking.
 ** Nerd Icons
-For icons and more helpful ui.
+For icons and more helpful UI.
 This is an icon set that can be used with dired, ibuffer and other Emacs programs.
 
 Don't forget to use nerd-icons-install-fonts.
@@ -466,6 +475,8 @@ Highlights uncommitted changes on the left side of the window (area also known a
 Enhances in-buffer completion with a small completion popup.
 Corfu is a small package, which relies on the Emacs completion facilities and concentrates on providing a polished completion.
 For more configuration options check out their [[https://github.com/minad/corfu][git repository]].
+Notes:
+- To enter Orderless field separator, use M-SPC.
 #+begin_src emacs-lisp
     (use-package corfu
       ;; Optional customizations
@@ -475,13 +486,12 @@ For more configuration options check out their [[https://github.com/minad/corfu]
       (corfu-auto-prefix 2)          ;; Minimum length of prefix for auto completion.
       (corfu-popupinfo-mode t)       ;; Enable popup information
       (corfu-popupinfo-delay 0.5)    ;; Lower popupinfo delay to 0.5 seconds from 2 seconds
-      :config
-      (setq completion-ignore-case  t)
+
+      (completion-ignore-case  t)
       ;; Enable indentation+completion using the TAB key.
       ;; `completion-at-point' is often bound to M-TAB.
-      (setq tab-always-indent 'complete)
-      (setq corfu-preview-current nil) ;; Don't insert completion without confirmation
-
+      (tab-always-indent 'complete)
+      (corfu-preview-current nil) ;; Don't insert completion without confirmation
       ;; Recommended: Enable Corfu globally.  This is recommended since Dabbrev can
       ;; be used globally (M-/).  See also the customization variable
       ;; `global-corfu-modes' to exclude certain modes.
@@ -499,7 +509,6 @@ Notes:
 - The functions that are added later will be the first in the completion list.
 - Take care when adding Capfs (Completion-at-point-functions) to the list since each of the Capfs adds a small runtime cost.
 Read the [[https://github.com/minad/cape#configuration][configuration section]] in Cape's readme for more information.
-
 #+begin_src emacs-lisp
     (use-package cape
       :after corfu
@@ -526,33 +535,71 @@ Read the [[https://github.com/minad/cape#configuration][configuration section]] 
       )
 #+end_src
 
-** Ivy and Counsel
-Ivy, a generic completion mechanism for Emacs.
-Ivy-rich allows us to add descriptions alongside the commands in M-x.
-
-Counsel, a collection of Ivy-enhanced versions of common Emacs commands.
+** Orderless
+Completion style that divides the pattern into space-separated components, and matches candidates that match all of the components in any order.
+Recomended for packages like vertico, corfu.
 #+begin_src emacs-lisp
-    (use-package ivy
-      :bind
-      (("C-c C-r" . ivy-resume) ;; Resumes the last Ivy-based completion.
-       ("C-x B" . ivy-switch-buffer-other-window))
-      :diminish
+    (use-package orderless
       :custom
-      (setq ivy-use-virtual-buffers t)
-      (setq ivy-count-format "(%d/%d) ")
-      (setq enable-recursive-minibuffers t)
+      (completion-styles '(orderless basic))
+      (completion-category-overrides '((file (styles basic partial-completion)))))
+#+end_src
+
+** Vertico and Marginalia
+- Vertico: Provides a performant and minimalistic vertical completion UI based on the default completion system.
+- Savehist: Saves completion history.
+- Marginalia: Adds extra metadata for completions in the margins (like descriptions).
+- Nerd-icons-completion: Adds icons to completion candidates using the built in completion metadata functions.
+
+We use this packages, because they use emacs native functions. Unlike Ivy or Helm.
+One alternative is ivy and counsel, check out the [[https://github.com/MiniApollo/kickstart.emacs/wiki][project wiki]] for more inforomation.
+#+begin_src emacs-lisp
+    (use-package vertico
+      :init
+      (vertico-mode))
+
+    (savehist-mode) ;; Enables save history mode
+
+    (use-package marginalia
+      :after vertico
+      :init
+      (marginalia-mode))
+
+    (use-package nerd-icons-completion
+      :after marginalia
       :config
-      (ivy-mode))
+      (nerd-icons-completion-mode)
+      :hook
+      ('marginalia-mode-hook . 'nerd-icons-completion-marginalia-setup))
+#+end_src
 
-    (use-package ivy-rich ;; This gets us descriptions in M-x.
-      :init (ivy-rich-mode 1))
+** Consult
+Provides search and navigation commands based on the Emacs completion function.
+Check out their [[https://github.com/minad/consult][git repository]] for more awesome functions.
+#+begin_src emacs-lisp
+    (use-package consult
+      ;; Enable automatic preview at point in the *Completions* buffer. This is
+      ;; relevant when you use the default completion UI.
+      :hook (completion-list-mode . consult-preview-at-point-mode)
+      :init
+      ;; Optionally configure the register formatting. This improves the register
+      ;; preview for `consult-register', `consult-register-load',
+      ;; `consult-register-store' and the Emacs built-ins.
+      (setq register-preview-delay 0.5
+            register-preview-function #'consult-register-format)
 
-    (use-package nerd-icons-ivy-rich ;; Adds icons to M-x.
-      :init (nerd-icons-ivy-rich-mode 1))
+      ;; Optionally tweak the register preview window.
+      ;; This adds thin lines, sorting and hides the mode line of the window.
+      (advice-add #'register-preview :override #'consult-register-window)
 
-    (use-package counsel
-      :diminish
-      :config (counsel-mode))
+      ;; Use Consult to select xref locations with preview
+      (setq xref-show-xrefs-function #'consult-xref
+            xref-show-definitions-function #'consult-xref)
+      :config
+       ;;;; 4. projectile.el (projectile-project-root)
+      (autoload 'projectile-project-root "projectile")
+      (setq consult-project-function (lambda (_) (projectile-project-root)))
+      )
 #+end_src
 
 ** UndoTree
@@ -561,15 +608,16 @@ Visualizes undo history.
     (use-package undo-tree
       :init
       (global-undo-tree-mode)
+      :custom
       ;; Use separate directory for undo history
-      (setq undo-tree-history-directory-alist '(("." . "~/.config/emacs/undoTree"))))
+      (undo-tree-history-directory-alist '(("." . "~/.config/emacs/undoTree"))))
 #+end_src
 
 ** Sudo edit
 Utilities for opening files with root privileges (also works with doas).
 #+begin_src emacs-lisp
     (use-package sudo-edit
-      :config (setq sudo-edit-local-method "doas")) ;; To use doas
+      :custom (sudo-edit-local-method "doas")) ;; To use doas
 #+end_src
 
 ** Drag Stuff
@@ -612,14 +660,14 @@ Which-key is a helper utility for keychords (which key to press).
       :init
       (which-key-mode 1)
       :diminish
-      :config
-      (setq which-key-side-window-location 'bottom
-            which-key-sort-order #'which-key-key-order-alpha ;; Same as default, except single characters are sorted alphabetically
-            which-key-sort-uppercase-first nil
-            which-key-add-column-padding 1 ;; Number of spaces to add to the left of each column
-            which-key-min-display-lines 6  ;; Increase the minimum lines to display, because the default is only 1
-            which-key-idle-delay 0.8 ;; Set the time delay (in seconds) for the which-key popup to appear
-            which-key-max-description-length 25))
+      :custom
+      (which-key-side-window-location 'bottom)
+      (which-key-sort-order #'which-key-key-order-alpha) ;; Same as default, except single characters are sorted alphabetically
+      (which-key-sort-uppercase-first nil)
+      (which-key-add-column-padding 1) ;; Number of spaces to add to the left of each column
+      (which-key-min-display-lines 6)  ;; Increase the minimum lines to display, because the default is only 1
+      (which-key-idle-delay 0.8)       ;; Set the time delay (in seconds) for the which-key popup to appear
+      (which-key-max-description-length 25))
 #+end_src
 
 ** Ws-butler
