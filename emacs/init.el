@@ -58,7 +58,7 @@
     "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
     "f e"' (sudo-edit :wk "Root edit current file")
     "f u"' (sudo-edit-find-file :wk "Root find file")
-    "f r" '(recentf :wk "Recent files")
+    "f r" '(consult-recent-file :wk "Recent files")
     "f f" '(consult-fd :wk "Fd search for files")
     "f g" '(consult-ripgrep :wk "Ripgrep search in files")
     "f l" '(consult-line :wk "Find line")
@@ -84,6 +84,7 @@
     "e" '(:ignore t :wk "Eglot Evaluate")
     "e e" '(eglot-reconnect :wk "Eglot Reconnect")
     "e f" '(eglot-format :wk "Eglot Format")
+    "e l" '(consult-flymake :wk "Consult Flymake")
     "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
     "e r" '(eval-region :wk "Evaluate elisp in region"))
 
@@ -99,8 +100,8 @@
 
   (mark/leader-keys
     "s" '(:ignore t :wk "Show")
-    "s v" '(vterm :wk "Show vterm")
-    "s u" '(undo-tree-visualize :wk "Show Undotree"))
+    "s v" '(vterm :wk "Vterm")
+    "s u" '(undo-tree-visualize :wk "Undotree"))
 
   (mark/leader-keys
     "t" '(:ignore t :wk "Toggle")
