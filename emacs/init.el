@@ -185,7 +185,7 @@
   (projectile-mode)
   :custom
   (projectile-run-use-comint-mode t) ;; Interactive run dialog when running projects inside emacs (like giving input)
-  (projectile-switch-project-action #'projectile-dired)
+  (projectile-switch-project-action #'projectile-dired) ;; Open dired when switching to a project
   (projectile-project-search-path '(("~/Projects/" . 3) ("/mnt/Ext4D/Mark/Projektek/". 4))))
 ;; Use Bookmarks for smaller, not standard projects
 
