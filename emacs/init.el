@@ -191,14 +191,15 @@
 
 (use-package eglot
   :ensure nil ;; Don't install eglot because it's now built-in
-  :hook ((c-mode . eglot-ensure) ;; Autostart lsp servers for a given mode
-         (c++-mode . eglot-ensure)
+  :hook ((c-ts-mode . eglot-ensure) ;; Autostart lsp servers for a given mode
+         (c++-ts-mode . eglot-ensure)
          (csharp-mode . eglot-ensure)
-         (java-mode . eglot-ensure)
-         (html-mode . eglot-ensure)
-         (css-mode . eglot-ensure)
-         (javascript-mode . eglot-ensure)
-         (rust-mode . eglot-ensure))
+         (java-ts-mode . eglot-ensure)
+         (html-ts-mode . eglot-ensure)
+         (css-ts-mode . eglot-ensure)
+         (js-ts-mode . eglot-ensure)
+         (cmake-ts-mode . eglot-ensure)
+         (rust-ts-mode . eglot-ensure))
   :custom
   ;; Good default
   (eglot-events-buffer-size 0) ;; No event buffers (Lsp server logs)
@@ -207,17 +208,30 @@
   (add-to-list 'eglot-server-programs
                `(csharp-mode . ("/usr/share/omnisharp-roslyn-1.39.11/OmniSharp" "-lsp")))
   (add-to-list 'eglot-server-programs
-               `(java-mode . ("~/.config/emacs/lsp-servers/jdt-language-server-1.31.0/bin/jdtls" "-lsp")))
+               `(java-ts-mode . ("~/.config/emacs/lsp-servers/jdt-language-server-1.31.0/bin/jdtls" "-lsp")))
+  (add-to-list 'eglot-server-programs
+               `(cmake-ts-mode . ("~/.local/bin/cmake-language-server"))) ;; Installed with pipx
   )
 
 (use-package yasnippet-snippets
   :hook (prog-mode . yas-minor-mode))
 
 (use-package emmet-mode
-  :hook ('html-mode . emmet-mode))
+  :hook (html-mode . emmet-mode))
+
+(use-package treesit-auto
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
 
 (use-package rust-mode
   :mode "\\.rs\\'")
+
+(use-package ebuild-mode
+  :ensure nil
+  :mode "\\.ebuild\\'")
 
 (use-package gdscript-mode
   :mode "\\.gd\\'")
@@ -238,7 +252,6 @@
   :ensure nil
   :custom
   (org-edit-src-content-indentation 4) ;; Set src block automatic indent to 4 instead of 2.
-
   :hook
   (org-mode . org-indent-mode) ;; Indent text
   ;; The following prevents <> from auto-pairing when electric-pair-mode is on.

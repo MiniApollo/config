@@ -313,14 +313,15 @@ If a project is in an another project add the project with this command: project
 #+begin_src emacs-lisp
     (use-package eglot
       :ensure nil ;; Don't install eglot because it's now built-in
-      :hook ((c-mode . eglot-ensure) ;; Autostart lsp servers for a given mode
-             (c++-mode . eglot-ensure)
+      :hook ((c-ts-mode . eglot-ensure) ;; Autostart lsp servers for a given mode
+             (c++-ts-mode . eglot-ensure)
              (csharp-mode . eglot-ensure)
-             (java-mode . eglot-ensure)
-             (html-mode . eglot-ensure)
-             (css-mode . eglot-ensure)
-             (javascript-mode . eglot-ensure)
-             (rust-mode . eglot-ensure))
+             (java-ts-mode . eglot-ensure)
+             (html-ts-mode . eglot-ensure)
+             (css-ts-mode . eglot-ensure)
+             (js-ts-mode . eglot-ensure)
+             (cmake-ts-mode . eglot-ensure)
+             (rust-ts-mode . eglot-ensure))
       :custom
       ;; Good default
       (eglot-events-buffer-size 0) ;; No event buffers (Lsp server logs)
@@ -329,7 +330,9 @@ If a project is in an another project add the project with this command: project
       (add-to-list 'eglot-server-programs
                    `(csharp-mode . ("/usr/share/omnisharp-roslyn-1.39.11/OmniSharp" "-lsp")))
       (add-to-list 'eglot-server-programs
-                   `(java-mode . ("~/.config/emacs/lsp-servers/jdt-language-server-1.31.0/bin/jdtls" "-lsp")))
+                   `(java-ts-mode . ("~/.config/emacs/lsp-servers/jdt-language-server-1.31.0/bin/jdtls" "-lsp")))
+      (add-to-list 'eglot-server-programs
+                   `(cmake-ts-mode . ("~/.local/bin/cmake-language-server"))) ;; Installed with pipx
       )
 #+end_src
 
@@ -346,7 +349,7 @@ For HTML, CSS snippets.
 Use C-j to complete.
 #+begin_src emacs-lisp
     (use-package emmet-mode
-      :hook ('html-mode . emmet-mode))
+      :hook (html-mode . emmet-mode))
 #+end_src
 
 ** Language modes
@@ -357,19 +360,27 @@ Currently it's tedious to use Treesitter, because emacs has not yet fully migrat
 *** Treesit-Auto
 Automatically install and use tree-sitter major modes in Emacs 29+.
 If the tree-sitter version can’t be used, fall back to the original major mode.
-# #+begin_src emacs-lisp
-#     (use-package treesit-auto
-#       :custom
-#       (treesit-auto-install 'prompt)
-#       :config
-#       (treesit-auto-add-to-auto-mode-alist 'all)
-#       (global-treesit-auto-mode))
-# #+end_src
+#+begin_src emacs-lisp
+    (use-package treesit-auto
+      :custom
+      (treesit-auto-install 'prompt)
+      :config
+      (treesit-auto-add-to-auto-mode-alist 'all)
+      (global-treesit-auto-mode))
+#+end_src
 
 *** Rust mode
 #+begin_src emacs-lisp
     (use-package rust-mode
       :mode "\\.rs\\'")
+#+end_src
+
+*** Ebuild mode
+For Gentoo ebuilds, installed with portage.
+#+begin_src emacs-lisp
+    (use-package ebuild-mode
+      :ensure nil
+      :mode "\\.ebuild\\'")
 #+end_src
 
 *** GDScript mode
@@ -398,13 +409,11 @@ Once you've used it for a bit, you'll understand why people love
 it. Even reading about it can be inspiring!
 For example, this document is effectively the source code and descriptions bound into the one document,
 much like the literate programming ideas that Donald Knuth made famous.
-**** Useful tweaks
 #+begin_src emacs-lisp
     (use-package org
       :ensure nil
       :custom
       (org-edit-src-content-indentation 4) ;; Set src block automatic indent to 4 instead of 2.
-
       :hook
       (org-mode . org-indent-mode) ;; Indent text
       ;; The following prevents <> from auto-pairing when electric-pair-mode is on.
