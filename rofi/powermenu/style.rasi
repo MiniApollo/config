@@ -15,7 +15,11 @@ configuration {
 /*****----- Global Properties -----*****/
 * {
     /* Resolution : 1920x1080 */
-    mainbox-spacing:             100px;
+	/**
+	 * For smaller screens remove one 0
+	 * from mailbox-spacing and margin 10px, 10px 30px, 40px
+	 **/
+	mainbox-spacing:             100px;
     mainbox-margin:              100px 300px;
     message-margin:              0px 400px;
     message-padding:             15px;
