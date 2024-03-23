@@ -22,8 +22,8 @@
         "spacing": 1
     },
     "clock": {
-        "format": "{:%b %d %A %R}",
-        "format-alt": "{:%Y - %b %d %A %R:%S}",
+        "format": "{:L%b %d %A %R}",
+        "format-alt": "{:L%Y - %b %d %A %R:%S}",
 
 		"tooltip-format": "<tt><small>{calendar}</small></tt>",
 		"calendar": {
