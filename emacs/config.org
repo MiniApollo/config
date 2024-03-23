@@ -383,6 +383,13 @@ For Gentoo ebuilds, installed with portage.
       :mode "\\.ebuild\\'")
 #+end_src
 
+*** Markdown mode
+#+begin_src emacs-lisp
+    (use-package markdown-mode
+      :mode ("README\\.md\\'" . gfm-mode)
+      :init (setq markdown-command "multimarkdown"))
+#+end_src
+
 *** GDScript mode
 For Godot C# don't forget to add the project to the projects list for eglot to work properly.
 (if there is no Project.sln file you need to create a C# file and build the project)

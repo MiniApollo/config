@@ -233,6 +233,10 @@
   :ensure nil
   :mode "\\.ebuild\\'")
 
+(use-package markdown-mode
+  :mode ("README\\.md\\'" . gfm-mode)
+  :init (setq markdown-command "multimarkdown"))
+
 (use-package gdscript-mode
   :mode "\\.gd\\'")
 (defun lsp--gdscript-ignore-errors (original-function &rest args)
