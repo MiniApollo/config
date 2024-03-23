@@ -66,7 +66,6 @@
 
   (mark/leader-keys
     "b" '(:ignore t :wk "Buffer Bookmarks")
-    "b b" '(switch-to-buffer :wk "Switch buffer")
     "b b" '(consult-buffer :wk "Switch buffer")
     "b k" '(kill-this-buffer :wk "Kill this buffer")
     "b i" '(ibuffer :wk "Ibuffer")
@@ -94,9 +93,10 @@
 
   (mark/leader-keys
     "h" '(:ignore t :wk "Help") ;; To get more help use C-h commands (describe variable, function, etc.)
+    "h q" '(save-buffers-kill-emacs :wk "Quit Emacs Daemon")
     "h r" '((lambda () (interactive)
               (load-file "~/.config/emacs/init.el"))
-            :wk "Reload emacs config"))
+            :wk "Reload Emacs config"))
 
   (mark/leader-keys
     "s" '(:ignore t :wk "Show")
