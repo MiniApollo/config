@@ -186,7 +186,7 @@ Install all three in the [gentoo wiki](https://wiki.gentoo.org/wiki/Fonts#Additi
  
 To update the system 
 ```bash
-doas emaint -a sync && doas emerge -qavuDNg @world && doas emerge --ask --depclean && doas eclean-dist -d && doas eclean-pkg -d && doas eclean-kernel -n 2
+doas emaint -a sync && doas emerge -qavuDNg @world && doas emerge --ask --depclean && doas eclean-dist -d && doas eclean-pkg -d && doas eclean-kernel -n 2 && flatpak update
 ```
 
 <h2>ntfs partition fstab</h2>
