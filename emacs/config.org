@@ -369,6 +369,13 @@ If the tree-sitter version can’t be used, fall back to the original major mode
       (global-treesit-auto-mode))
 #+end_src
 
+*** CMake mode
+#+begin_src emacs-lisp
+    (use-package cmake-ts-mode
+      :ensure nil
+      :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
+#+end_src
+
 *** Rust mode
 #+begin_src emacs-lisp
     (use-package rust-mode
