@@ -1,9 +1,11 @@
+### General
+games-action/prismlauncher ~amd64
+media-video/obs-studio ~amd64
+sys-power/tlp ~amd64
+
+### Nvidia
 x11-drivers/nvidia-drivers ~amd64
 dev-util/nvidia-cuda-toolkit ~amd64
-
-media-gfx/raw-thumbnailer ~amd64
-games-action/prismlauncher ~amd64
-gui-apps/rofi-wayland ~amd64
 
 ### Dotnet
 dev-dotnet/dotnet-sdk-bin ~amd64
@@ -11,9 +13,10 @@ app-eselect/eselect-dotnet ~amd64
 dev-dotnet/dotnet-runtime-nugets ~amd64
 
 ### Emacs
-app-editors/emacs ~amd64
-
 dev-dotnet/omnisharp-roslyn ~amd64
+
+dev-python/pipx ~amd64
+dev-python/userpath ~amd64
 
 ### Ios
 app-pda/gtkpod ~amd64
@@ -23,6 +26,7 @@ dev-util/anjuta ~amd64
 media-gfx/blender ~amd64
 media-libs/openpgl ~amd64
 media-libs/opensubdiv ~amd64
+media-gfx/openvdb ~amd64
 
 ### Lutris
 games-util/lutris  ~amd64
@@ -30,45 +34,26 @@ dev-python/pypresence ~amd64
 dev-python/moddb ~amd64
 dev-python/pyrate-limiter ~amd64
 
+### Steam-overlay
+games-util/game-device-udev-rules ~amd64
+games-util/steam-launcher ~amd64
+sys-libs/libudev-compat ~amd64
+
 ### Wayland
 gui-apps/tuigreet ~amd64
 app-misc/brightnessctl ~amd64
 gui-apps/swaylock-effects ~amd64
-
-### Steam-overlay
-games-util/game-device-udev-rules ~amd64
-games-util/steam-launcher ~amd64
-
-x11-base/xwayland ~amd64
-dev-libs/libei ~amd64
-
-sys-apps/xdg-desktop-portal ~amd64
+gui-apps/rofi-wayland ~amd64
 
 ### Hyprland
 gui-wm/hyprland ~amd64
-dev-libs/libliftoff ~amd64
-media-libs/libdisplay-info ~amd64
-dev-libs/hyprland-protocols ~amd64
-dev-libs/wayland-protocols ~amd64
-x11-libs/libdrm ~amd64
-# Alacritty crash fix 
+gui-libs/hyprcursor ~amd64
+gui-libs/xdg-desktop-portal-hyprland ~amd64
+dev-libs/hyprlang ~amd64
+dev-cpp/sdbus-c++ ~amd64
+
+# Alacritty use toml as config file
 x11-terms/alacritty ~amd64
-dev-cpp/tomlplusplus ~amd64
 
 gui-apps/waybar ~amd64
 dev-libs/date ~amd64
-
-gui-libs/xdg-desktop-portal-hyprland ~amd64
-dev-cpp/sdbus-c++ ~amd64
-
-dev-qt/qtcore ~amd64
-dev-qt/qtbase ~amd64
-dev-qt/qtwayland ~amd64
-dev-qt/qtdeclarative ~amd64
-dev-qt/qtshadertools ~amd64
-dev-qt/qttranslations ~amd64
-dev-qt/qttools ~amd64
-dev-qt/linguist-tools ~amd64
-
-### Obs
-media-video/obs-studio ~amd64
