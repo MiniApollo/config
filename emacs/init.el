@@ -39,6 +39,7 @@
   (evil-collection-init))
 
 (use-package general
+  :after evil
   :config
   (general-evil-setup)
   ;; Set up 'SPC' as the leader key
@@ -46,8 +47,8 @@
     :states '(normal insert visual motion emacs)
     :keymaps 'override
     :prefix "SPC"           ;; Set leader key
-    :global-prefix "C-SPC") ;; Set global leader key
-
+    :global-prefix "C-SPC"  ;; Set global leader key
+    )
   (mark/leader-keys
     "." '(find-file :wk "Find file")
     "TAB" '(comment-line :wk "Comment lines")
@@ -146,6 +147,13 @@
   :bind (
          ([escape] . keyboard-escape-quit) ;; Makes Escape quit prompts (Minibuffer Escape)
          )
+  ;; Fix general.el leader key not working instantly in messages buffer with evil mode
+  :ghook ('after-init-hook
+                    (lambda (&rest _)
+                      (when-let ((messages-buffer (get-buffer "*Messages*")))
+                        (with-current-buffer messages-buffer
+                         (evil-normalize-keymaps))))
+                    nil nil t)
   )
 
 (use-package gruvbox-theme
