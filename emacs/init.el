@@ -230,6 +230,7 @@
 (use-package treesit-auto
   :custom
   (treesit-auto-install 'prompt)
+  (c-ts-mode-indent-offset 4) ;; Fix weird indentation in c-ts (C, C++)
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
