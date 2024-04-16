@@ -18,12 +18,17 @@ media-video/ffmpeg nvenc
 ### Pipewire
 media-video/pipewire sound-server readline ssl v4l pipewire-alsa dbus extra jack-sdk ffmpeg
 
+media-libs/opus abi_x86_32
+
 ### Wayland
 gui-apps/rofi-wayland drun
 
 ### Hyprland
 gui-apps/waybar experimental tray -upower
 gui-libs/xdg-desktop-portal-hyprland qt6
+
+x11-libs/pixman abi_x86_32
+x11-libs/pango abi_x86_32
 
 ### Steam
 x11-base/xwayland libei
@@ -37,6 +42,7 @@ media-gfx/blender collada jemalloc openal cuda optix
 
 media-libs/openpgl cpu_flags_x86_sse4_2 cpu_flags_x86_avx2
 sys-apps/systemd-utils abi_x86_32
+x11-libs/libXcursor abi_x86_32
 
 ### PrismLauchner
 sys-libs/zlib minizip
@@ -74,11 +80,12 @@ app-editors/emacs gui gtk json jit dynamic-loading sqlite tree-sitter -X -athena
 sys-devel/gcc jit
 
 dev-lang/rust-bin rust-analyzer rust-src rustfmt
+dev-lang/php curl
 
 ### Vaapi
 media-libs/libva abi_x86_32
 media-plugins/gst-plugins-vaapi abi_x86_32
-x11-libs/libvdpau abi_x86_32 # For mesa
+media-libs/mesa -vaapi -vdpau # Not needed because not using amd or nouveau
 
 ### Krita
 dev-python/PyQt5 declarative
