@@ -212,6 +212,7 @@
          (css-ts-mode . eglot-ensure)
          (js-ts-mode . eglot-ensure)
          (cmake-ts-mode . eglot-ensure)
+         (php-mode . eglot-ensure)
          (rust-ts-mode . eglot-ensure))
   :custom
   ;; Good default
@@ -225,6 +226,8 @@
                `(java-ts-mode . ("~/.config/emacs/lsp-servers/jdt-language-server-1.31.0/bin/jdtls" "-lsp")))
   (add-to-list 'eglot-server-programs
                `(cmake-ts-mode . ("~/.local/bin/cmake-language-server"))) ;; Installed with pipx
+  (add-to-list 'eglot-server-programs
+               `(php-mode . ("intelephense" "--stdio")))
   )
 
 (use-package yasnippet-snippets
@@ -240,6 +243,11 @@
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
+
+(use-package web-mode)
+
+(use-package php-mode
+  :mode "\\.php\\'")
 
 (use-package cmake-ts-mode
   :ensure nil

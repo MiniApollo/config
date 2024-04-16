@@ -334,6 +334,7 @@ If a project is in an another project add the project with this command: project
              (css-ts-mode . eglot-ensure)
              (js-ts-mode . eglot-ensure)
              (cmake-ts-mode . eglot-ensure)
+             (php-mode . eglot-ensure)
              (rust-ts-mode . eglot-ensure))
       :custom
       ;; Good default
@@ -347,6 +348,8 @@ If a project is in an another project add the project with this command: project
                    `(java-ts-mode . ("~/.config/emacs/lsp-servers/jdt-language-server-1.31.0/bin/jdtls" "-lsp")))
       (add-to-list 'eglot-server-programs
                    `(cmake-ts-mode . ("~/.local/bin/cmake-language-server"))) ;; Installed with pipx
+      (add-to-list 'eglot-server-programs
+                   `(php-mode . ("intelephense" "--stdio")))
       )
 #+end_src
 
@@ -382,6 +385,17 @@ If the tree-sitter version can’t be used, fall back to the original major mode
       :config
       (treesit-auto-add-to-auto-mode-alist 'all)
       (global-treesit-auto-mode))
+#+end_src
+
+*** Web mode
+#+begin_src emacs-lisp
+        (use-package web-mode)
+#+end_src
+
+*** PHP mode
+#+begin_src emacs-lisp
+    (use-package php-mode
+      :mode "\\.php\\'")
 #+end_src
 
 *** CMake mode
