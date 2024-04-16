@@ -24,10 +24,9 @@ bind '"\e[A":history-search-backward'
 bind '"\e[B":history-search-forward'
 bind '"\C-l": clear;'
 
-stty -ixon #disables ctrl-s and ctrl-q
+stty -ixon # Disables ctrl-s and ctrl-q
 shopt -s autocd
 
 export TERM=xterm-256color
 export EDITOR=emacs
 export TERMINAL=alacritty
-export NVCC_PREPEND_FLAGS='-ccbin /usr/bin/g++-12' # Cuda needs gcc-12 currenly
