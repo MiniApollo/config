@@ -206,7 +206,7 @@
   :ensure nil ;; Don't install eglot because it's now built-in
   :hook ((c-ts-mode . eglot-ensure) ;; Autostart lsp servers for a given mode
          (c++-ts-mode . eglot-ensure)
-         (csharp-mode . eglot-ensure)
+         (csharp-ts-mode . eglot-ensure)
          (java-ts-mode . eglot-ensure)
          (html-ts-mode . eglot-ensure)
          (css-ts-mode . eglot-ensure)
@@ -217,9 +217,10 @@
   ;; Good default
   (eglot-events-buffer-size 0) ;; No event buffers (Lsp server logs)
   (eglot-autoshutdown t);; Shutdown unused servers.
+  (eglot-report-progress nil) ;; Disable lsp server logs (Don't show lsp messages at the bottom, java)
   :config
   (add-to-list 'eglot-server-programs
-               `(csharp-mode . ("/usr/share/omnisharp-roslyn-1.39.11/OmniSharp" "-lsp")))
+               `(csharp-ts-mode . ("/usr/bin/OmniSharp" "-lsp")))
   (add-to-list 'eglot-server-programs
                `(java-ts-mode . ("~/.config/emacs/lsp-servers/jdt-language-server-1.31.0/bin/jdtls" "-lsp")))
   (add-to-list 'eglot-server-programs
