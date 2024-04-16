@@ -168,12 +168,15 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
         "d j" '(dired-jump :wk "Dired jump to current"))
 
       (mark/leader-keys
-        "e" '(:ignore t :wk "Eglot Evaluate")
+        "e" '(:ignore t :wk "Languages Eglot ")
         "e e" '(eglot-reconnect :wk "Eglot Reconnect")
         "e f" '(eglot-format :wk "Eglot Format")
         "e l" '(consult-flymake :wk "Consult Flymake")
-        "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
-        "e r" '(eval-region :wk "Evaluate elisp in region"))
+        "e s" '(:ignore :wk "Show")
+        "e s b" '(flymake-show-buffer-diagnostics :wk "Flymake buffer diagnostic")
+        "e v" '(:ignore :wk "Elisp")
+        "e v b" '(eval-buffer :wk "Evaluate elisp in buffer")
+        "e v r" '(eval-region :wk "Evaluate elisp in region"))
 
       (mark/leader-keys
         "g" '(:ignore t :wk "Git")
