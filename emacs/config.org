@@ -327,17 +327,12 @@ If a project is in an another project add the project with this command: project
 #+begin_src emacs-lisp
     (use-package eglot
       :ensure nil ;; Don't install eglot because it's now built-in
-      :hook ((c-ts-mode . eglot-ensure) ;; Autostart lsp servers for a given mode
-             (c++-ts-mode . eglot-ensure)
-             (csharp-ts-mode . eglot-ensure)
-             (java-ts-mode . eglot-ensure)
-             (html-ts-mode . eglot-ensure)
-             (css-ts-mode . eglot-ensure)
-             (js-ts-mode . eglot-ensure)
-             (cmake-ts-mode . eglot-ensure)
-             (php-mode . eglot-ensure)
-             (go-mode . eglot-ensure)
-             (rust-ts-mode . eglot-ensure))
+      :hook ((c-ts-mode c++-ts-mode
+                        csharp-ts-mode java-ts-mode
+                        html-mode css-ts-mode
+                        js-ts-mode cmake-ts-mode
+                        php-mode go-mode rust-ts-mode)
+             . eglot-ensure)  ;; Autostart lsp servers for a given mode
       :custom
       ;; Good default
       (eglot-events-buffer-size 0) ;; No event buffers (Lsp server logs)
