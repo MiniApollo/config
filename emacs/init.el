@@ -152,11 +152,11 @@
          )
   ;; Fix general.el leader key not working instantly in messages buffer with evil mode
   :ghook ('after-init-hook
-                    (lambda (&rest _)
-                      (when-let ((messages-buffer (get-buffer "*Messages*")))
-                        (with-current-buffer messages-buffer
-                         (evil-normalize-keymaps))))
-                    nil nil t)
+          (lambda (&rest _)
+            (when-let ((messages-buffer (get-buffer "*Messages*")))
+              (with-current-buffer messages-buffer
+                (evil-normalize-keymaps))))
+          nil nil t)
   )
 
 (use-package gruvbox-theme
@@ -334,13 +334,13 @@
 (use-package corfu
   ;; Optional customizations
   :custom
-  (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
-  (corfu-auto t)                 ;; Enable auto completion
-  (corfu-auto-prefix 2)          ;; Minimum length of prefix for auto completion.
-  (corfu-popupinfo-mode t)       ;; Enable popup information
-  (corfu-popupinfo-delay 0.5)    ;; Lower popupinfo delay to 0.5 seconds from 2 seconds
+  (corfu-cycle t)             ;; Enable cycling for `corfu-next/previous'
+  (corfu-auto t)              ;; Enable auto completion
+  (corfu-auto-prefix 2)       ;; Minimum length of prefix for auto completion.
+  (corfu-popupinfo-mode t)    ;; Enable popup information
+  (corfu-popupinfo-delay 0.5) ;; Lower popupinfo delay to 0.5 seconds from 2 seconds
 
-  (completion-ignore-case  t)
+  (completion-ignore-case t)
   ;; Enable indentation+completion using the TAB key.
   ;; `completion-at-point' is often bound to M-TAB.
   (tab-always-indent 'complete)
