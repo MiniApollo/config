@@ -229,6 +229,7 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
       (scroll-margin 8)
 
       (tab-width 4)
+      (sgml-basic-offset 4) ;; Set Html mode indentation to 4
 
       (make-backup-files nil) ;; Stop creating ~ backup files
       (auto-save-default nil) ;; Stop creating # auto save files
@@ -385,11 +386,6 @@ If the tree-sitter version can’t be used, fall back to the original major mode
       ;; Important: Delete before 'treesit-auto-add-to-auto-mode-alist'
       (treesit-auto-add-to-auto-mode-alist 'all)
       (global-treesit-auto-mode))
-#+end_src
-
-*** Web mode
-#+begin_src emacs-lisp
-        (use-package web-mode)
 #+end_src
 
 *** PHP mode

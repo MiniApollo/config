@@ -138,6 +138,7 @@
   (scroll-margin 8)
 
   (tab-width 4)
+  (sgml-basic-offset 4) ;; Set Html mode indentation to 4
 
   (make-backup-files nil) ;; Stop creating ~ backup files
   (auto-save-default nil) ;; Stop creating # auto save files
@@ -242,8 +243,6 @@
   ;; Important: Delete before 'treesit-auto-add-to-auto-mode-alist'
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
-
-(use-package web-mode)
 
 (use-package php-mode
   :mode "\\.php\\'")
