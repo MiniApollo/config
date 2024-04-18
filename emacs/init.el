@@ -85,9 +85,9 @@
     "e e" '(eglot-reconnect :wk "Eglot Reconnect")
     "e f" '(eglot-format :wk "Eglot Format")
     "e l" '(consult-flymake :wk "Consult Flymake")
-    "e s" '(:ignore :wk "Show")
+    "e s" '(:ignore t :wk "Show")
     "e s b" '(flymake-show-buffer-diagnostics :wk "Flymake buffer diagnostic")
-    "e v" '(:ignore :wk "Elisp")
+    "e v" '(:ignore t :wk "Elisp")
     "e v b" '(eval-buffer :wk "Evaluate elisp in buffer")
     "e v r" '(eval-region :wk "Evaluate elisp in region"))
 
