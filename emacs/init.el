@@ -213,6 +213,7 @@
          (js-ts-mode . eglot-ensure)
          (cmake-ts-mode . eglot-ensure)
          (php-mode . eglot-ensure)
+         (go-mode . eglot-ensure)
          (rust-ts-mode . eglot-ensure))
   :custom
   ;; Good default
@@ -241,6 +242,9 @@
   (treesit-auto-install 'prompt)
   (c-ts-mode-indent-offset 4) ;; Fix weird indentation in c-ts (C, C++)
   :config
+  ;; Remove treesitter modes, go-ts-mode not working currently
+  (setq treesit-auto-langs (cl-set-difference treesit-auto-langs '(go gomod)))
+  ;; Important: Delete before 'treesit-auto-add-to-auto-mode-alist'
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
 
@@ -253,8 +257,8 @@
   :ensure nil
   :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
 
-(use-package rust-mode
-  :mode "\\.rs\\'")
+(use-package go-mode
+  :mode "\\.go\\'")
 
 (use-package ebuild-mode
   :ensure nil
@@ -262,7 +266,7 @@
 
 (use-package markdown-mode
   :mode ("README\\.md\\'" . gfm-mode)
-  :init (setq markdown-command "multimarkdown"))
+  :custom (markdown-command "multimarkdown"))
 
 (use-package gdscript-mode
   :mode "\\.gd\\'")

@@ -335,6 +335,7 @@ If a project is in an another project add the project with this command: project
              (js-ts-mode . eglot-ensure)
              (cmake-ts-mode . eglot-ensure)
              (php-mode . eglot-ensure)
+             (go-mode . eglot-ensure)
              (rust-ts-mode . eglot-ensure))
       :custom
       ;; Good default
@@ -383,6 +384,9 @@ If the tree-sitter version can’t be used, fall back to the original major mode
       (treesit-auto-install 'prompt)
       (c-ts-mode-indent-offset 4) ;; Fix weird indentation in c-ts (C, C++)
       :config
+      ;; Remove treesitter modes, go-ts-mode not working currently
+      (setq treesit-auto-langs (cl-set-difference treesit-auto-langs '(go gomod)))
+      ;; Important: Delete before 'treesit-auto-add-to-auto-mode-alist'
       (treesit-auto-add-to-auto-mode-alist 'all)
       (global-treesit-auto-mode))
 #+end_src
@@ -405,10 +409,10 @@ If the tree-sitter version can’t be used, fall back to the original major mode
       :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
 #+end_src
 
-*** Rust mode
+*** Go mode
 #+begin_src emacs-lisp
-    (use-package rust-mode
-      :mode "\\.rs\\'")
+    (use-package go-mode
+      :mode "\\.go\\'")
 #+end_src
 
 *** Ebuild mode
@@ -423,7 +427,7 @@ For Gentoo ebuilds, installed with portage.
 #+begin_src emacs-lisp
     (use-package markdown-mode
       :mode ("README\\.md\\'" . gfm-mode)
-      :init (setq markdown-command "multimarkdown"))
+      :custom (markdown-command "multimarkdown"))
 #+end_src
 
 *** GDScript mode
