@@ -310,6 +310,7 @@
   :after org)
 
 (use-package vterm
+  :commands vterm
   :custom
   (vterm-max-scrollback 5000))
 

@@ -503,6 +503,7 @@ Fast, POSIX compliant shell, handles UIs well.
 Eat don't support C-arrow key movement and don't work well with evil mode.
 #+begin_src emacs-lisp
     (use-package vterm
+      :commands vterm
       :custom
       (vterm-max-scrollback 5000))
 #+end_src
