@@ -36,6 +36,7 @@
   - [[#undotree][UndoTree]]
   - [[#sudo-edit][Sudo edit]]
   - [[#drag-stuff][Drag Stuff]]
+  - [[#evil-mc][Evil-mc]]
   - [[#diminish][Diminish]]
   - [[#rainbow-delimiters][Rainbow Delimiters]]
   - [[#rainbow-mode][Rainbow Mode]]
@@ -703,6 +704,13 @@ Makes it possible to move selected text, regions, lines.
       :init
       (drag-stuff-global-mode 1)
       (drag-stuff-define-keys))
+#+end_src
+
+** Evil-mc
+Multiple-cursors for evil mode.
+#+begin_src emacs-lisp
+    (use-package evil-mc
+      :custom (global-evil-mc-mode t))
 #+end_src
 
 ** Diminish

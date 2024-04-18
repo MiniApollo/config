@@ -442,6 +442,9 @@
   (drag-stuff-global-mode 1)
   (drag-stuff-define-keys))
 
+(use-package evil-mc
+  :custom (global-evil-mc-mode t))
+
 (use-package diminish)
 
 (use-package rainbow-delimiters
