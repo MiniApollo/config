@@ -73,7 +73,8 @@
     "b n" '(next-buffer :wk "Next buffer")
     "b p" '(previous-buffer :wk "Previous buffer")
     "b r" '(revert-buffer :wk "Reload buffer")
-    "b j" '(bookmark-jump :wk "Bookmark jump"))
+    "b j" '(bookmark-jump :wk "Bookmark jump")
+    "b m" '(evil-mc-mode :wk "Toggle Evil mc mode"))
 
   (mark/leader-keys
     "d" '(:ignore t :wk "Dired")
@@ -437,7 +438,8 @@
   (drag-stuff-define-keys))
 
 (use-package evil-mc
-  :custom (global-evil-mc-mode t))
+  :commands (evil-mc-mode)
+  :config (message "evil-mc loaded"))
 
 (use-package diminish)
 

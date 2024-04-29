@@ -161,7 +161,8 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
         "b n" '(next-buffer :wk "Next buffer")
         "b p" '(previous-buffer :wk "Previous buffer")
         "b r" '(revert-buffer :wk "Reload buffer")
-        "b j" '(bookmark-jump :wk "Bookmark jump"))
+        "b j" '(bookmark-jump :wk "Bookmark jump")
+        "b m" '(evil-mc-mode :wk "Toggle Evil mc mode"))
 
       (mark/leader-keys
         "d" '(:ignore t :wk "Dired")
@@ -701,7 +702,8 @@ Makes it possible to move selected text, regions, lines.
 Multiple-cursors for evil mode.
 #+begin_src emacs-lisp
     (use-package evil-mc
-      :custom (global-evil-mc-mode t))
+      :commands (evil-mc-mode)
+      :config (message "evil-mc loaded"))
 #+end_src
 
 ** Diminish
