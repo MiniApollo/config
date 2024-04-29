@@ -702,8 +702,7 @@ Makes it possible to move selected text, regions, lines.
 Multiple-cursors for evil mode.
 #+begin_src emacs-lisp
     (use-package evil-mc
-      :commands (evil-mc-mode)
-      :config (message "evil-mc loaded"))
+      :commands (evil-mc-mode))
 #+end_src
 
 ** Diminish

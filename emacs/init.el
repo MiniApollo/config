@@ -438,8 +438,7 @@
   (drag-stuff-define-keys))
 
 (use-package evil-mc
-  :commands (evil-mc-mode)
-  :config (message "evil-mc loaded"))
+  :commands (evil-mc-mode))
 
 (use-package diminish)
 
