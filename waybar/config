@@ -7,7 +7,6 @@
 	"output": "eDP-1", // Only display on the first screen
 
     // Order of the modules
-	// hyprland/workspaces causes the warning
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
     "modules-center": [],
     "modules-right": ["tray", "pulseaudio", "backlight", "battery", "clock", "custom/powermenu"],
