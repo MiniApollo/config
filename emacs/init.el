@@ -204,7 +204,7 @@
   (projectile-run-use-comint-mode t) ;; Interactive run dialog when running projects inside emacs (like giving input)
   (projectile-switch-project-action #'projectile-dired) ;; Open dired when switching to a project
   (projectile-project-search-path '(("~/Projects/" . 3)
-                                    ("/mnt/Ext4D/Mark/Projektek/desktop_Programs/" . 1)
+                                    ("/mnt/Ext4D/Mark/Projektek/Desktop_Projects/" . 1)
                                     ("/mnt/Ext4D/Mark/Projektek/Game_Projects/" . 2))))
 ;; Use Bookmarks for smaller, not standard projects
 
@@ -214,7 +214,8 @@
                     csharp-ts-mode java-ts-mode
                     html-mode css-ts-mode
                     js-ts-mode cmake-ts-mode
-                    php-mode go-mode rust-ts-mode)
+                    php-mode go-mode rust-ts-mode
+                    gdscript-mode)
          . eglot-ensure)  ;; Autostart lsp servers for a given mode
   :custom
   ;; Good default
