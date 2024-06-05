@@ -172,8 +172,11 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
       (mark/leader-keys
         "e" '(:ignore t :wk "Languages Eglot ")
         "e e" '(eglot-reconnect :wk "Eglot Reconnect")
+        "e d" '(eldoc-doc-buffer :wk "Eldoc Buffer")
         "e f" '(eglot-format :wk "Eglot Format")
         "e l" '(consult-flymake :wk "Consult Flymake")
+        "e r" '(eglot-rename :wk "Eglot Rename")
+        "e i" '(xref-find-definitions :wk "Find defintion")
         "e s" '(:ignore t :wk "Show")
         "e s b" '(flymake-show-buffer-diagnostics :wk "Flymake buffer diagnostic")
         "e v" '(:ignore t :wk "Elisp")
@@ -242,6 +245,7 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
       (load custom-file 'noerror 'nomessage)
       :bind (
              ([escape] . keyboard-escape-quit) ;; Makes Escape quit prompts (Minibuffer Escape)
+             ("C-g" . evil-normal-state) ;; Makes Escape quit prompts (Minibuffer Escape)
              )
       ;; Fix general.el leader key not working instantly in messages buffer with evil mode
       :ghook ('after-init-hook
