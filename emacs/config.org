@@ -245,7 +245,7 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
       (load custom-file 'noerror 'nomessage)
       :bind (
              ([escape] . keyboard-escape-quit) ;; Makes Escape quit prompts (Minibuffer Escape)
-             ("C-g" . evil-normal-state) ;; Makes Escape quit prompts (Minibuffer Escape)
+             ("C-g" . evil-normal-state)
              )
       ;; Fix general.el leader key not working instantly in messages buffer with evil mode
       :ghook ('after-init-hook
@@ -322,8 +322,8 @@ Project interaction library for Emacs.
       (projectile-run-use-comint-mode t) ;; Interactive run dialog when running projects inside emacs (like giving input)
       (projectile-switch-project-action #'projectile-dired) ;; Open dired when switching to a project
       (projectile-project-search-path '(("~/Projects/" . 3)
-                                        ("/mnt/Ext4D/Mark/Projektek/Desktop_Projects/" . 1)
-                                        ("/mnt/Ext4D/Mark/Projektek/Game_Projects/" . 2))))
+                                        ("/mnt/Data/Mark/Projektek/Desktop/" . 1)
+                                        ("/mnt/Data/Mark/Projektek/Games/" . 2))))
     ;; Use Bookmarks for smaller, not standard projects
 #+end_src
 
