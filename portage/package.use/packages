@@ -19,6 +19,7 @@ media-video/ffmpeg nvenc
 media-video/pipewire sound-server readline ssl v4l pipewire-alsa dbus extra jack-sdk ffmpeg
 
 media-libs/opus abi_x86_32
+media-libs/alsa-lib abi_x86_32
 
 ### Wayland
 gui-apps/rofi-wayland drun
@@ -26,6 +27,7 @@ gui-apps/rofi-wayland drun
 ### Hyprland
 gui-apps/waybar experimental tray -upower
 gui-libs/xdg-desktop-portal-hyprland qt6
+media-libs/harfbuzz abi_x86_32
 
 x11-libs/pixman abi_x86_32
 x11-libs/pango abi_x86_32
@@ -43,13 +45,14 @@ media-gfx/blender collada jemalloc openal cuda optix
 media-libs/openpgl cpu_flags_x86_sse4_2 cpu_flags_x86_avx2
 sys-apps/systemd-utils abi_x86_32
 x11-libs/libXcursor abi_x86_32
+dev-libs/nettle abi_x86_32
 
 ### PrismLauchner
 sys-libs/zlib minizip
 
 ### Ios
 app-pda/gtkpod gstreamer
-gnome-base/gvfs afp archive gphoto2 mtp
+gnome-base/gvfs afp archive gphoto2 mtp keyring
 
 ### Printing
 net-print/cups zeroconf
@@ -78,6 +81,7 @@ app-misc/mime-types nginx
 ### Emacs
 app-editors/emacs gui gtk json jit dynamic-loading sqlite tree-sitter -X -athena -Xaw3d -motif
 sys-devel/gcc jit
+dev-libs/libunistring abi_x86_32
 
 dev-lang/rust-bin rust-analyzer rust-src rustfmt
 dev-lang/php curl
@@ -95,5 +99,22 @@ media-video/obs-studio qt6
 
 ### Lutris
 net-libs/webkit-gtk keyring # For binary
+dev-libs/libgudev abi_x86_32
+dev-libs/glib abi_x86_32
+media-libs/graphene abi_x86_32
+
 app-arch/xz-utils abi_x86_32
 
+### Gimp
+x11-libs/libxkbcommon abi_x86_32
+
+### Qtbase
+dev-libs/libpcre2 abi_x86_32
+
+### Thunderbird
+media-libs/fontconfig abi_x86_32
+gui-libs/libdecor abi_x86_32
+
+### VLC
+media-video/vlc gstreamer keyring -vaapi -vdpau # For binary package
+sys-libs/libcap abi_x86_32

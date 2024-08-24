@@ -60,3 +60,8 @@ sys-apps/dbus abi_x86_32
 media-libs/libpng abi_x86_32
 sys-apps/util-linux abi_x86_32
 app-arch/bzip2 abi_x86_32
+media-libs/gstreamer abi_x86_32
+media-libs/gst-plugins-base abi_x86_32
+media-libs/gst-plugins-bad abi_x86_32
+dev-lang/orc abi_x86_32
+sys-libs/pam abi_x86_32

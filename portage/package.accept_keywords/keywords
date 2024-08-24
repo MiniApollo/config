@@ -2,6 +2,7 @@
 games-action/prismlauncher ~amd64
 media-video/obs-studio ~amd64
 sys-power/tlp ~amd64
+app-backup/pika-backup ~amd64
 
 ### Nvidia
 x11-drivers/nvidia-drivers ~amd64
@@ -14,6 +15,7 @@ dev-dotnet/dotnet-runtime-nugets ~amd64
 
 ### Emacs
 dev-dotnet/omnisharp-roslyn ~amd64
+dev-go/gopls ~amd64
 
 dev-python/pipx ~amd64
 dev-python/userpath ~amd64
@@ -21,12 +23,16 @@ dev-python/userpath ~amd64
 ### Ios
 app-pda/gtkpod ~amd64
 dev-util/anjuta ~amd64
+app-pda/libplist ~amd64
 
 ### Blender
 media-gfx/blender ~amd64
 media-libs/openpgl ~amd64
 media-libs/opensubdiv ~amd64
 media-gfx/openvdb ~amd64
+media-libs/oidn ~amd64
+media-libs/openexr ~amd64
+media-libs/openimageio ~amd64
 
 ### Lutris
 games-util/lutris  ~amd64
@@ -51,9 +57,18 @@ gui-libs/hyprcursor ~amd64
 gui-libs/xdg-desktop-portal-hyprland ~amd64
 dev-libs/hyprlang ~amd64
 dev-cpp/sdbus-c++ ~amd64
+dev-util/hyprwayland-scanner ~amd64
+dev-libs/wayland-protocols ~amd64
+gui-libs/hyprutils ~amd64
+dev-libs/hyprland-protocols ~amd64
+gui-libs/aquamarine ~amd64
 
 # Alacritty use toml as config file
 x11-terms/alacritty ~amd64
 
 gui-apps/waybar ~amd64
 dev-libs/date ~amd64
+media-video/wireplumber ~amd64
+media-video/pipewire ~amd64
+
+gui-apps/wtype ~amd64
