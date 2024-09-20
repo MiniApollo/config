@@ -205,7 +205,7 @@
   (projectile-switch-project-action #'projectile-dired) ;; Open dired when switching to a project
   (projectile-project-search-path '(("~/Projects/" . 3)
                                     ("/mnt/Data/Mark/Projektek/Desktop/" . 1)
-                                    ("/mnt/Data/Mark/Projektek/Games/" . 2))))
+                                    ("/mnt/Data/Mark/Projektek/Games/" . 3))))
 ;; Use Bookmarks for smaller, not standard projects
 
 (use-package eglot
@@ -213,9 +213,10 @@
   :hook ((c-ts-mode c++-ts-mode
                     csharp-ts-mode java-ts-mode
                     html-mode css-ts-mode
-                    js-ts-mode cmake-ts-mode
-                    php-mode go-mode rust-ts-mode
-                    gdscript-mode)
+                    js-ts-mode typescript-ts-mode
+                    vue-mode php-mode cmake-ts-mode
+                    go-mode rust-ts-mode
+                    gdscript-mode glsl-mode)
          . eglot-ensure)  ;; Autostart lsp servers for a given mode
   :custom
   ;; Good default
@@ -231,6 +232,8 @@
                `(cmake-ts-mode . ("~/.local/bin/cmake-language-server"))) ;; Installed with pipx
   (add-to-list 'eglot-server-programs
                `(php-mode . ("intelephense" "--stdio")))
+  (add-to-list 'eglot-server-programs
+               `(glsl-mode . ("~/.config/emacs/lsp-servers/glsl_analyzer//glsl_analyzer")))
   )
 
 (use-package yasnippet-snippets
@@ -253,9 +256,15 @@
 (use-package php-mode
   :mode "\\.php\\'")
 
+(use-package vue-mode
+  :mode "\\.vue\\'")
+
 (use-package cmake-ts-mode
   :ensure nil
   :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
+
+(use-package glsl-mode
+  :mode ("\\.shader\\'" "\\.glsl\\'"))
 
 (use-package go-mode
   :mode "\\.go\\'")
