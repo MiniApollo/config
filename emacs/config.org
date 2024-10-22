@@ -21,6 +21,7 @@
 - [[#development][Development]]
   - [[#projectile][Projectile]]
   - [[#eglot][Eglot]]
+  - [[#sideline-flymake][Sideline-flymake]]
   - [[#yasnippet][Yasnippet]]
   - [[#emmet-mode][Emmet-mode]]
   - [[#language-modes][Language modes]]
@@ -177,8 +178,6 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
         "e l" '(consult-flymake :wk "Consult Flymake")
         "e r" '(eglot-rename :wk "Eglot Rename")
         "e i" '(xref-find-definitions :wk "Find defintion")
-        "e s" '(:ignore t :wk "Show")
-        "e s b" '(flymake-show-buffer-diagnostics :wk "Flymake buffer diagnostic")
         "e v" '(:ignore t :wk "Elisp")
         "e v b" '(eval-buffer :wk "Evaluate elisp in buffer")
         "e v r" '(eval-region :wk "Evaluate elisp in region"))
@@ -196,7 +195,8 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
 
       (mark/leader-keys
         "s" '(:ignore t :wk "Show")
-        "s v" '(vterm :wk "Vterm")
+        "s v" '(multi-vterm :wk "Vterm")
+        "s d" '(flymake-show-buffer-diagnostics :wk "Flymake buffer diagnostic")
         "s u" '(undo-tree-visualize :wk "Undotree"))
 
       (mark/leader-keys
@@ -356,8 +356,20 @@ If a project is in an another project add the project with this command: project
       (add-to-list 'eglot-server-programs
                    `(php-mode . ("intelephense" "--stdio")))
       (add-to-list 'eglot-server-programs
-                   `(glsl-mode . ("~/.config/emacs/lsp-servers/glsl_analyzer//glsl_analyzer")))
+                   `(glsl-mode . ("~/.config/emacs/lsp-servers/glsl_analyzer/glsl_analyzer")))
+      (add-to-list 'eglot-server-programs
+                   `(vue-mode . ("vue-language-server" "--stdio")))
       )
+#+end_src
+
+** Sideline-flymake
+Show flymake errors with sideline
+#+begin_src emacs-lisp
+    (use-package sideline-flymake
+      :hook (flymake-mode . sideline-mode)
+      :custom
+      (sideline-flymake-display-mode 'line) ;; show errors on the current line
+      (sideline-backends-right '(sideline-flymake)))
 #+end_src
 
 ** Yasnippet
@@ -520,6 +532,12 @@ Eat don't support C-arrow key movement and don't work well with evil mode.
       :commands vterm
       :custom
       (vterm-max-scrollback 5000))
+#+end_src
+*** Multi-vterm
+Managing multiple vterm buffers in Emacs
+#+begin_src emacs-lisp
+    (use-package multi-vterm
+      :commands multi-vterm)
 #+end_src
 
 * Other Packages

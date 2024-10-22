@@ -89,8 +89,6 @@
     "e l" '(consult-flymake :wk "Consult Flymake")
     "e r" '(eglot-rename :wk "Eglot Rename")
     "e i" '(xref-find-definitions :wk "Find defintion")
-    "e s" '(:ignore t :wk "Show")
-    "e s b" '(flymake-show-buffer-diagnostics :wk "Flymake buffer diagnostic")
     "e v" '(:ignore t :wk "Elisp")
     "e v b" '(eval-buffer :wk "Evaluate elisp in buffer")
     "e v r" '(eval-region :wk "Evaluate elisp in region"))
@@ -108,7 +106,8 @@
 
   (mark/leader-keys
     "s" '(:ignore t :wk "Show")
-    "s v" '(vterm :wk "Vterm")
+    "s v" '(multi-vterm :wk "Vterm")
+    "s d" '(flymake-show-buffer-diagnostics :wk "Flymake buffer diagnostic")
     "s u" '(undo-tree-visualize :wk "Undotree"))
 
   (mark/leader-keys
@@ -233,8 +232,16 @@
   (add-to-list 'eglot-server-programs
                `(php-mode . ("intelephense" "--stdio")))
   (add-to-list 'eglot-server-programs
-               `(glsl-mode . ("~/.config/emacs/lsp-servers/glsl_analyzer//glsl_analyzer")))
+               `(glsl-mode . ("~/.config/emacs/lsp-servers/glsl_analyzer/glsl_analyzer")))
+  (add-to-list 'eglot-server-programs
+               `(vue-mode . ("vue-language-server" "--stdio")))
   )
+
+(use-package sideline-flymake
+  :hook (flymake-mode . sideline-mode)
+  :custom
+  (sideline-flymake-display-mode 'line) ;; show errors on the current line
+  (sideline-backends-right '(sideline-flymake)))
 
 (use-package yasnippet-snippets
   :hook (prog-mode . yas-minor-mode))
@@ -322,6 +329,9 @@
   :commands vterm
   :custom
   (vterm-max-scrollback 5000))
+
+(use-package multi-vterm
+  :commands multi-vterm)
 
 (use-package nerd-icons
   :if (display-graphic-p))
