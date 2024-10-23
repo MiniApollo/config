@@ -257,7 +257,9 @@
   (c-ts-mode-indent-offset 4) ;; Fix weird indentation in c-ts (C, C++)
   :config
   ;; Remove treesitter modes, go-ts-mode not working currently
-  (setq treesit-auto-langs (cl-set-difference treesit-auto-langs '(go gomod)))
+  ;; glsl-ts-mode don't work because of a rewrite in glsl-mode
+  ;; https://github.com/jimhourihan/glsl-mode/commit/c5f2c2e7edf8a647eda74abe2cdf73fa6f62ebd2
+  (setq treesit-auto-langs (cl-set-difference treesit-auto-langs '(go gomod glsl)))
   ;; Important: Delete before 'treesit-auto-add-to-auto-mode-alist'
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
