@@ -233,8 +233,10 @@
                `(php-mode . ("intelephense" "--stdio")))
   (add-to-list 'eglot-server-programs
                `(glsl-mode . ("~/.config/emacs/lsp-servers/glsl_analyzer/glsl_analyzer")))
+  ;; Add typescript, because server can't find it
+  ;; https://github.com/neovim/neovim/issues/20010
   (add-to-list 'eglot-server-programs
-               `(vue-mode . ("vue-language-server" "--stdio")))
+               `(vue-mode . ("vue-language-server" "--stdio" :initializationOptions(:typescript(:tsdk "/usr/lib64/node_modules/typescript/lib/")))))
   )
 
 (use-package sideline-flymake
