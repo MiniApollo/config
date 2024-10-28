@@ -460,11 +460,6 @@
 (use-package sudo-edit
   :custom (sudo-edit-local-method "doas")) ;; To use doas
 
-(use-package drag-stuff
-  :init
-  (drag-stuff-global-mode 1)
-  (drag-stuff-define-keys))
-
 (use-package evil-mc
   :commands (evil-mc-mode))
 

@@ -36,7 +36,6 @@
   - [[#consult][Consult]]
   - [[#undotree][UndoTree]]
   - [[#sudo-edit][Sudo edit]]
-  - [[#drag-stuff][Drag Stuff]]
   - [[#evil-mc][Evil-mc]]
   - [[#diminish][Diminish]]
   - [[#rainbow-delimiters][Rainbow Delimiters]]
@@ -729,15 +728,6 @@ Utilities for opening files with root privileges (also works with doas).
 #+begin_src emacs-lisp
     (use-package sudo-edit
       :custom (sudo-edit-local-method "doas")) ;; To use doas
-#+end_src
-
-** Drag Stuff
-Makes it possible to move selected text, regions, lines.
-#+begin_src emacs-lisp
-    (use-package drag-stuff
-      :init
-      (drag-stuff-global-mode 1)
-      (drag-stuff-define-keys))
 #+end_src
 
 ** Evil-mc
