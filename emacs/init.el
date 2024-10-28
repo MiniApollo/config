@@ -52,7 +52,7 @@
   (mark/leader-keys
     "." '(find-file :wk "Find file")
     "TAB" '(comment-line :wk "Comment lines")
-    "p" '(projectile-command-map :wk "Projectile command map"))
+    "p" '(projectile-command-map :wk "Projectile"))
 
   (mark/leader-keys
     "f" '(:ignore t :wk "Find")
@@ -63,7 +63,8 @@
     "f f" '(consult-fd :wk "Fd search for files")
     "f g" '(consult-ripgrep :wk "Ripgrep search in files")
     "f l" '(consult-line :wk "Find line")
-    "f i" '(consult-imenu :wk "Imenu buffer locations"))
+    "f i" '(consult-imenu :wk "Imenu buffer locations")
+    "f p" '(projectile-discover-projects-in-search-path :wk "Projectile Discover Projects"))
 
   (mark/leader-keys
     "b" '(:ignore t :wk "Buffer Bookmarks")
@@ -207,6 +208,7 @@
   :custom
   (projectile-run-use-comint-mode t) ;; Interactive run dialog when running projects inside emacs (like giving input)
   (projectile-switch-project-action #'projectile-dired) ;; Open dired when switching to a project
+  (projectile-auto-discover nil) ;; Disable auto search for better startup times
   (projectile-project-search-path '(("~/Projects/" . 3)
                                     ("/mnt/Data/Mark/Projektek/Desktop/" . 1)
                                     ("/mnt/Data/Mark/Projektek/Games/" . 3))))
