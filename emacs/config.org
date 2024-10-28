@@ -343,7 +343,7 @@ If a project is in an another project add the project with this command: project
                         csharp-ts-mode java-ts-mode
                         html-mode css-ts-mode
                         js-ts-mode typescript-ts-mode
-                        vue-mode php-mode cmake-ts-mode
+                        php-mode cmake-ts-mode
                         go-mode rust-ts-mode
                         gdscript-mode glsl-mode)
              . eglot-ensure)  ;; Autostart lsp servers for a given mode
@@ -365,8 +365,8 @@ If a project is in an another project add the project with this command: project
                    `(glsl-mode . ("~/.config/emacs/lsp-servers/glsl_analyzer/glsl_analyzer")))
       ;; Add typescript, because server can't find it
       ;; https://github.com/neovim/neovim/issues/20010
-      (add-to-list 'eglot-server-programs
-                   `(vue-mode . ("vue-language-server" "--stdio" :initializationOptions(:typescript(:tsdk "/usr/lib64/node_modules/typescript/lib/")))))
+      ;;(add-to-list 'eglot-server-programs
+      ;;             `(vue-mode . ("vue-language-server" "--stdio" :initializationOptions(:typescript(:tsdk "/usr/lib64/node_modules/typescript/lib/")))))
       )
 #+end_src
 
@@ -405,6 +405,8 @@ Currently it's tedious to use Treesitter, because emacs has not yet fully migrat
 Automatically install and use tree-sitter major modes in Emacs 29+.
 If the tree-sitter version can’t be used, fall back to the original major mode.
 #+begin_src emacs-lisp
+    ;; M-x treesit-auto-install-all
+    ;; Install all (or a selected subset) of the maintained and compatible grammars.
     (use-package treesit-auto
       :custom
       (treesit-auto-install 'prompt)
@@ -426,10 +428,10 @@ If the tree-sitter version can’t be used, fall back to the original major mode
 #+end_src
 
 *** Vue mode
-#+begin_src emacs-lisp
-    (use-package vue-mode
-      :mode "\\.vue\\'")
-#+end_src
+# #+begin_src emacs-lisp
+#     (use-package vue-mode
+#       :mode "\\.vue\\'")
+# #+end_src
 
 *** CMake mode
 #+begin_src emacs-lisp

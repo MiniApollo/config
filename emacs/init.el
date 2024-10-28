@@ -220,7 +220,7 @@
                     csharp-ts-mode java-ts-mode
                     html-mode css-ts-mode
                     js-ts-mode typescript-ts-mode
-                    vue-mode php-mode cmake-ts-mode
+                    php-mode cmake-ts-mode
                     go-mode rust-ts-mode
                     gdscript-mode glsl-mode)
          . eglot-ensure)  ;; Autostart lsp servers for a given mode
@@ -242,8 +242,8 @@
                `(glsl-mode . ("~/.config/emacs/lsp-servers/glsl_analyzer/glsl_analyzer")))
   ;; Add typescript, because server can't find it
   ;; https://github.com/neovim/neovim/issues/20010
-  (add-to-list 'eglot-server-programs
-               `(vue-mode . ("vue-language-server" "--stdio" :initializationOptions(:typescript(:tsdk "/usr/lib64/node_modules/typescript/lib/")))))
+  ;;(add-to-list 'eglot-server-programs
+  ;;             `(vue-mode . ("vue-language-server" "--stdio" :initializationOptions(:typescript(:tsdk "/usr/lib64/node_modules/typescript/lib/")))))
   )
 
 (use-package sideline-flymake
@@ -258,6 +258,8 @@
 (use-package emmet-mode
   :hook (html-mode . emmet-mode))
 
+;; M-x treesit-auto-install-all
+;; Install all (or a selected subset) of the maintained and compatible grammars.
 (use-package treesit-auto
   :custom
   (treesit-auto-install 'prompt)
@@ -273,9 +275,6 @@
 
 (use-package php-mode
   :mode "\\.php\\'")
-
-(use-package vue-mode
-  :mode "\\.vue\\'")
 
 (use-package cmake-ts-mode
   :ensure nil
