@@ -73,8 +73,7 @@
     "b n" '(next-buffer :wk "Next buffer")
     "b p" '(previous-buffer :wk "Previous buffer")
     "b r" '(revert-buffer :wk "Reload buffer")
-    "b j" '(bookmark-jump :wk "Bookmark jump")
-    "b m" '(evil-mc-mode :wk "Toggle Evil mc mode"))
+    "b j" '(bookmark-jump :wk "Bookmark jump"))
 
   (mark/leader-keys
     "d" '(:ignore t :wk "Dired")
@@ -82,7 +81,7 @@
     "d j" '(dired-jump :wk "Dired jump to current"))
 
   (mark/leader-keys
-    "e" '(:ignore t :wk "Languages Eglot ")
+    "e" '(:ignore t :wk "Languages Eglot")
     "e e" '(eglot-reconnect :wk "Eglot Reconnect")
     "e d" '(eldoc-doc-buffer :wk "Eldoc Buffer")
     "e f" '(eglot-format :wk "Eglot Format")
@@ -106,14 +105,20 @@
 
   (mark/leader-keys
     "s" '(:ignore t :wk "Show")
-    "s v" '(multi-vterm :wk "Vterm")
+    "s v" '(:ignore t :wk "Vterm")
+    "s v v" '(multi-vterm :wk "New Multi Vterm")
+    "s v n" '(multi-vterm-next :wk "Vterm next")
+    "s v b" '(multi-vterm-prev :wk "Vterm previus")
+    "s v d" '(multi-vterm-dedicated-toggle :wk "Toggle dedicated Vterm")
     "s d" '(flymake-show-buffer-diagnostics :wk "Flymake buffer diagnostic")
     "s u" '(undo-tree-visualize :wk "Undotree"))
 
   (mark/leader-keys
     "t" '(:ignore t :wk "Toggle")
-    "t t" '(visual-line-mode :wk "Toggle truncated lines (wrap)")
-    "t l" '(display-line-numbers-mode :wk "Toggle line numbers")))
+    "t t" '(visual-line-mode :wk "Truncated lines (wrap)")
+    "t l" '(display-line-numbers-mode :wk "Line numbers")
+    "t m" '(evil-mc-mode :wk "Evil mc mode")
+    ))
 
 (use-package emacs
   :custom
