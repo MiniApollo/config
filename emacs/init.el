@@ -217,7 +217,7 @@
 (use-package eglot
   :ensure nil ;; Don't install eglot because it's now built-in
   :hook ((c-ts-mode c++-ts-mode
-                    csharp-ts-mode java-ts-mode
+                    csharp-mode java-ts-mode
                     html-mode css-ts-mode
                     js-ts-mode typescript-ts-mode
                     php-mode cmake-ts-mode
@@ -231,7 +231,7 @@
   (eglot-report-progress nil) ;; Disable lsp server logs (Don't show lsp messages at the bottom, java)
   :config
   (add-to-list 'eglot-server-programs
-               `(csharp-ts-mode . ("/usr/bin/OmniSharp" "-lsp")))
+               `(csharp-mode . ("OmniSharp" "-lsp")))
   (add-to-list 'eglot-server-programs
                `(java-ts-mode . ("~/.config/emacs/lsp-servers/jdt-language-server-1.31.0/bin/jdtls" "-lsp")))
   (add-to-list 'eglot-server-programs
@@ -268,7 +268,7 @@
   ;; Remove treesitter modes, go-ts-mode not working currently
   ;; glsl-ts-mode don't work because of a rewrite in glsl-mode
   ;; https://github.com/jimhourihan/glsl-mode/commit/c5f2c2e7edf8a647eda74abe2cdf73fa6f62ebd2
-  (setq treesit-auto-langs (cl-set-difference treesit-auto-langs '(go gomod glsl)))
+  (setq treesit-auto-langs (cl-set-difference treesit-auto-langs '(go gomod glsl c-sharp)))
   ;; Important: Delete before 'treesit-auto-add-to-auto-mode-alist'
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
