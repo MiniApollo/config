@@ -428,10 +428,10 @@ If the tree-sitter version can’t be used, fall back to the original major mode
 #+end_src
 
 *** Vue mode
-# #+begin_src emacs-lisp
-#     (use-package vue-mode
-#       :mode "\\.vue\\'")
-# #+end_src
+#+begin_src emacs-lisp
+    (use-package vue-mode
+      :mode "\\.vue\\'")
+#+end_src
 
 *** CMake mode
 #+begin_src emacs-lisp

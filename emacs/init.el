@@ -276,6 +276,9 @@
 (use-package php-mode
   :mode "\\.php\\'")
 
+(use-package vue-mode
+  :mode "\\.vue\\'")
+
 (use-package cmake-ts-mode
   :ensure nil
   :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
