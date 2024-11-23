@@ -3,10 +3,15 @@ games-action/prismlauncher ~amd64
 media-video/obs-studio ~amd64
 sys-power/tlp ~amd64
 app-backup/pika-backup ~amd64
+media-sound/musescore ~amd64
+sys-devel/gcc:14 ~amd64
 
 ### Nvidia
 x11-drivers/nvidia-drivers ~amd64
 dev-util/nvidia-cuda-toolkit ~amd64
+
+gui-libs/egl-x11 ~amd64
+gui-libs/eglexternalplatform ~amd64
 
 ### Dotnet
 dev-dotnet/dotnet-sdk-bin ~amd64
@@ -66,7 +71,8 @@ gui-libs/aquamarine ~amd64
 # Alacritty use toml as config file
 x11-terms/alacritty ~amd64
 
-gui-apps/waybar ~amd64
+# Not working 0.11.0 no tray icons
+# gui-apps/waybar ~amd64
 dev-libs/date ~amd64
 media-video/wireplumber ~amd64
 media-video/pipewire ~amd64

@@ -15,6 +15,8 @@ sys-kernel/installkernel grub dracut
 x11-drivers/nvidia-drivers tools abi_x86_32 kernel-open
 media-video/ffmpeg nvenc
 
+gui-libs/egl-x11 abi_x86_32
+
 ### Pipewire
 media-video/pipewire sound-server readline ssl v4l pipewire-alsa dbus extra jack-sdk ffmpeg
 
@@ -86,6 +88,9 @@ dev-libs/libunistring abi_x86_32
 dev-lang/rust-bin rust-analyzer rust-src rustfmt
 dev-lang/php curl
 
+### VSCodium
+x11-libs/libXi abi_x86_32
+
 ### Vaapi
 media-libs/libva abi_x86_32
 media-plugins/gst-plugins-vaapi abi_x86_32
@@ -107,9 +112,13 @@ app-arch/xz-utils abi_x86_32
 
 ### Gimp
 x11-libs/libxkbcommon abi_x86_32
+net-print/cups abi_x86_32
 
 ### Qtbase
 dev-libs/libpcre2 abi_x86_32
+
+dev-qt/qt5compat qml
+kde-frameworks/kconfig qml
 
 ### Thunderbird
 media-libs/fontconfig abi_x86_32
@@ -118,3 +127,10 @@ gui-libs/libdecor abi_x86_32
 ### VLC
 media-video/vlc gstreamer keyring -vaapi -vdpau # For binary package
 sys-libs/libcap abi_x86_32
+media-libs/libjpeg-turbo abi_x86_32
+
+### LibreOffice
+app-dicts/myspell-en l10n_en-US l10n_en-GB
+
+### GTK+
+x11-libs/cairo abi_x86_32

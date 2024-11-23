@@ -24,6 +24,8 @@ dev-libs/libxml2 abi_x86_32
 dev-libs/icu abi_x86_32
 sys-libs/gpm abi_x86_32
 x11-libs/libpciaccess abi_x86_32
+gui-libs/egl-gbm abi_x86_32
+gui-libs/egl-wayland abi_x86_32
 
 ### Wine
 media-libs/libsdl2 abi_x86_32
@@ -65,3 +67,4 @@ media-libs/gst-plugins-base abi_x86_32
 media-libs/gst-plugins-bad abi_x86_32
 dev-lang/orc abi_x86_32
 sys-libs/pam abi_x86_32
+net-libs/gnutls abi_x86_32
