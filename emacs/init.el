@@ -378,10 +378,14 @@
   ;; `completion-at-point' is often bound to M-TAB.
   (tab-always-indent 'complete)
   (corfu-preview-current nil) ;; Don't insert completion without confirmation
+  ;; Emacs 30 will fix text-mode
+  ;; Text-mode not working currently, because ispell-complete-word is called not completion-at-point
+  ;; https://github.com/emacs-mirror/emacs/blob/1704fa4fb4164a15c7e258b922dbba190811d92d/etc/NEWS.30#L752
+  ;; Corfu also has info in their readme, but no configuration is needed
+  :init
   ;; Recommended: Enable Corfu globally.  This is recommended since Dabbrev can
   ;; be used globally (M-/).  See also the customization variable
   ;; `global-corfu-modes' to exclude certain modes.
-  :init
   (global-corfu-mode))
 
 (use-package nerd-icons-corfu
