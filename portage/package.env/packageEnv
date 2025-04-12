@@ -1,3 +1,6 @@
 net-libs/webkit-gtk lessjobs.conf
 media-gfx/openvdb lessjobs.conf
-gui-wm/hyprland gcc14.conf
+media-gfx/blender lessjobs.conf
+
+#gui-wm/hyprland gcc14.conf
+#llvm-core/libclc gcc14.conf
