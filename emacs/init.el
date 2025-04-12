@@ -69,7 +69,7 @@
   (mark/leader-keys
     "b" '(:ignore t :wk "Buffer Bookmarks")
     "b b" '(consult-buffer :wk "Switch buffer")
-    "b k" '(kill-this-buffer :wk "Kill this buffer")
+    "b k" '(kill-current-buffer :wk "Kill this buffer")
     "b i" '(ibuffer :wk "Ibuffer")
     "b n" '(next-buffer :wk "Next buffer")
     "b p" '(previous-buffer :wk "Previous buffer")
@@ -488,6 +488,7 @@
   ((org-mode prog-mode) . rainbow-mode))
 
 (use-package which-key
+  :ensure nil ;; Don't install which-key because it's now built-in
   :init
   (which-key-mode 1)
   :diminish
