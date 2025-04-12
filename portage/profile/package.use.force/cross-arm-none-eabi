@@ -1,0 +1,4 @@
+cross-arm-none-eabi/newlib  multilib
+cross-arm-none-eabi/binutils  multilib
+cross-arm-none-eabi/gcc  nopie multilib
+cross-arm-none-eabi/gdb  multilib

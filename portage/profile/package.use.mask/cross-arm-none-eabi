@@ -1,0 +1,4 @@
+cross-arm-none-eabi/newlib  cet -multilib
+cross-arm-none-eabi/binutils  cet -multilib
+cross-arm-none-eabi/gcc  default-stack-clash-protection hardened ssp pie -nopie cet -multilib
+cross-arm-none-eabi/gdb  -multilib
