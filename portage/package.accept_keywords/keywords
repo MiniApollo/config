@@ -21,6 +21,7 @@ dev-dotnet/dotnet-runtime-nugets ~amd64
 ### Emacs
 dev-dotnet/omnisharp-roslyn ~amd64
 dev-go/gopls ~amd64
+dev-go/go-tools ~amd64
 
 dev-python/pipx ~amd64
 dev-python/userpath ~amd64
@@ -59,7 +60,6 @@ gui-apps/rofi-wayland ~amd64
 ### Hyprland
 gui-wm/hyprland ~amd64
 gui-libs/hyprcursor ~amd64
-gui-libs/xdg-desktop-portal-hyprland ~amd64
 dev-libs/hyprlang ~amd64
 dev-cpp/sdbus-c++ ~amd64
 dev-util/hyprwayland-scanner ~amd64
@@ -67,14 +67,23 @@ dev-libs/wayland-protocols ~amd64
 gui-libs/hyprutils ~amd64
 dev-libs/hyprland-protocols ~amd64
 gui-libs/aquamarine ~amd64
+dev-libs/hyprgraphics ~amd64
+gui-libs/hyprland-qtutils ~amd64
+dev-cpp/glaze ~amd64
 
 # Alacritty use toml as config file
 x11-terms/alacritty ~amd64
 
-# Not working 0.11.0 no tray icons
 # gui-apps/waybar ~amd64
 dev-libs/date ~amd64
 media-video/wireplumber ~amd64
 media-video/pipewire ~amd64
 
 gui-apps/wtype ~amd64
+
+### Nvg-look
+x11-apps/xcur2png ~amd64
+app-misc/nwg-look ~amd64
+
+### Brave
+dev-libs/libpthread-stubs **

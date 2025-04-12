@@ -3,9 +3,14 @@ app-admin/doas persist
 sys-process/htop lm-sensors
 app-editor/vim gpm -sound
 
-### Modemmanger Fix
+net-libs/nodejs npm
+
+### Networkmanager
+# Modemmanger Fix
 net-misc/networkmanager -modemmanager -bluetooth
 gnome-extra/nm-applet appindicator -modemmanager
+
+dev-db/sqlite abi_x86_32
 
 ### Boot
 sys-boot/grub mount
@@ -40,7 +45,7 @@ x11-base/xwayland libei
 ### Blender
 media-libs/opencolorio -opengl
 media-libs/freetype brotli
-media-video/ffmpeg theora opus vpx
+media-video/ffmpeg theora opus vpx lame
 app-arch/brotli abi_x86_32
 media-gfx/blender collada jemalloc openal cuda optix
 
@@ -49,16 +54,20 @@ sys-apps/systemd-utils abi_x86_32
 x11-libs/libXcursor abi_x86_32
 dev-libs/nettle abi_x86_32
 
+# Use binary version, because can't compile
+media-libs/openimageio cpu_flags_x86_avx cpu_flags_x86_avx2 cpu_flags_x86_f16c cpu_flags_x86_sse3 cpu_flags_x86_sse4_1 cpu_flags_x86_sse4_2 cpu_flags_x86_ssse3 
+
 ### PrismLauchner
 sys-libs/zlib minizip
 
 ### Ios
 app-pda/gtkpod gstreamer
-gnome-base/gvfs afp archive gphoto2 mtp keyring
+gnome-base/gvfs afp archive gphoto2 mtp keyring 
 
 ### Printing
 net-print/cups zeroconf
 net-print/cups-filters zeroconf
+media-libs/freetype abi_x86_32
 
 ### Avahi wireless printing
 net-dns/avahi abi_x86_32
@@ -81,7 +90,7 @@ dev-lang/rust-bin abi_x86_32
 app-misc/mime-types nginx
 
 ### Emacs
-app-editors/emacs gui gtk json jit dynamic-loading sqlite tree-sitter -X -athena -Xaw3d -motif
+app-editors/emacs gui gtk json jit dynamic-loading sqlite tree-sitter libxml2 -X -athena -Xaw3d -motif
 sys-devel/gcc jit
 dev-libs/libunistring abi_x86_32
 
@@ -96,8 +105,10 @@ media-libs/libva abi_x86_32
 media-plugins/gst-plugins-vaapi abi_x86_32
 media-libs/mesa -vaapi -vdpau # Not needed because not using amd or nouveau
 
+llvm-core/llvm:18 abi_x86_32
+
 ### Krita
-dev-python/PyQt5 declarative
+dev-python/pyqt5 declarative
 
 ### OBS
 media-video/obs-studio qt6
@@ -109,6 +120,14 @@ dev-libs/glib abi_x86_32
 media-libs/graphene abi_x86_32
 
 app-arch/xz-utils abi_x86_32
+
+#Lutris multilib dependencies
+media-libs/vulkan-loader abi_x86_32
+media-libs/vulkan-layers abi_x86_32
+media-libs/freetype abi_x86_32
+media-libs/libpng abi_x86_32
+net-libs/gnutls abi_x86_32
+media-libs/libsdl2 abi_x86_32
 
 ### Gimp
 x11-libs/libxkbcommon abi_x86_32
@@ -134,3 +153,12 @@ app-dicts/myspell-en l10n_en-US l10n_en-GB
 
 ### GTK+
 x11-libs/cairo abi_x86_32
+
+### Avrdude
+dev-libs/libusb-compat abi_x86_32
+
+### LMMS
+media-sound/lmms fluidsynth portaudio libgig soundio stk
+
+### Mesa
+dev-util/spirv-tools abi_x86_32
