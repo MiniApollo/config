@@ -384,8 +384,24 @@ Show flymake errors with sideline
 A template system for Emacs. And yasnippet-snippets is a snippet collection package.
 To use it write out the full keyword (or use autocompletion) and press Tab.
 #+begin_src emacs-lisp
-    (use-package yasnippet-snippets
-      :hook (prog-mode . yas-minor-mode))
+        (use-package yasnippet-snippets
+          :hook (prog-mode . yas-minor-mode))
+
+        (defun mark/corfu-yas-tab-handler ()
+          "Prioritize corfu over yasnippet when yasnippet is active"
+          (interactive)
+          ;; There is no direct way to get if corfu is currently displayed so we watch the completion index
+          (if (> corfu--index -1)
+              (corfu-complete)
+            (yas-next-field-or-maybe-expand)
+            )
+          )
+        (use-package emacs
+          :after (yasnippet corfu)
+          :bind
+          (:map yas-keymap
+                ("TAB" . mark/corfu-yas-tab-handler))
+          )
 #+end_src
 
 ** Emmet-mode

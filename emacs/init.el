@@ -255,6 +255,22 @@
 (use-package yasnippet-snippets
   :hook (prog-mode . yas-minor-mode))
 
+(defun mark/corfu-yas-tab-handler ()
+  "Prioritize corfu over yasnippet when yasnippet is active"
+  (interactive)
+  ;; There is no direct way to get if corfu is currently displayed so we watch the completion index
+  (if (> corfu--index -1)
+      (corfu-complete)
+    (yas-next-field-or-maybe-expand)
+    )
+  )
+(use-package emacs
+  :after (yasnippet corfu)
+  :bind
+  (:map yas-keymap
+        ("TAB" . mark/corfu-yas-tab-handler))
+  )
+
 (use-package emmet-mode
   :hook (html-mode . emmet-mode))
 
