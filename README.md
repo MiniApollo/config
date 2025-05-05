@@ -19,8 +19,6 @@
 
 <kbd>1.</kbd> Clone the repository
 
-> **Note**
-> I personally clone the repository to my home directory.
 ```bash
 git clone https://github.com/MiniApollo/config.git
 cd config
@@ -34,16 +32,12 @@ cp -r .* ~/.config
 
 ## :bookmark_tabs: <samp>DETAILS</samp>
 
-
 - Linux Kernel: [Linux LTS](https://www.kernel.org)
 - Distro: [Gentoo](https://www.gentoo.org)
 - Window Manager - Compositor: [Hyprland](https://hyprland.org/)
 - Terminal Emulator: [Alacritty](https://github.com/alacritty/alacritty)
 - Shell: [Bash](https://www.gnu.org/software/bash)
 - Browser: [Librewolf](https://librewolf.net)
-
-### <samp>Dev</samp>
-
 - Text Editor: [Gnu Emacs](https://www.gnu.org/software/emacs/)
 
 ### <samp>Other Utilities</samp>
@@ -52,14 +46,8 @@ cp -r .* ~/.config
 - GUI File manager: [Thunar](https://docs.xfce.org/xfce/thunar/start)
 - Night light: [Gammastep](https://wiki.archlinux.org/title/backlight#Wayland)
 - Brightness: [brightnessctl](https://wiki.archlinux.org/title/backlight#Backlight_utilities)
-- Network-manager-applet: [nm-applet](https://wiki.archlinux.org/title/NetworkManager)
 - Notifier: [dunst](https://dunst-project.org)
 - Wallpaper: [dynamic-wallpaper-wayland](https://github.com/MiniApollo/dynamic-wallpaper-wayland)
-
-> Font: [noto fonts](https://wiki.gentoo.org/wiki/Fonts)
-### <samp>Notes</samp>
-> **Note**
-> If you don't want any of the programs just delete it or change it in autostart.sh or hyprland.conf 
 
 ### <samp>Emacs</samp>
 
@@ -71,93 +59,65 @@ cp -r .* ~/.config
 > The default port in nvim-lspconfig for Godot is 6008, but if you're running Godot 4.0 then that's configured to use 6005 (you can change this in the  settings).<br>
 > #### [Thanks to Greyly on reddit](https://www.reddit.com/r/godot/comments/sexkij/state_of_neovim_support_in_2022)
 
-![alt neovim](https://github.com/MiniApollo/config/blob/main/images/editor/3_Emacs.png)
+![alt emacs](https://github.com/MiniApollo/config/blob/main/images/editor/3_Emacs.png)
 
-## <samp>How to replicate</samp>
+## <samp>Installation</samp>
 
 Make a base gentoo install [(I recommend Denshi's video )](https://www.youtube.com/watch?v=J7W9MItUSGw) <br>
-
-> **Note**
-> When partitioning the disk you can use Gparted 
+[Gentoo Handbook](https://wiki.gentoo.org/wiki/Handbook:Main_Page) <br>
 
 Choose the desktop profile 
-> **Warning**
-> Don't forget to emerge the rust binary if you don't want longer emerge time (1-2 hours)
+
+### Partitioning 
+When partitioning the disk you can use Gparted 
+- EFI system partition: Recommended size 1 GiB (1024 MiB)
+- Swap partition: Recommended size 4 GiB (4096 MiB)
+### Base System
+Don't forget to emerge the rust binary if you don't want longer emerge time (1-2 hours)
 
 Set the use flags and makeopts for faster emerge
-
-<h3>Use ram instead of ssd,hdd</h3>
-Change fstab https://wiki.gentoo.org/wiki/Portage_TMPDIR_on_tmpfs
-
-> **Warning**
-> Only use it if you have at least 2 gb per thread 
-
-> **Note**
-> If you want you can copy the /etc/portage files, but change it to your hardware (makeopts, use flags, videocards) 
-
-After the install
-
-Open /etc/rc.conf and change to rc_parallel="YES" and rc_logger="YES" 
+Use plocate
 
 Core
 ```bash
-doas emerge -av gentoolkit app-admin/doas sys-process/dcron app-admin/sysklogd net-misc/networkmanager
-efibootmgr grub sys-boot/os-prober app-shells/bash-completion
+doas emerge -qavg gentoolkit eclean-kernel cfg-update app-admin/doas sys-process/dcron app-admin/sysklogd net-misc/networkmanager grub sys-boot/os-prober app-shells/bash-completion app-eselect/eselect-repository
 ```
-> **Note**
-> Enable [Guru](https://wiki.gentoo.org/wiki/Project:GURU/Information_for_End_Users) for swaylock-effects <br>
-> For [Librewolf](https://wiki.gentoo.org/wiki/LibreWolf) select the librewolf repository 
-
-> **Warning**
-> Don't forget /etc/doas.conf [wiki](https://wiki.gentoo.org/wiki/Doas)  <br>
-> Don't forget to install app-shells/bash-completion and add to .bashrc (complete -F _root_command doas) for doas bash completion
+### Post Installation
+- Enable [Guru](https://wiki.gentoo.org/wiki/Project:GURU/Information_for_End_Users) for swaylock-effects <br>
+- For [Librewolf](https://wiki.gentoo.org/wiki/LibreWolf) select the librewolf repository 
+- Install app-shells/bash-completion and add to .bashrc (complete -F _root_command doas) for doas bash completion
 
 Window manager
 ```bash
-doas emerge -qav vim hyprland waybar alacritty htop gammastep
-nm-applet gui-apps/rofi-wayland gui-apps/swaylock-effects swayidle swaybg gui-apps/wl-clipboard
-gui-apps/foot gui-apps/slurp gui-apps/grim media-sound/playerctl app-misc/brightnessctl gui-libs/xdg-desktop-portal-hyprland
-media-sound/alsa-utils gnome-extra/polkit-gnome x11-misc/dunst sys-apps/xdg-desktop-portal-gtk
+doas emerge -qavg hyprland waybar alacritty htop tlp gammastep nm-applet gui-apps/rofi-wayland gui-apps/swaylock-effects swayidle swaybg gui-apps/wl-clipboard gui-apps/foot gui-apps/slurp gui-apps/grim media-sound/playerctl app-misc/brightnessctl gui-libs/xdg-desktop-portal-wlr media-sound/alsa-utils gnome-extra/polkit-gnome x11-misc/dunst sys-apps/xdg-desktop-portal-gtk gui-apps/tuigreet nwg-look
 ```
 
 Lighter Programs
 ```bash
-doas emerge -qav gparted thunar xfce-base/tumbler xfce-base/thunar-volman media-gfx/raw-thumbnailer
-app-admin/keepassxc ristretto galgulator celluloid app-arch/file-roller net-misc/yt-dlp cmus
+doas emerge -qavg gparted thunar xfce-base/tumbler xfce-base/thunar-volman app-admin/keepassxc ristretto galculator celluloid app-arch/file-roller net-misc/yt-dlp cmus media-video/vlc
 ```
 
 Development
 ```bash
-doas emerge -qav sys-apps/ripgrep sys-apps/fd dev-vcs/git dev-dotnet/dotnet-sdk-bin
+doas emerge -qavg neovim emacs app-editors/vscodium sys-apps/ripgrep sys-apps/fd dev-vcs/git dev-dotnet/dotnet-sdk-bin
 ```
 
 Heavy Programs
-
 ```bash
-doas emerge -qav librewolf-bin www-client/firefox-bin app-office/libreoffice-bin mail-client/thunderbird-bin
-media-gfx/gimp
+doas emerge -qavg librewolf-bin www-client/firefox-bin app-office/libreoffice-bin mail-client/thunderbird-bin media-gfx/gimp
 ```
 Themes
 ```bash
 doas emerge -qav x11-themes/arc-theme
 ```
-> **Note**
-> I personaly install Qogir [icon](https://github.com/vinceliuice/Qogir-icon-theme),[cursor](https://github.com/vinceliuice/Qogir-icon-theme/tree/master/src/cursors) theme
 
-To install Qogir icon/cursor theme
+Qogir icon/cursor theme
 ```bash
 git clone https://github.com/vinceliuice/Qogir-icon-theme.git
-doas emerge --ask xcb-util-cursor
 cd Qogir-icon-theme/
-ls
-doas ./install.sh
+./install.sh -t default
+doas cp -r .local/share/icons/Qogir /usr/share/icons/
 ```
-Laptop
-```bash
-doas emerge -qav tlp powertop
-```
-> **Note**
-> To poweroff the computer use loginctl poweroff/reboot in order when closing of the leds the command finish
 
 Drivers
 ```bash
@@ -169,28 +129,24 @@ doas emerge -qav prime-run
 ```
 Gaming 
 
-To install  
+To install follow the gentoo wiki
 - [Steam](https://wiki.gentoo.org/wiki/Steam)
-- [Wine](https://wiki.gentoo.org/wiki/Wine) <br>
-follow the gentoo wiki
+- [Wine](https://wiki.gentoo.org/wiki/Wine)
 
 Fonts
 
-Install all three in the [gentoo wiki](https://wiki.gentoo.org/wiki/Fonts#Additional_package_considerations)
-+ copy the fonts included in config into fonts folder  
-> **Note**
-> Change in desktop files at /usr/share/applications/ to terminal=false exec=alacritty -e command
+Follow the [gentoo wiki](https://wiki.gentoo.org/wiki/Fonts#Additional_package_considerations)
+and copy the fonts included in config into fonts folder
 
-> **Warning**
-> Don't forget bluetooth printing
- 
-To update the system 
+
+System Update
 ```bash
 doas emaint -a sync && doas emerge -qavuDNg @world && doas emerge --ask --depclean && doas eclean-dist -d && doas eclean-pkg -d && doas eclean-kernel -n 2 && flatpak update
 ```
-
-<h2>ntfs partition fstab</h2>
-if you want to mount ntfs partion in fstab you need to use ntfs3 type
+### Notes
+- Thunar use alacritty: Change in desktop files at /usr/share/applications/ to terminal=false exec=alacritty -e command
+- To poweroff the computer use loginctl poweroff/reboot in order when closing of the leds the command finish
+- if you want to mount ntfs partion in fstab you need to use ntfs3 type
 
 ## <samp>Sources</samp>
 
