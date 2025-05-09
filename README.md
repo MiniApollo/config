@@ -89,7 +89,7 @@ doas emerge -qavg gentoolkit eclean-kernel cfg-update app-admin/doas sys-process
 
 Window manager
 ```bash
-doas emerge -qavg hyprland waybar alacritty htop tlp gammastep nm-applet gui-apps/rofi-wayland gui-apps/swaylock-effects swayidle swaybg gui-apps/wl-clipboard gui-apps/foot gui-apps/slurp gui-apps/grim media-sound/playerctl app-misc/brightnessctl gui-libs/xdg-desktop-portal-wlr media-sound/alsa-utils gnome-extra/polkit-gnome x11-misc/dunst sys-apps/xdg-desktop-portal-gtk gui-apps/tuigreet nwg-look
+doas emerge -qavg hyprland waybar alacritty htop tlp gammastep nm-applet gui-apps/rofi-wayland gui-apps/hypridle gui-apps/hyprlock gui-apps/hyprpicker swaybg gui-apps/wl-clipboard gui-apps/foot gui-apps/slurp gui-apps/grim media-sound/playerctl app-misc/brightnessctl gui-libs/xdg-desktop-portal-wlr media-sound/alsa-utils gnome-extra/polkit-gnome x11-misc/dunst sys-apps/xdg-desktop-portal-gtk gui-apps/tuigreet nwg-look
 ```
 
 Lighter Programs
