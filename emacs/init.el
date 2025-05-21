@@ -210,8 +210,8 @@
   (projectile-switch-project-action #'projectile-dired) ;; Open dired when switching to a project
   (projectile-auto-discover nil) ;; Disable auto search for better startup times
   (projectile-project-search-path '(("~/Projects/" . 3)
-                                    ("/mnt/Data/Mark/Projektek/Desktop/" . 1)
-                                    ("/mnt/Data/Mark/Projektek/Games/" . 3))))
+                                    ("/mnt/Ext4D/Mark/Projektek/Desktop/" . 1)
+                                    ("/mnt/Ext4D/Mark/Projektek/Games/" . 3))))
 ;; Use Bookmarks for smaller, not standard projects
 
 (use-package eglot
