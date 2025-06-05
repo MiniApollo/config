@@ -233,8 +233,6 @@
   (add-to-list 'eglot-server-programs
                `(csharp-mode . ("OmniSharp" "-lsp")))
   (add-to-list 'eglot-server-programs
-               `(java-ts-mode . ("~/.config/emacs/lsp-servers/jdt-language-server-1.31.0/bin/jdtls" "-lsp")))
-  (add-to-list 'eglot-server-programs
                `(cmake-ts-mode . ("~/.local/bin/cmake-language-server"))) ;; Installed with pipx
   (add-to-list 'eglot-server-programs
                `(php-mode . ("intelephense" "--stdio")))
