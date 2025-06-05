@@ -218,10 +218,10 @@
   :ensure nil ;; Don't install eglot because it's now built-in
   :hook ((c-ts-mode c++-ts-mode
                     csharp-mode java-ts-mode
-                    html-mode css-ts-mode
+                    html-ts-mode css-ts-mode
                     js-ts-mode typescript-ts-mode
                     php-mode cmake-ts-mode
-                    go-mode rust-ts-mode
+                    go-ts-mode rust-ts-mode
                     gdscript-mode glsl-mode)
          . eglot-ensure)  ;; Autostart lsp servers for a given mode
   :custom
@@ -274,36 +274,59 @@
 (use-package emmet-mode
   :hook (html-mode . emmet-mode))
 
-;; M-x treesit-auto-install-all
-;; Install all (or a selected subset) of the maintained and compatible grammars.
-(use-package treesit-auto
-  :custom
-  (treesit-auto-install 'prompt)
+(use-package treesit
+  :ensure nil
+  :custom (treesit-language-source-alist
+           '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+             (cmake "https://github.com/uyha/tree-sitter-cmake")
+             (c "https://github.com/tree-sitter/tree-sitter-c")
+             (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
+             (rust "https://github.com/tree-sitter/tree-sitter-rust")
+             (go "https://github.com/tree-sitter/tree-sitter-go")
+             (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
+             (python "https://github.com/tree-sitter/tree-sitter-python")
+             (html "https://github.com/tree-sitter/tree-sitter-html")
+             (css "https://github.com/tree-sitter/tree-sitter-css")
+             (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+             (json "https://github.com/tree-sitter/tree-sitter-json")
+             (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+             (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+             (toml "https://github.com/tree-sitter/tree-sitter-toml")
+             (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+
+  (major-mode-remap-alist
+   '((sh-mode . bash-ts-mode)
+     (c-mode . c-ts-mode)
+     (c++-mode . c++-ts-mode)
+     (python-mode . python-ts-mode)
+     (mhtml-mode . html-ts-mode)
+     (css-mode . css-ts-mode)
+     (javascript-mode . js-ts-mode)
+     (js-json-mode . json-ts-mode)
+     (typescript-mode . typescript-ts-mode)
+     (conf-toml-mode . toml-ts-mode)
+     (yaml-mode . yaml-ts-mode)))
   (c-ts-mode-indent-offset 4) ;; Fix weird indentation in c-ts (C, C++)
   :config
-  ;; Remove treesitter modes, go-ts-mode not working currently
-  ;; glsl-ts-mode don't work because of a rewrite in glsl-mode
-  ;; https://github.com/jimhourihan/glsl-mode/commit/c5f2c2e7edf8a647eda74abe2cdf73fa6f62ebd2
-  (setq treesit-auto-langs (cl-set-difference treesit-auto-langs '(go gomod glsl c-sharp)))
-  ;; Important: Delete before 'treesit-auto-add-to-auto-mode-alist'
-  (treesit-auto-add-to-auto-mode-alist 'all)
-  (global-treesit-auto-mode))
+  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
+  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
+  (add-to-list 'auto-mode-alist '("\\.mod\\'" . go-mod-ts-mode))
+  )
 
-(use-package php-mode
-  :mode "\\.php\\'")
-
-(use-package vue-mode
-  :mode "\\.vue\\'")
+(defun mark/sync-treesit-grammars ()
+  "Clone and compile all treesit grammars"
+  (interactive)
+  (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist)))
 
 (use-package cmake-ts-mode
   :ensure nil
   :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
 
+(use-package php-mode
+  :mode "\\.php\\'")
+
 (use-package glsl-mode
   :mode ("\\.shader\\'" "\\.glsl\\'"))
-
-(use-package go-mode
-  :mode "\\.go\\'")
 
 (use-package ebuild-mode
   :ensure nil
