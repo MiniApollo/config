@@ -122,6 +122,16 @@
     ))
 
 (use-package emacs
+  ;; Fix general.el leader key not working instantly in messages buffer with evil mode
+  :ghook ('after-init-hook
+          (lambda (&rest _)
+            (when-let ((messages-buffer (get-buffer "*Messages*")))
+              (with-current-buffer messages-buffer
+                (evil-normalize-keymaps))))
+          nil nil t)
+  )
+
+(use-package emacs
   :custom
   (menu-bar-mode nil)         ;; Disable the menu bar
   (scroll-bar-mode nil)       ;; Disable the scroll bar
@@ -160,15 +170,7 @@
   :bind (
          ([escape] . keyboard-escape-quit) ;; Makes Escape quit prompts (Minibuffer Escape)
          ("C-g" . evil-normal-state)
-         )
-  ;; Fix general.el leader key not working instantly in messages buffer with evil mode
-  :ghook ('after-init-hook
-          (lambda (&rest _)
-            (when-let ((messages-buffer (get-buffer "*Messages*")))
-              (with-current-buffer messages-buffer
-                (evil-normalize-keymaps))))
-          nil nil t)
-  )
+         ))
 
 (use-package gruvbox-theme
   :config
