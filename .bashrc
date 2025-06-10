@@ -33,4 +33,4 @@ shopt -s autocd
 export TERM=xterm-256color
 export EDITOR=nvim
 export TERMINAL=alacritty
-export PATH="$PATH:/home/mark/.local/bin"
+export PATH="$PATH:~/.local/bin"
