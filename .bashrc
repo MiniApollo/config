@@ -15,7 +15,8 @@ alias ll='ls -lav --ignore=..'   # show long listing of all except ".."
 alias l='ls -lav --ignore=.?*'   # show long listing but no hidden dotfiles except "."
 
 set -o vi
-PS1="\[\033[38;5;9m\][\[$(tput sgr0)\]\[\033[38;5;214m\]\u\[$(tput sgr0)\]\[\033[38;5;6m\]@\[$(tput sgr0)\]\[\033[38;5;38m\]\h\[$(tput sgr0)\] \[$(tput sgr0)\]\[\033[38;5;77m\]\w\[$(tput sgr0)\]\[\033[38;5;9m\]]\[$(tput sgr0)\]\[\033[38;5;214m\]\\$\[$(tput sgr0)\] \[$(tput sgr0)\]"
+## Created with $ _ Bash Prompt Generator
+PS1='\[\e[38;5;202m\][\[\e[38;5;214m\]\u\[\e[0m\] \[\e[38;5;40;1m\]\W\[\e[0;38;5;202m\]]\[\e[38;5;214m\]\\$\[\e[0m\] '
 
 [[ -z "$FUNCNEST" ]] && export FUNCNEST=100          # limits recursive functions, see 'man bash'
 
