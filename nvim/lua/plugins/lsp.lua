@@ -221,6 +221,9 @@ return {
 			--  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
 			--  - settings (table): Override the default settings passed when initializing the server.
 			--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+			local vue_language_server_path = vim.fn.expand("$MASON/packages")
+				.. "/vue-language-server"
+				.. "/node_modules/@vue/language-server"
 			local servers = {
 				clangd = {},
 				gopls = {},
@@ -232,11 +235,21 @@ return {
 				--    https://github.com/pmizio/typescript-tools.nvim
 				--
 				-- But for many setups, the LSP (`ts_ls`) will work just fine
-				-- ts_ls = {},
 				--
 				html = {},
 				cssls = {},
-				vue_ls = {},
+				ts_ls = {},
+				vue_ls = {
+					init_options = {
+						plugins = {
+							name = "@vue/typescript-plugin",
+							location = vue_language_server_path,
+							languages = { "vue" },
+							configNamespace = "typescript",
+						},
+					},
+					filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+				},
 				hyprls = {},
 				sqlls = {},
 				bashls = {},
