@@ -12,7 +12,4 @@ return {
 		dependencies = { "nvim-tree/nvim-web-devicons", opts = {} },
 		opts = {},
 	},
-	{
-		"https://github.com/gentoo/gentoo-syntax",
-	},
 }
