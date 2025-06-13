@@ -271,6 +271,7 @@ Use consult-theme to easily try out themes (Epilepsy Warning).
 #+begin_src emacs-lisp
     (use-package gruvbox-theme
       :config
+      (setq gruvbox-bold-constructs t)
       (load-theme 'gruvbox-dark-medium t)) ;; We need to add t to trust this package
 #+end_src
 
