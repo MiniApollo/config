@@ -82,13 +82,13 @@
     "d j" '(dired-jump :wk "Dired jump to current"))
 
   (mark/leader-keys
-    "e" '(:ignore t :wk "Languages Eglot")
-    "e e" '(eglot-reconnect :wk "Eglot Reconnect")
+    "e" '(:ignore t :wk "Languages")
+    "e e" '(lsp-restart-workspace :wk "LSP Reconnect")
     "e d" '(eldoc-doc-buffer :wk "Eldoc Buffer")
-    "e f" '(eglot-format :wk "Eglot Format")
+    "e f" '(lsp-format-buffer :wk "LSP Format")
     "e l" '(consult-flymake :wk "Consult Flymake")
-    "e r" '(eglot-rename :wk "Eglot Rename")
-    "e i" '(xref-find-definitions :wk "Find defintion")
+    "e r" '(lsp-rename :wk "Eglot Rename")
+    "e i" '(lsp-find-definition :wk "Find defintion")
     "e v" '(:ignore t :wk "Elisp")
     "e v b" '(eval-buffer :wk "Evaluate elisp in buffer")
     "e v r" '(eval-region :wk "Evaluate elisp in region"))
@@ -216,35 +216,32 @@
                                     ("/mnt/Ext4D/Mark/Projektek/Games/" . 3))))
 ;; Use Bookmarks for smaller, not standard projects
 
-(use-package eglot
-  :ensure nil ;; Don't install eglot because it's now built-in
-  :hook ((c-ts-mode c++-ts-mode
-                    csharp-mode java-ts-mode
-                    html-ts-mode css-ts-mode
-                    js-ts-mode typescript-ts-mode
-                    php-mode cmake-ts-mode
-                    go-ts-mode rust-ts-mode
-                    gdscript-mode glsl-mode)
-         . eglot-ensure)  ;; Autostart lsp servers for a given mode
+(use-package lsp-mode
   :custom
-  ;; Good default
-  (eglot-events-buffer-size 0) ;; No event buffers (Lsp server logs)
-  (eglot-autoshutdown t);; Shutdown unused servers.
-  (eglot-report-progress nil) ;; Disable lsp server logs (Don't show lsp messages at the bottom, java)
-  :config
-  (add-to-list 'eglot-server-programs
-               `(csharp-mode . ("OmniSharp" "-lsp")))
-  (add-to-list 'eglot-server-programs
-               `(cmake-ts-mode . ("~/.local/bin/cmake-language-server"))) ;; Installed with pipx
-  (add-to-list 'eglot-server-programs
-               `(php-mode . ("intelephense" "--stdio")))
-  (add-to-list 'eglot-server-programs
-               `(glsl-mode . ("~/.config/emacs/lsp-servers/glsl_analyzer/glsl_analyzer")))
-  ;; Add typescript, because server can't find it
-  ;; https://github.com/neovim/neovim/issues/20010
-  ;;(add-to-list 'eglot-server-programs
-  ;;             `(vue-mode . ("vue-language-server" "--stdio" :initializationOptions(:typescript(:tsdk "/usr/lib64/node_modules/typescript/lib/")))))
-  )
+  (lsp-completion-provider :none) ;; we use Corfu!
+  ;; Disable unneeded features
+  (lsp-lens-enable nil) ;; Disable references count
+  (lsp-headerline-breadcrumb-enable nil) ;; Disable Header line
+  (lsp-ui-sideline-show-code-actions nil) ;; Hide right side code actions
+  (lsp-ui-sideline-show-hover nil) ;; Hide right hover symbols
+  (lsp-modeline-code-actions-enable nil) ;; Disable modeline code actions
+  (lsp-eldoc-enable-hover nil) ;; Disable eldoc (echo area info)
+  (lsp-modeline-diagnostics-enable nil) ;; Disable Modeline diagnostic status
+  (lsp-signature-auto-activate nil) ;; Disable Signature help you could manually request them via `lsp-signature-activate`
+  (lsp-completion-show-detail nil) ;; Disable Completion item detail
+  :init
+  (defun my/lsp-mode-setup-completion ()
+    (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+          '(flex))) ;; Configure flex (corfu)
+  :hook (;; Automatic Language Modes
+         (prog-mode . lsp)
+         (lsp-completion-mode . my/lsp-mode-setup-completion) ;; corfu completion
+         ;; if you want which-key integration
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
+;; optionally
+(use-package lsp-ui
+  :commands lsp-ui-mode)
 
 (use-package sideline-flymake
   :hook (flymake-mode . sideline-mode)
