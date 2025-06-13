@@ -72,3 +72,6 @@ vim.o.confirm = true
 
 -- Show visual column for line lenght
 vim.opt.colorcolumn = "80"
+
+-- Change Work directory
+vim.opt.autochdir = true
