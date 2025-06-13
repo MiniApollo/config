@@ -80,16 +80,16 @@ return {
 					map("<leader>ea", vim.lsp.buf.code_action, "Goto Code Action", { "n", "x" })
 
 					-- Find references for the word under your cursor.
-					map("<leader>er", require("telescope.builtin").lsp_references, "Goto References")
+					map("<leader>ec", require("telescope.builtin").lsp_references, "Goto References")
 
 					-- Jump to the implementation of the word under your cursor.
 					--  Useful when your language has ways of declaring types without an actual implementation.
-					map("<leader>ei", require("telescope.builtin").lsp_implementations, "Goto Implementation")
+					map("<leader>em", require("telescope.builtin").lsp_implementations, "Goto Implementation")
 
 					-- Jump to the definition of the word under your cursor.
 					--  This is where a variable was first declared, or where a function is defined, etc.
 					--  To jump back, press <C-t>.
-					map("<leader>ef", require("telescope.builtin").lsp_definitions, "Goto Definition")
+					map("<leader>ei", require("telescope.builtin").lsp_definitions, "Goto Definition")
 
 					-- WARN: This is not Goto Definition, this is Goto Declaration.
 					--  For example, in C this would take you to the header.
