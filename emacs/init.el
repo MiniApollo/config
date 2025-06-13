@@ -212,9 +212,7 @@
   (projectile-run-use-comint-mode t) ;; Interactive run dialog when running projects inside emacs (like giving input)
   (projectile-switch-project-action #'projectile-dired) ;; Open dired when switching to a project
   (projectile-auto-discover nil) ;; Disable auto search for better startup times
-  (projectile-project-search-path '(("~/Projects/" . 3)
-                                    ("/mnt/Ext4D/Mark/Projektek/Desktop/" . 1)
-                                    ("/mnt/Ext4D/Mark/Projektek/Games/" . 3))))
+  (projectile-project-search-path '(("/mnt/Ext4D/Mark/Projektek/" . 2))))
 ;; Use Bookmarks for smaller, not standard projects
 
 (use-package lsp-mode
