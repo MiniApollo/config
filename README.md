@@ -27,7 +27,8 @@ cd config
 > **Note**
 > Delete the files that you don't need.
 ```bash
-cp -r .* ~/.config
+cp -r alacritty lazygit hypr tmux emacs nvim rofi waybar ~/.config/
+cp .bashrc ~/
 ```
 
 ## :bookmark_tabs: <samp>DETAILS</samp>
