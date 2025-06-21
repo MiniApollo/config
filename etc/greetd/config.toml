@@ -1,0 +1,1 @@
+command = "tuigreet --time --remember --remember-session --power-shutdown 'loginctl poweroff' --power-reboot 'loginctl reboot'"
