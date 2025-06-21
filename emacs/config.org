@@ -9,6 +9,7 @@
 - [[#important-to-load-first][Important to load first]]
   - [[#startup-performance][Startup Performance]]
   - [[#auto-tangle-configuration-file][Auto-tangle Configuration file]]
+  - [[#startup-time][Startup time]]
   - [[#use-package][Use Package]]
   - [[#evil-mode][Evil Mode]]
   - [[#general-keybindings][General Keybindings]]
@@ -19,11 +20,10 @@
   - [[#fonts][Fonts]]
   - [[#modeline][Modeline]]
 - [[#development][Development]]
-  - [[#projectile][Projectile]]
+  - [[#consult-dir][Consult-dir]]
   - [[#lsp-mode][LSP Mode]]
   - [[#sideline-flymake][Sideline-flymake]]
   - [[#yasnippet][Yasnippet]]
-  - [[#emmet-mode][Emmet-mode]]
   - [[#language-modes][Language modes]]
   - [[#terminal][Terminal]]
 - [[#other-packages][Other Packages]]
@@ -64,14 +64,30 @@ This function checks to see if the file being saved is the Emacs.org file you’
 automatically exports the configuration here to the associated output files.
 #+begin_src emacs-lisp
     (defun mark/org-babel-tangle-config ()
-      "Automatically tangle our Emacs.org config file when we save it. Credit to Emacs From Scratch for this one!"
+      "Automatically tangle our Emacs.org config file and refresh package-quickstart when we save it. Credit to Emacs From Scratch for this one!"
+      (interactive)
       (when (string-equal (file-name-directory (buffer-file-name))
-                          (expand-file-name user-emacs-directory))
+    					  (expand-file-name user-emacs-directory))
         ;; Dynamic scoping to the rescue
         (let ((org-confirm-babel-evaluate nil))
-          (org-babel-tangle))))
+    	  (org-babel-tangle)
+    	  (package-quickstart-refresh)
+    	  )
+        ))
 
     (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'mark/org-babel-tangle-config)))
+#+end_src
+
+** Startup time
+#+begin_src emacs-lisp
+    (defun mark/display-startup-time ()
+      (message "Emacs loaded in %s with %d garbage collections."
+               (format "%.2f seconds"
+                       (float-time
+    					(time-subtract after-init-time before-init-time)))
+               gcs-done))
+
+    (add-hook 'emacs-startup-hook #'mark/display-startup-time)
 #+end_src
 
 ** Use Package
@@ -91,6 +107,7 @@ With Emacs 29 use-package is now built-in.
     (setq package-archives '(("melpa" . "https://melpa.org/packages/") ;; Sets default package repositories
                              ("org" . "https://orgmode.org/elpa/")
                              ("elpa" . "https://elpa.gnu.org/packages/")))
+    (setq package-quickstart t) ;; For blazingly fast startup times, this line makes startup miles faster
 #+end_src
 
 ** Evil Mode
@@ -112,7 +129,62 @@ Notes:
       :bind (:map evil-motion-state-map
                   ("SPC" . nil)
                   ("RET" . nil)
-                  ("TAB" . nil)))
+                  ("TAB" . nil))
+      ;;   :config
+      ;;   ;; Define the leader key as Space
+      ;;   (evil-set-leader '(normal visual motion) (kbd "SPC"))
+      ;;   (evil-set-leader nil (kbd "C-SPC"))
+
+      ;;   (evil-define-key '(normal visual motion) 'global
+      ;;     (kbd "<leader>.") 'find-file
+      ;;     (kbd "<leader>TAB") 'comment-line
+
+      ;;     (kbd "<leader>sc") (lambda () (interactive) (find-file "~/.config/emacs/config.org"))
+      ;;     (kbd "<leader>se") 'sudo-edit
+      ;;     (kbd "<leader>su") 'sudo-edit-find-file
+      ;;     (kbd "<leader>sr") 'consult-recent-file
+      ;;     (kbd "<leader>sf") 'consult-fd
+      ;;     (kbd "<leader>sg") 'consult-ripgrep
+      ;;     (kbd "<leader>sl") 'consult-line
+      ;;     (kbd "<leader>si") 'consult-imenu
+
+      ;;     (kbd "<leader>ds") 'consult-buffer
+      ;;     (kbd "<leader>dk") 'kill-current-buffer
+      ;;     (kbd "<leader>di") 'ibuffer
+      ;;     (kbd "<leader>dn") 'next-buffer
+      ;;     (kbd "<leader>dp") 'previous-buffer
+      ;;     (kbd "<leader>dr") 'revert-buffer
+      ;;     (kbd "<leader>db") 'bookmark-jump
+      ;;     (kbd "<leader>dv") 'dired
+      ;;     (kbd "<leader>dj") 'dired-jump
+      
+      ;;     (kbd "<leader>ee") 'lsp-restart-workspace
+      ;;     (kbd "<leader>ed") 'eldoc-doc-buffer
+      ;;     (kbd "<leader>ef") 'lsp-format-buffer
+      ;;     (kbd "<leader>el") 'consult-flymake
+      ;;     (kbd "<leader>er") 'lsp-rename
+      ;;     (kbd "<leader>ei") 'lsp-find-definition
+      ;;     (kbd "<leader>evb") 'eval-buffer
+      ;;     (kbd "<leader>evr") 'eval-region
+
+      ;;     (kbd "<leader>gt") 'magit-status
+
+      ;;     (kbd "<leader>hq") 'save-buffers-kill-emacs ;; Quit Emacs and Daemon
+      ;;     (kbd "<leader>hr") (lambda () (interactive) (load-file "~/.config/emacs/init.el")) ;; Reload Emacs config
+
+      ;;     (kbd "<leader>vm") 'multi-vterm
+      ;;     (kbd "<leader>vn") 'multi-vterm-next 
+      ;;     (kbd "<leader>vp") 'multi-vterm-prev
+      ;;     (kbd "<leader>vd") 'multi-vterm-dedicated-toggle
+
+      ;;     (kbd "<leader>q") 'flymake-show-buffer-diagnostics
+      ;;     (kbd "<leader>u") 'undo-tree-visualize
+
+      ;;     (kbd "<leader>tt") 'visual-line-mode
+      ;;     (kbd "<leader>tm") 'evil-mc-mode
+      ;;     )
+      )
+
     (use-package evil-collection
       :after evil
       :config
@@ -138,77 +210,82 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
         :global-prefix "C-SPC"  ;; Set global leader key
         )
       (mark/leader-keys
-        "." '(find-file :wk "Find file")
-        "TAB" '(comment-line :wk "Comment lines")
-        "p" '(projectile-command-map :wk "Projectile"))
+    	"." '(find-file :wk "Find file")
+    	"TAB" '(comment-line :wk "Comment lines")
+    	"q" '(flymake-show-buffer-diagnostics :wk "Flymake buffer diagnostic")
+    	"u" '(undo-tree-visualize :wk "Undotree"))
 
       (mark/leader-keys
-        "f" '(:ignore t :wk "Find")
-        "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
-        "f e"' (sudo-edit :wk "Root edit current file")
-        "f u"' (sudo-edit-find-file :wk "Root find file")
-        "f r" '(consult-recent-file :wk "Recent files")
-        "f f" '(consult-fd :wk "Fd search for files")
-        "f g" '(consult-ripgrep :wk "Ripgrep search in files")
-        "f l" '(consult-line :wk "Find line")
-        "f i" '(consult-imenu :wk "Imenu buffer locations")
-        "f p" '(projectile-discover-projects-in-search-path :wk "Projectile Discover Projects"))
+    	"p" '(:ignore t :wk "Project")
+    	"p f"' (project-find-file :wk "Project Find file")
+    	"p d"' (project-dired :wk "Project Dired")
+    	)
 
       (mark/leader-keys
-        "b" '(:ignore t :wk "Buffer Bookmarks")
-        "b b" '(consult-buffer :wk "Switch buffer")
-        "b k" '(kill-current-buffer :wk "Kill this buffer")
-        "b i" '(ibuffer :wk "Ibuffer")
-        "b n" '(next-buffer :wk "Next buffer")
-        "b p" '(previous-buffer :wk "Previous buffer")
-        "b r" '(revert-buffer :wk "Reload buffer")
-        "b j" '(bookmark-jump :wk "Bookmark jump"))
+    	"s" '(:ignore t :wk "Find")
+    	"s c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
+    	"s e"' (sudo-edit :wk "Root edit current file")
+    	"s u"' (sudo-edit-find-file :wk "Root find file")
+    	"s r" '(consult-recent-file :wk "Recent files")
+    	"s f" '(consult-fd :wk "Fd search for files")
+    	"s g" '(consult-ripgrep :wk "Ripgrep search in files")
+    	"s l" '(consult-line :wk "Find line")
+    	"s i" '(consult-imenu :wk "Imenu buffer locations")
+    	"s p" '(projectile-discover-projects-in-search-path :wk "Projectile Discover Projects"))
 
       (mark/leader-keys
-        "d" '(:ignore t :wk "Dired")
-        "d v" '(dired :wk "Open dired")
-        "d j" '(dired-jump :wk "Dired jump to current"))
+    	"d" '(:ignore t :wk "Buffer Bookmarks")
+    	"d s" '(consult-buffer :wk "Switch buffer")
+    	"d k" '(kill-current-buffer :wk "Kill this buffer")
+    	"d i" '(ibuffer :wk "Ibuffer")
+    	"d n" '(next-buffer :wk "Next buffer")
+    	"d p" '(previous-buffer :wk "Previous buffer")
+    	"d r" '(revert-buffer :wk "Reload buffer")
+    	"d a" '(consult-dir :wk "Consult dir")
+    	"d v" '(dired :wk "Open dired")
+    	"d j" '(dired-jump :wk "Dired jump to current"))
 
       (mark/leader-keys
-        "e" '(:ignore t :wk "Languages")
-        "e e" '(lsp-restart-workspace :wk "LSP Reconnect")
-        "e d" '(eldoc-doc-buffer :wk "Eldoc Buffer")
-        "e f" '(lsp-format-buffer :wk "LSP Format")
-        "e l" '(consult-flymake :wk "Consult Flymake")
-        "e r" '(lsp-rename :wk "Eglot Rename")
-        "e i" '(lsp-find-definition :wk "Find defintion")
-        "e v" '(:ignore t :wk "Elisp")
-        "e v b" '(eval-buffer :wk "Evaluate elisp in buffer")
-        "e v r" '(eval-region :wk "Evaluate elisp in region"))
+    	"d" '(:ignore t :wk "Dired")
+    	"d v" '(dired :wk "Open dired")
+    	"d j" '(dired-jump :wk "Dired jump to current"))
 
       (mark/leader-keys
-        "g" '(:ignore t :wk "Git")
-        "g g" '(magit-status :wk "Magit status"))
+    	"e" '(:ignore t :wk "Languages")
+    	"e e" '(lsp-restart-workspace :wk "LSP Reconnect")
+    	"e d" '(eldoc-doc-buffer :wk "Eldoc Buffer")
+    	"e f" '(lsp-format-buffer :wk "LSP Format")
+    	"e l" '(consult-flymake :wk "Consult Flymake")
+    	"e r" '(lsp-rename :wk "Eglot Rename")
+    	"e i" '(lsp-find-definition :wk "Find defintion")
+    	"e v" '(:ignore t :wk "Elisp")
+    	"e v b" '(eval-buffer :wk "Evaluate elisp in buffer")
+    	"e v r" '(eval-region :wk "Evaluate elisp in region"))
 
       (mark/leader-keys
-        "h" '(:ignore t :wk "Help") ;; To get more help use C-h commands (describe variable, function, etc.)
-        "h q" '(save-buffers-kill-emacs :wk "Quit Emacs and Daemon")
-        "h r" '((lambda () (interactive)
+    	"g" '(:ignore t :wk "Git")
+    	"g s" '(magit-status :wk "Magit status"))
+
+      (mark/leader-keys
+    	"h" '(:ignore t :wk "Help") ;; To get more help use C-h commands (describe variable, function, etc.)
+    	"h q" '(save-buffers-kill-emacs :wk "Quit Emacs and Daemon")
+    	"h r" '((lambda () (interactive)
                   (load-file "~/.config/emacs/init.el"))
-                :wk "Reload Emacs config"))
+    			:wk "Reload Emacs config"))
 
       (mark/leader-keys
-        "s" '(:ignore t :wk "Show")
-        "s v" '(:ignore t :wk "Vterm")
-        "s v v" '(multi-vterm :wk "New Multi Vterm")
-        "s v n" '(multi-vterm-next :wk "Vterm next")
-        "s v b" '(multi-vterm-prev :wk "Vterm previus")
-        "s v d" '(multi-vterm-dedicated-toggle :wk "Toggle dedicated Vterm")
-        "s d" '(flymake-show-buffer-diagnostics :wk "Flymake buffer diagnostic")
-        "s u" '(undo-tree-visualize :wk "Undotree"))
+    	"v" '(:ignore t :wk "Vterm")
+    	"v m" '(multi-vterm :wk "New Multi Vterm")
+    	"v n" '(multi-vterm-next :wk "Vterm next")
+    	"v p" '(multi-vterm-prev :wk "Vterm previus")
+    	"v d" '(multi-vterm-dedicated-toggle :wk "Toggle dedicated Vterm"))
 
       (mark/leader-keys
-        "t" '(:ignore t :wk "Toggle")
-        "t t" '(visual-line-mode :wk "Truncated lines (wrap)")
-        "t l" '(display-line-numbers-mode :wk "Line numbers")
-        "t m" '(evil-mc-mode :wk "Evil mc mode")
-        ))
-
+    	"t" '(:ignore t :wk "Toggle")
+    	"t t" '(visual-line-mode :wk "Truncated lines (wrap)")
+    	"t l" '(display-line-numbers-mode :wk "Line numbers")
+    	"t m" '(evil-mc-mode :wk "Evil mc mode")
+    	))
     (use-package emacs
       ;; Fix general.el leader key not working instantly in messages buffer with evil mode
       :ghook ('after-init-hook
@@ -280,7 +357,6 @@ With Emacs version 29, true transparency has been added.
 #+begin_src emacs-lisp
     (add-to-list 'default-frame-alist '(alpha-background . 90)) ;; For all new frames henceforth
 #+end_src
-
 ** Fonts
 *** Setting fonts
 #+begin_src emacs-lisp
@@ -320,18 +396,35 @@ Replace the default modeline with a prettier more useful.
 #+end_src
 
 * Development
-** Projectile
-Project interaction library for Emacs.
+** Consult-dir
 #+begin_src emacs-lisp
-    (use-package projectile
-      :init
-      (projectile-mode)
-      :custom
-      (projectile-run-use-comint-mode t) ;; Interactive run dialog when running projects inside emacs (like giving input)
-      (projectile-switch-project-action #'projectile-dired) ;; Open dired when switching to a project
-      (projectile-auto-discover nil) ;; Disable auto search for better startup times
-      (projectile-project-search-path '(("/mnt/Ext4D/Mark/Projektek/" . 2))))
-    ;; Use Bookmarks for smaller, not standard projects
+    (use-package consult-dir
+      :defer
+      :custom 
+      (consult-dir-default-command #'consult-dir-dired)
+      :config 
+      ;; A function that returns a list of directories
+      (defun consult-dir--work-dirs ()
+        "Return list of work dirs."
+        (append
+         (split-string (shell-command-to-string "find ~/.config -maxdepth 1 -type d") "\n" t)
+         (split-string (shell-command-to-string "find /mnt/Ext4D/Mark/Projektek/ /mnt/Ext4D/Mark/Projektek/Desktop/Gyakorlas/ -mindepth 2 -maxdepth 2 -type d") "\n" t)
+         )
+        )
+
+      ;; A consult source that calls this function
+      (defvar consult-dir--source-work
+        `(:name     "Work Directories"
+                    :narrow   ?w
+                    :category file
+                    :face     consult-file
+                    :history  file-name-history
+                    :enabled  ,(lambda () (executable-find "find"))
+                    :items    ,#'consult-dir--work-dirs)
+        "Work directory source for `consult-dir'.")
+
+      ;; Adding to the list of consult-dir sources
+      (add-to-list 'consult-dir-sources 'consult-dir--source-work t))
 #+end_src
 
 ** LSP Mode
@@ -357,7 +450,13 @@ https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
         (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
               '(flex))) ;; Configure flex (corfu)
       :hook (;; Automatic Language Modes
-             (prog-mode . lsp)
+             ((c-ts-mode c++-ts-mode
+                    csharp-mode java-ts-mode
+                    html-ts-mode css-ts-mode
+                    js-ts-mode typescript-ts-mode
+                    php-mode cmake-ts-mode
+                    go-ts-mode rust-ts-mode
+                    gdscript-mode glsl-mode) . lsp)
              (lsp-completion-mode . my/lsp-mode-setup-completion) ;; corfu completion
              ;; if you want which-key integration
              (lsp-mode . lsp-enable-which-key-integration))
@@ -381,39 +480,27 @@ Show flymake errors with sideline
 A template system for Emacs. And yasnippet-snippets is a snippet collection package.
 To use it write out the full keyword (or use autocompletion) and press Tab.
 #+begin_src emacs-lisp
-        (use-package yasnippet-snippets
-          :hook (prog-mode . yas-minor-mode))
+    (use-package yasnippet-snippets
+      :hook (prog-mode . yas-minor-mode))
 
-        (defun mark/corfu-yas-tab-handler ()
-          "Prioritize corfu over yasnippet when yasnippet is active"
-          (interactive)
-          ;; There is no direct way to get if corfu is currently displayed so we watch the completion index
-          (if (> corfu--index -1)
-              (corfu-complete)
-            (yas-next-field-or-maybe-expand)
-            )
-          )
-        (use-package emacs
-          :after (yasnippet corfu)
-          :bind
-          (:map yas-keymap
-                ("TAB" . mark/corfu-yas-tab-handler))
-          )
-#+end_src
-
-** Emmet-mode
-For HTML, CSS snippets.
-Use C-j to complete.
-#+begin_src emacs-lisp
-    (use-package emmet-mode
-      :hook (html-mode . emmet-mode))
+    (defun mark/corfu-yas-tab-handler ()
+      "Prioritize corfu over yasnippet when yasnippet is active"
+      (interactive)
+      ;; There is no direct way to get if corfu is currently displayed so we watch the completion index
+      (if (> corfu--index -1)
+          (corfu-complete)
+        (yas-next-field-or-maybe-expand)
+        )
+      )
+    (use-package emacs
+      :after (yasnippet corfu)
+      :bind
+      (:map yas-keymap
+            ("TAB" . mark/corfu-yas-tab-handler))
+      )
 #+end_src
 
 ** Language modes
-It's not required for every language like C,C++,C#,Java,Javascript etc. to install language mode packages,
-but for more specific languages it is necessary for syntax highlighting.
-If you want to use TreeSitter,check out this [[https://www.masteringemacs.org/article/how-to-get-started-tree-sitter][website]] or try out [[https://github.com/renzmann/treesit-auto][Treesit-auto]].
-Currently it's tedious to use Treesitter, because emacs has not yet fully migrated to it.
 *** Tree-sitter
 Automatically install and use tree-sitter major modes in Emacs 29+. If the tree-sitter version can’t be used, fall back to the original major mode.
 #+begin_src emacs-lisp
@@ -423,6 +510,8 @@ Automatically install and use tree-sitter major modes in Emacs 29+. If the tree-
       :custom
       (treesit-auto-install 'prompt)
       (c-ts-mode-indent-offset 4) ;; Fix weird indentation in c-ts (C, C++)
+      (go-ts-mode-indent-offset 4) ;; Fix weird indentation in go-ts
+      (treesit-font-lock-level 4)
       :config
       ;; Remove treesitter modes, go-ts-mode not working currently
       ;; glsl-ts-mode don't work because of a rewrite in glsl-mode
@@ -437,53 +526,6 @@ Automatically install and use tree-sitter major modes in Emacs 29+. If the tree-
     (use-package cmake-ts-mode
       :ensure nil
       :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
-#+end_src
-
-*** PHP mode
-#+begin_src emacs-lisp
-    (use-package php-mode
-      :mode "\\.php\\'")
-#+end_src
-
-*** GLSL mode
-#+begin_src emacs-lisp
-    (use-package glsl-mode
-      :mode ("\\.shader\\'" "\\.glsl\\'"))
-#+end_src
-
-*** Ebuild mode
-For Gentoo ebuilds, installed with portage.
-#+begin_src emacs-lisp
-    (use-package ebuild-mode
-      :ensure nil
-      :mode "\\.ebuild\\'")
-#+end_src
-
-*** Markdown mode
-#+begin_src emacs-lisp
-    (use-package markdown-mode
-      :mode ("README\\.md\\'" . gfm-mode)
-      :custom (markdown-command "multimarkdown"))
-#+end_src
-
-*** GDScript mode
-For Godot C# don't forget to add the project to the projects list for eglot to work properly.
-(if there is no Project.sln file you need to create a C# file and build the project)
-#+begin_src emacs-lisp
-    (use-package gdscript-mode
-      :mode "\\.gd\\'")
-    (defun lsp--gdscript-ignore-errors (original-function &rest args)
-      "Ignore the error message resulting from Godot not replying to the `JSONRPC' request."
-      (if (string-equal major-mode "gdscript-mode")
-          (let ((json-data (nth 0 args)))
-            (if (and (string= (gethash "jsonrpc" json-data "") "2.0")
-                     (not (gethash "id" json-data nil))
-                     (not (gethash "method" json-data nil)))
-                nil ; (message "Method not found")
-              (apply original-function args)))
-        (apply original-function args)))
-    ;; Runs the function `lsp--gdscript-ignore-errors` around `lsp--get-message-type` to suppress unknown notification errors.
-    (advice-add #'lsp--get-message-type :around #'lsp--gdscript-ignore-errors)
 #+end_src
 
 *** Org Mode
@@ -531,7 +573,6 @@ Org-tempo allows for '<s' followed by TAB to expand to a begin_src tag.
       :ensure nil
       :after org)
 #+end_src
-
 ** Terminal
 *** VTerm
 Fully-fledged terminal emulator inside GNU Emacs.
@@ -539,7 +580,7 @@ Fast, POSIX compliant shell, handles UIs well.
 Eat don't support C-arrow key movement and don't work well with evil mode.
 #+begin_src emacs-lisp
     (use-package vterm
-      :commands vterm
+      :defer
       :custom
       (vterm-max-scrollback 5000))
 #+end_src
@@ -547,7 +588,7 @@ Eat don't support C-arrow key movement and don't work well with evil mode.
 Managing multiple vterm buffers in Emacs
 #+begin_src emacs-lisp
     (use-package multi-vterm
-      :commands multi-vterm)
+      :after vterm)
 #+end_src
 
 * Other Packages
@@ -576,8 +617,10 @@ While nerd-icons supports both GUI and TUI.
 Complete text-based user interface to Git.
 #+begin_src emacs-lisp
     (use-package magit
+      :defer
       :custom (magit-diff-refine-hunk (quote all))
-      :commands magit-status)
+      :config (define-key transient-map (kbd "<escape>") 'transient-quit-one)
+      )
 #+end_src
 
 *** Diff-hl
@@ -586,8 +629,7 @@ Highlights uncommitted changes on the left side of the window (area also known a
     (use-package diff-hl
       :hook ((dired-mode         . diff-hl-dired-mode-unless-remote)
              (magit-pre-refresh  . diff-hl-magit-pre-refresh)
-             (magit-post-refresh . diff-hl-magit-post-refresh))
-      :init (global-diff-hl-mode))
+             (magit-post-refresh . diff-hl-magit-post-refresh)))
 #+end_src
 
 ** Corfu
@@ -635,7 +677,7 @@ Read the [[https://github.com/minad/cape#configuration][configuration section]] 
 #+begin_src emacs-lisp
     (use-package cape
       :after corfu
-      :init
+      :config
       ;; Add to the global default value of `completion-at-point-functions' which is
       ;; used by `completion-at-point'.  The order of the functions matters, the
       ;; first function returning a result wins.  Note that the list of buffer-local
@@ -718,10 +760,6 @@ Check out their [[https://github.com/minad/consult][git repository]] for more aw
       ;; Use Consult to select xref locations with preview
       (setq xref-show-xrefs-function #'consult-xref
             xref-show-definitions-function #'consult-xref)
-      :config
-       ;;;; 4. projectile.el (projectile-project-root)
-      (autoload 'projectile-project-root "projectile")
-      (setq consult-project-function (lambda (_) (projectile-project-root)))
       )
 #+end_src
 
@@ -735,11 +773,11 @@ Visualizes undo history.
       ;; Use separate directory for undo history
       (undo-tree-history-directory-alist '(("." . "~/.config/emacs/undoTree"))))
 #+end_src
-
 ** Sudo edit
 Utilities for opening files with root privileges (also works with doas).
 #+begin_src emacs-lisp
     (use-package sudo-edit
+      :defer
       :custom (sudo-edit-local-method "doas")) ;; To use doas
 #+end_src
 
