@@ -25,7 +25,7 @@ PS1='\[\e[38;5;202m\][\[\e[38;5;214m\]\u\[\e[0m\] \[\e[38;5;40;1m\]\W\[\e[0;38;5
 bind '"\e[A":history-search-backward'
 bind '"\e[B":history-search-forward'
 bind '"\C-l": clear;'
-bind -x '"\C-q": . sessionizer-tmux'
+bind -x '"\C-f": . sessionizer-tmux'
 
 stty -ixon # Disables ctrl-s and ctrl-q
 shopt -s autocd
