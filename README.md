@@ -34,7 +34,7 @@ cp .bashrc ~/
 ## :bookmark_tabs: <samp>DETAILS</samp>
 
 - Linux Kernel: [Linux LTS](https://www.kernel.org)
-- Distro: [Gentoo](https://www.gentoo.org)
+- Distro: [Arch](https://archlinux.org/)
 - Window Manager - Compositor: [Hyprland](https://hyprland.org/)
 - Terminal Emulator: [Alacritty](https://github.com/alacritty/alacritty)
 - Shell: [Bash](https://www.gnu.org/software/bash)
@@ -63,91 +63,125 @@ cp .bashrc ~/
 ![alt emacs](https://github.com/MiniApollo/config/blob/main/images/editor/3_Emacs.png)
 
 ## <samp>Installation</samp>
-
-Make a base gentoo install [(I recommend Denshi's video )](https://www.youtube.com/watch?v=J7W9MItUSGw) <br>
-[Gentoo Handbook](https://wiki.gentoo.org/wiki/Handbook:Main_Page) <br>
-
-Choose the desktop profile 
+BACKUP anything that you don't want to lose!
 
 ### Partitioning 
-When partitioning the disk you can use Gparted 
+When partitioning the disk you can use Gparted from another distro for safer install like linux mint.
 - EFI system partition: Recommended size 1 GiB (1024 MiB)
 - Swap partition: Recommended size 4 GiB (4096 MiB)
-### Base System
-Don't forget to emerge the rust binary if you don't want longer emerge time (1-2 hours)
 
-Set the use flags and makeopts for faster emerge
+### Base System
 Use plocate
 
 Core
 ```bash
-doas emerge -qavg gentoolkit eclean-kernel cfg-update app-admin/doas sys-process/dcron app-admin/sysklogd net-misc/networkmanager grub sys-boot/os-prober app-shells/bash-completion app-eselect/eselect-repository
+pacman -S doas cronie networkmanager grub efibootmgr os-prober bash-completion
 ```
 ### Post Installation
-- Enable [Guru](https://wiki.gentoo.org/wiki/Project:GURU/Information_for_End_Users) for swaylock-effects <br>
-- For [Librewolf](https://wiki.gentoo.org/wiki/LibreWolf) select the librewolf repository 
-- Install app-shells/bash-completion and add to .bashrc (complete -F _root_command doas) for doas bash completion
+Install bash-completion and add to .bashrc (complete -F _root_command doas) for doas bash completion
 
 Window manager
 ```bash
-doas emerge -qavg hyprland waybar alacritty htop tlp gammastep nm-applet gui-apps/rofi-wayland gui-apps/hypridle gui-apps/hyprlock gui-apps/hyprpicker swaybg gui-apps/wl-clipboard gui-apps/foot gui-apps/slurp gui-apps/grim media-sound/playerctl app-misc/brightnessctl gui-libs/xdg-desktop-portal-wlr media-sound/alsa-utils gnome-extra/polkit-gnome x11-misc/dunst sys-apps/xdg-desktop-portal-gtk gui-apps/tuigreet nwg-look
+doas pacman -S hyprland waybar alacritty htop tlp gammastep network-manager-applet rofi-wayland hypridle hyprlock hyprpicker swaybg wl-clipboard foot slurp grim playerctl brightnessctl xdg-desktop-portal-hyprland dunst greetd-tuigreet nwg-look hyprpolkitagent
+```
+Don't forget to setup tlp, tuigreet.
+
+Fonts
+```bash
+doas pacman -S noto-fonts noto-fonts-emoji ttf-jetbrains-mono
+```
+and copy the fonts included in config into fonts folder
+
+Hardware
+Intel
+```bash
+doas pacman -S intel-ucode
+```
+For older intel:
+
+```bash
+doas pacman -S libva-intel-driver
+```
+For newer intel: 
+```bash
+doas pacman -S intel-media-driver
+```
+Nvidia:
+```bash
+doas pacman -S nvidia-open-dkms cuda
+```
+Nvidia Optimus 
+```bash
+doas pacman -S nvidia-prime
+```
+Pipewire
+```bash
+doas pacman -S pipewire pipewire-alsa pipewire-pulse alsa-utils
+```
+
+Aur
+```bash
+doas pacman -S base-devel
+doas pacman -Rdd sudo
+```
+doas vim /etc/makepkg.conf
+set threads
+Install Paru
+
+Themes
+```bash
+paru -S arc-gtk-theme
+paru qogir-icon-theme
+```
+
+Browsers
+```bash
+paru -S librewolf-bin
+paru -S brave-bin
 ```
 
 Lighter Programs
 ```bash
-doas emerge -qavg gparted thunar xfce-base/tumbler xfce-base/thunar-volman app-admin/keepassxc ristretto galculator celluloid app-arch/file-roller net-misc/yt-dlp cmus media-video/vlc
+doas pacman -S gparted keepassxc ristretto galculator celluloid yt-dlp cmus vlc
+```
+Thunar
+```bash
+doas pacman -S thunar tumbler ffmpegthumbnailer thunar-volman gvfs thunar-archive-plugin
+```
+For Gparted and other root programs. A hack xhost
+```bash
+doas pacman -S xorg-xhost
+```
+To launch with xhost: 
+```bash
+xhost si:localuser:root && gparted && xhost -si:localuser:root
 ```
 
 Development
 ```bash
-doas emerge -qavg neovim emacs app-editors/vscodium sys-apps/ripgrep sys-apps/fd dev-vcs/git dev-dotnet/dotnet-sdk-bin
+doas pacman -S emacs-wayland ripgrep fd git
+doas pacman -S tmux fzf neovim luarocks tree-sitter nodejs-lts-jod npm
+paru -S vscodium-bin
 ```
 
 Heavy Programs
 ```bash
-doas emerge -qavg librewolf-bin www-client/firefox-bin app-office/libreoffice-bin mail-client/thunderbird-bin media-gfx/gimp
-```
-Themes
-```bash
-doas emerge -qav x11-themes/arc-theme
+doas pacman -S firefox libreoffice-fresh thunderbird gimp krita kdenlive blender
 ```
 
-Qogir icon/cursor theme
-```bash
-git clone https://github.com/vinceliuice/Qogir-icon-theme.git
-cd Qogir-icon-theme/
-./install.sh -t default
-doas cp -r .local/share/icons/Qogir /usr/share/icons/
-```
-
-Drivers
-```bash
-doas emerge -qav x11-drivers/nvidia-drivers dev-util/nvidia-cuda-toolkit media-libs/libva-intel-media-driver
-```
-Nvidia Optimus 
-```bash
-doas emerge -qav prime-run
-```
 Gaming 
-
 To install follow the gentoo wiki
 - [Steam](https://wiki.gentoo.org/wiki/Steam)
 - [Wine](https://wiki.gentoo.org/wiki/Wine)
 
-Fonts
-
-Follow the [gentoo wiki](https://wiki.gentoo.org/wiki/Fonts#Additional_package_considerations)
-and copy the fonts included in config into fonts folder
-
-
 System Update
 ```bash
-doas emaint -a sync && doas emerge -qavuDNg @world && doas emerge --ask --depclean && doas eclean-dist -d && doas eclean-pkg -d && doas eclean-kernel -n 2 && flatpak update
+doas pacman -Syu
 ```
 ### Notes
 - Thunar use alacritty: Change in desktop files at /usr/share/applications/ to terminal=false exec=alacritty -e command
-- To poweroff the computer use loginctl poweroff/reboot in order when closing of the leds the command finish
 - if you want to mount ntfs partion in fstab you need to use ntfs3 type
+- Gentoo: To poweroff the computer use loginctl poweroff/reboot in order when closing of the leds the command finish
 
 ## <samp>Sources</samp>
 
