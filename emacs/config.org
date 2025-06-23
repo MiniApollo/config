@@ -629,7 +629,8 @@ Highlights uncommitted changes on the left side of the window (area also known a
     (use-package diff-hl
       :hook ((dired-mode         . diff-hl-dired-mode-unless-remote)
              (magit-pre-refresh  . diff-hl-magit-pre-refresh)
-             (magit-post-refresh . diff-hl-magit-post-refresh)))
+             (magit-post-refresh . diff-hl-magit-post-refresh))
+      :init (global-diff-hl-mode))
 #+end_src
 
 ** Corfu
