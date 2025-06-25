@@ -29,6 +29,7 @@ cd config
 ```bash
 cp -r alacritty lazygit hypr tmux emacs nvim rofi waybar ~/.config/
 cp .bashrc ~/
+mkdir -p ~/.local/share/ && cp -r fonts/ ~/.local/share/
 ```
 
 ## :bookmark_tabs: <samp>DETAILS</samp>
@@ -72,19 +73,33 @@ When partitioning the disk you can use Gparted from another distro for safer ins
 
 ### Base System
 Use plocate
+Enable the repos you want to use in /etc/pacman.conf
 
 Core
 ```bash
 pacman -S doas cronie networkmanager grub efibootmgr os-prober bash-completion
 ```
+syslink doas
+
+[Sort mirrors by speed](https://wiki.archlinux.org/title/Mirrors#List_by_speed)
+```bash
+pacman -S pacman-contrib
+```
+
 ### Post Installation
 Install bash-completion and add to .bashrc (complete -F _root_command doas) for doas bash completion
 
+Generate user dirs
+```bash
+doas pacman -S xdg-user-dirs
+xdg-user-dirs-update
+```
+
 Window manager
 ```bash
-doas pacman -S hyprland waybar alacritty htop tlp gammastep network-manager-applet rofi-wayland hypridle hyprlock hyprpicker swaybg wl-clipboard foot slurp grim playerctl brightnessctl xdg-desktop-portal-hyprland dunst greetd-tuigreet nwg-look hyprpolkitagent
+doas pacman -S hyprland waybar alacritty htop tlp gammastep network-manager-applet rofi-wayland hypridle hyprlock hyprpicker swaybg wl-clipboard foot slurp grim playerctl brightnessctl xdg-desktop-portal-hyprland xdg-desktop-portal-gtk dunst greetd-tuigreet nwg-look hyprpolkitagent fastfetch
 ```
-Don't forget to setup tlp, tuigreet.
+Don't forget to setup tlp, tuigreet. xdg-desktop-portal-gtk needed for file picker hyprland.
 
 Fonts
 ```bash
@@ -108,7 +123,7 @@ doas pacman -S intel-media-driver
 ```
 Nvidia:
 ```bash
-doas pacman -S nvidia-open-dkms cuda
+doas pacman -S linux-lts-headers nvidia-open-dkms cuda lib32-nvidia-utils
 ```
 Nvidia Optimus 
 ```bash
@@ -121,11 +136,11 @@ doas pacman -S pipewire pipewire-alsa pipewire-pulse alsa-utils
 
 Aur
 ```bash
-doas pacman -S base-devel
+doas pacman -S base-devel rust
 doas pacman -Rdd sudo
 ```
 doas vim /etc/makepkg.conf
-set threads
+set threads and pacman auth to doas
 Install Paru
 
 Themes
@@ -142,7 +157,7 @@ paru -S brave-bin
 
 Lighter Programs
 ```bash
-doas pacman -S gparted keepassxc ristretto galculator celluloid yt-dlp cmus vlc
+doas pacman -S gparted keepassxc ristretto galculator celluloid yt-dlp cmus vlc audacity
 ```
 Thunar
 ```bash
@@ -168,15 +183,30 @@ Heavy Programs
 ```bash
 doas pacman -S firefox libreoffice-fresh thunderbird gimp krita kdenlive blender
 ```
+Libreoffice in options: 
+- view: colibre (dark) theme
+- Apperiance: light
+Install hunspell dictionaries
+```bash
+doas pacman -S hunspell-en_us hunspell-hu
+```
+- Languages and locales:General:Format locale settings Hungarian
+- Languages and locales:General:Default for docs Hungarian
+
+Thunar:
+- view: location selector: button style
+- List view
+- Edit:preferences:Display:Format: Today at 00:00
+- Edit:preferences:Side Pane: Icon size 32px
 
 Gaming 
-To install follow the gentoo wiki
-- [Steam](https://wiki.gentoo.org/wiki/Steam)
-- [Wine](https://wiki.gentoo.org/wiki/Wine)
+```bash
+doas pacman -S steam
+```
 
 System Update
 ```bash
-doas pacman -Syu
+doas pacman -Syu && flatpak update
 ```
 ### Notes
 - Thunar use alacritty: Change in desktop files at /usr/share/applications/ to terminal=false exec=alacritty -e command
