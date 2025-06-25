@@ -27,7 +27,7 @@ cd config
 > **Note**
 > Delete the files that you don't need.
 ```bash
-cp -r alacritty lazygit hypr tmux emacs nvim rofi waybar ~/.config/
+cp -r alacritty lazygit hypr tmux emacs nvim rofi waybar xfce4 ~/.config/
 cp .bashrc ~/
 mkdir -p ~/.local/share/ && cp -r fonts/ ~/.local/share/
 ```
