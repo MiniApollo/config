@@ -1,3 +1,0 @@
-cross-avr/binutils cxx multilib
-cross-avr/avr-libc -selinux -libraries multilib
-cross-avr/gcc -fortran -go -sanitize -vtv -selinux -d -objc -objc++ -objc-gc -vtv -sanitize multilib

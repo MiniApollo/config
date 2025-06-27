@@ -1,5 +1,0 @@
-cross-arm-unknown-linux-gnueabi/linux-headers cross-arm-unknown-linux-gnueabi/linux-headers.conf
-cross-arm-unknown-linux-gnueabi/glibc cross-arm-unknown-linux-gnueabi/glibc.conf
-cross-arm-unknown-linux-gnueabi/binutils cross-arm-unknown-linux-gnueabi/binutils.conf
-cross-arm-unknown-linux-gnueabi/gcc cross-arm-unknown-linux-gnueabi/gcc.conf
-cross-arm-unknown-linux-gnueabi/gdb cross-arm-unknown-linux-gnueabi/gdb.conf
