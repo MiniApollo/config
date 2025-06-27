@@ -81,6 +81,11 @@ pacman -S doas cronie networkmanager grub efibootmgr os-prober bash-completion
 ```
 syslink doas
 
+Setup grub and enable os prober for other operating systems
+```bash
+doas vim /etc/default/grub
+```
+
 [Sort mirrors by speed](https://wiki.archlinux.org/title/Mirrors#List_by_speed)
 ```bash
 pacman -S pacman-contrib
@@ -203,6 +208,19 @@ Gaming
 ```bash
 doas pacman -S steam
 ```
+
+IOS
+```bash
+doas pacman -S libimobiledevice usbmuxd
+doas pacman -S gvfs-afc gvfs-gphoto2
+```
+
+Cups
+```bash
+doas pacman -S cups avahi nss-mdns
+doas pacman -S ghostscript # for some printers
+```
+Also Install firewall and enable all services that you want to use.
 
 System Update
 ```bash
