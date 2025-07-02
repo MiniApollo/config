@@ -718,6 +718,8 @@ Visualizes undo history.
       :init
       (global-undo-tree-mode)
       :custom
+      (undo-tree-visualizer-diff t)
+      (undo-tree-visualizer-timestamps t)
       ;; Use separate directory for undo history
       (undo-tree-history-directory-alist '(("." . "~/.config/emacs/undoTree"))))
 #+end_src
