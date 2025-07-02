@@ -130,59 +130,6 @@ Notes:
                   ("SPC" . nil)
                   ("RET" . nil)
                   ("TAB" . nil))
-      ;;   :config
-      ;;   ;; Define the leader key as Space
-      ;;   (evil-set-leader '(normal visual motion) (kbd "SPC"))
-      ;;   (evil-set-leader nil (kbd "C-SPC"))
-
-      ;;   (evil-define-key '(normal visual motion) 'global
-      ;;     (kbd "<leader>.") 'find-file
-      ;;     (kbd "<leader>TAB") 'comment-line
-
-      ;;     (kbd "<leader>sc") (lambda () (interactive) (find-file "~/.config/emacs/config.org"))
-      ;;     (kbd "<leader>se") 'sudo-edit
-      ;;     (kbd "<leader>su") 'sudo-edit-find-file
-      ;;     (kbd "<leader>sr") 'consult-recent-file
-      ;;     (kbd "<leader>sf") 'consult-fd
-      ;;     (kbd "<leader>sg") 'consult-ripgrep
-      ;;     (kbd "<leader>sl") 'consult-line
-      ;;     (kbd "<leader>si") 'consult-imenu
-
-      ;;     (kbd "<leader>ds") 'consult-buffer
-      ;;     (kbd "<leader>dk") 'kill-current-buffer
-      ;;     (kbd "<leader>di") 'ibuffer
-      ;;     (kbd "<leader>dn") 'next-buffer
-      ;;     (kbd "<leader>dp") 'previous-buffer
-      ;;     (kbd "<leader>dr") 'revert-buffer
-      ;;     (kbd "<leader>db") 'bookmark-jump
-      ;;     (kbd "<leader>dv") 'dired
-      ;;     (kbd "<leader>dj") 'dired-jump
-      
-      ;;     (kbd "<leader>ee") 'lsp-restart-workspace
-      ;;     (kbd "<leader>ed") 'eldoc-doc-buffer
-      ;;     (kbd "<leader>ef") 'lsp-format-buffer
-      ;;     (kbd "<leader>el") 'consult-flymake
-      ;;     (kbd "<leader>er") 'lsp-rename
-      ;;     (kbd "<leader>ei") 'lsp-find-definition
-      ;;     (kbd "<leader>evb") 'eval-buffer
-      ;;     (kbd "<leader>evr") 'eval-region
-
-      ;;     (kbd "<leader>gt") 'magit-status
-
-      ;;     (kbd "<leader>hq") 'save-buffers-kill-emacs ;; Quit Emacs and Daemon
-      ;;     (kbd "<leader>hr") (lambda () (interactive) (load-file "~/.config/emacs/init.el")) ;; Reload Emacs config
-
-      ;;     (kbd "<leader>vm") 'multi-vterm
-      ;;     (kbd "<leader>vn") 'multi-vterm-next 
-      ;;     (kbd "<leader>vp") 'multi-vterm-prev
-      ;;     (kbd "<leader>vd") 'multi-vterm-dedicated-toggle
-
-      ;;     (kbd "<leader>q") 'flymake-show-buffer-diagnostics
-      ;;     (kbd "<leader>u") 'undo-tree-visualize
-
-      ;;     (kbd "<leader>tt") 'visual-line-mode
-      ;;     (kbd "<leader>tm") 'evil-mc-mode
-      ;;     )
       )
 
     (use-package evil-collection
