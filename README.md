@@ -179,7 +179,8 @@ xhost si:localuser:root && gparted && xhost -si:localuser:root
 
 Development
 ```bash
-doas pacman -S emacs-wayland ripgrep fd git
+doas pacman -S git lazygit git-delta
+doas pacman -S emacs-wayland ripgrep fd
 doas pacman -S tmux fzf neovim luarocks tree-sitter nodejs-lts-jod npm
 paru -S vscodium-bin
 ```
