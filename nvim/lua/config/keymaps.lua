@@ -28,3 +28,6 @@ vim.keymap.set("n", "N", "Nzzzv")
 
 -- This is going to get me cancelled
 vim.keymap.set("i", "<C-c>", "<Esc>")
+
+-- Launch Tmux sessionizer in vim
+vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww sessionizer-tmux<CR>")
