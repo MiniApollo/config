@@ -66,6 +66,8 @@ mkdir -p ~/.local/share/ && cp -r fonts/ ~/.local/share/
 ## <samp>Installation</samp>
 BACKUP anything that you don't want to lose!
 
+To check iso integrity: gpg --verify
+
 ### Partitioning 
 When partitioning the disk you can use Gparted from another distro for safer install like linux mint.
 - EFI system partition: Recommended size 1 GiB (1024 MiB)
@@ -166,7 +168,7 @@ doas pacman -S gparted keepassxc ristretto galculator celluloid yt-dlp cmus vlc 
 ```
 Thunar
 ```bash
-doas pacman -S thunar tumbler ffmpegthumbnailer thunar-volman gvfs thunar-archive-plugin
+doas pacman -S thunar tumbler ffmpegthumbnailer thunar-volman gvfs thunar-archive-plugin file-roller
 ```
 For Gparted and other root programs. A hack xhost
 ```bash
@@ -179,7 +181,7 @@ xhost si:localuser:root && gparted && xhost -si:localuser:root
 
 Development
 ```bash
-doas pacman -S git lazygit git-delta
+doas pacman -S git lazygit git-delta cmake
 doas pacman -S emacs-wayland ripgrep fd
 doas pacman -S tmux fzf neovim luarocks tree-sitter nodejs-lts-jod npm
 paru -S vscodium-bin
@@ -231,6 +233,7 @@ doas pacman -Syu && flatpak update
 - Thunar use alacritty: Change in desktop files at /usr/share/applications/ to terminal=false exec=alacritty -e command
 - if you want to mount ntfs partion in fstab you need to use ntfs3 type
 - Gentoo: To poweroff the computer use loginctl poweroff/reboot in order when closing of the leds the command finish
+- Change mic volume: wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 0.3
 
 ## <samp>Sources</samp>
 
