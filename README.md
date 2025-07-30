@@ -81,7 +81,12 @@ Core
 ```bash
 pacman -S doas cronie networkmanager grub efibootmgr os-prober bash-completion
 ```
-syslink doas
+syslink doas and enable services
+```bash
+ln -s $(which doas) /usr/bin/sudo
+systemctl enable NetworkManager.service
+systemctl enable cronie.service
+```
 
 Setup grub and enable os prober for other operating systems
 ```bash
@@ -107,6 +112,10 @@ Window manager
 doas pacman -S hyprland waybar alacritty htop tlp gammastep network-manager-applet rofi-wayland hypridle hyprlock hyprpicker swaybg wl-clipboard foot slurp grim playerctl brightnessctl xdg-desktop-portal-hyprland xdg-desktop-portal-gtk dunst greetd-tuigreet nwg-look hyprpolkitagent fastfetch
 ```
 Don't forget to setup tlp, tuigreet. xdg-desktop-portal-gtk needed for file picker hyprland.
+```bash
+systemctl enable tlp.service
+systemctl enable greetd.service
+```
 
 Fonts
 ```bash
@@ -120,7 +129,6 @@ Intel
 doas pacman -S intel-ucode
 ```
 For older intel:
-
 ```bash
 doas pacman -S libva-intel-driver
 ```
