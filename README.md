@@ -109,12 +109,13 @@ xdg-user-dirs-update
 
 Window manager
 ```bash
-doas pacman -S hyprland waybar alacritty htop tlp gammastep network-manager-applet rofi-wayland hypridle hyprlock hyprpicker swaybg wl-clipboard foot slurp grim playerctl brightnessctl xdg-desktop-portal-hyprland xdg-desktop-portal-gtk dunst greetd-tuigreet nwg-look hyprpolkitagent fastfetch
+doas pacman -S hyprland waybar alacritty htop tlp gammastep network-manager-applet rofi-wayland hypridle hyprlock hyprpicker swaybg wl-clipboard foot slurp grim playerctl brightnessctl xdg-desktop-portal-hyprland xdg-desktop-portal-gtk dunst greetd-tuigreet nwg-look hyprpolkitagent fastfetch chrony
 ```
 Don't forget to setup tlp, tuigreet. xdg-desktop-portal-gtk needed for file picker hyprland.
 ```bash
 systemctl enable tlp.service
 systemctl enable greetd.service
+systemctl enable chronyd.service
 ```
 
 Fonts
