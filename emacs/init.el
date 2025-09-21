@@ -266,8 +266,13 @@
 
 (use-package eglot
   :ensure nil ;; Don't install eglot because it's now built-in
-  :hook ((c-mode c++-mode ;; Autostart lsp servers for a given mode
-                 lua-mode) ;; Lua-mode needs to be installed
+  :hook ((c-ts-mode c++-ts-mode
+                    csharp-mode java-ts-mode
+                    html-ts-mode css-ts-mode
+                    js-ts-mode typescript-ts-mode
+                    php-mode cmake-ts-mode
+                    go-ts-mode rust-ts-mode
+                    gdscript-mode glsl-mode haskell-mode)
          . eglot-ensure)
   :custom
   ;; Good default
@@ -367,6 +372,9 @@
 
 (use-package markdown-mode
   :mode "\\.md\\'")
+
+(use-package haskell-mode
+  :mode "\\.hs\\'")
 
 (use-package org
   :ensure nil
