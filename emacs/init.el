@@ -270,7 +270,7 @@
                     csharp-mode java-ts-mode
                     html-ts-mode css-ts-mode
                     js-ts-mode typescript-ts-mode
-                    php-mode cmake-ts-mode
+                    php-ts-mode cmake-ts-mode
                     go-ts-mode rust-ts-mode
                     gdscript-mode glsl-mode haskell-mode)
          . eglot-ensure)
@@ -369,6 +369,7 @@
 (use-package go-mod-ts-mode :ensure nil :mode "\\.mod\\'")
 (use-package tsx-ts-mode :ensure nil :mode "\\.tsx\\'")
 (use-package cmake-ts-mode :ensure nil :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
+(use-package yaml-ts-mode :ensure nil :mode ("\\.yaml\\'"))
 
 (use-package markdown-mode
   :mode "\\.md\\'")
