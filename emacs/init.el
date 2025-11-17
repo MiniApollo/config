@@ -290,6 +290,7 @@
                     js-ts-mode typescript-ts-mode
                     php-ts-mode cmake-ts-mode
                     go-ts-mode rust-ts-mode
+                    haskell-mode bash-ts-mode
                     gdscript-mode glsl-mode haskell-mode)
          . eglot-ensure)
   :custom
