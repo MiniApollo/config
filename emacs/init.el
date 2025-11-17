@@ -315,7 +315,7 @@
 (use-package yasnippet-capf
   :after (cape yasnippet)
   :config
-  (add-hook 'completion-at-point-functions #'yasnippet-capf))
+  (add-to-list 'completion-at-point-functions #'yasnippet-capf))
 
 (defun mark/corfu-yas-tab-handler ()
   "Prioritize corfu over yasnippet when yasnippet is active"
