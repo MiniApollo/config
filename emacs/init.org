@@ -18,7 +18,6 @@
 - [[#appearance][Appearance]]
   - [[#set-theme][Set Theme]]
   - [[#transparency][Transparency]]
-  - [[#setting-fonts][Setting Fonts]]
   - [[#doom-modeline][Doom Modeline]]
   - [[#nerd-icons][Nerd Icons]]
 - [[#development][Development]]
@@ -59,9 +58,10 @@ They impact the entire configuration, skipping these could result in significant
 
 ** Startup Performance
 Make startup faster by reducing the frequency of garbage collection. This will be set back when startup finishes.
+We also increase Read Process Output Max so Emacs can read more data.
 #+begin_src emacs-lisp
-    ;; The default is 800 kilobytes. Measured in bytes.
-    (setq gc-cons-threshold (* 50 1000 1000))
+    ;; -*- lexical-binding: t; -*-
+
 #+end_src
 
 ** Auto-tangle Configuration file
@@ -92,6 +92,7 @@ To fix this, you need to find this file (C-x C-f), fix the error and press C-c C
 ** Show startup time
 #+begin_src emacs-lisp
     (defun start/display-startup-time ()
+      (interactive)
       (message "Emacs loaded in %s with %d garbage collections."
                (format "%.2f seconds"
                        (float-time
@@ -142,9 +143,11 @@ If you plan to use a different package manager, remember to remove this section 
 #+begin_src emacs-lisp
     (use-package emacs
       :custom
+      ;; Still needed for terminals
       (menu-bar-mode nil)         ;; Disable the menu bar
       (scroll-bar-mode nil)       ;; Disable the scroll bar
       (tool-bar-mode nil)         ;; Disable the tool bar
+
       (inhibit-startup-screen t)  ;; Disable welcome screen
 
       (delete-selection-mode t)   ;; Select text and delete it by typing.
@@ -153,6 +156,7 @@ If you plan to use a different package manager, remember to remove this section 
 
       (blink-cursor-mode nil)     ;; Don't blink cursor
       (global-auto-revert-mode t) ;; Automatically reload file and show changes if the file has changed
+      (use-short-answers t)   ;; Since Emacs 29, `yes-or-no-p' will use `y-or-n-p'
 
       (dired-kill-when-opening-new-dired-buffer t) ;; Dired don't create new buffer
       (recentf-mode t) ;; Enable recent file mode
@@ -172,6 +176,7 @@ If you plan to use a different package manager, remember to remove this section 
 
       (make-backup-files nil) ;; Stop creating ~ backup files
       (auto-save-default nil) ;; Stop creating # auto save files
+      (delete-by-moving-to-trash t)
       :hook
       (prog-mode . (lambda () (hs-minor-mode t))) ;; Enable folding hide/show globally
       :config
@@ -352,20 +357,6 @@ Use consult-theme to easily try out themes (*Epilepsy* Warning).
 With Emacs version 29, true transparency has been added.
 #+begin_src emacs-lisp
     (add-to-list 'default-frame-alist '(alpha-background . 90)) ;; For all new frames henceforth
-#+end_src
-
-** Setting Fonts
-#+begin_src emacs-lisp
-    (set-face-attribute 'default nil
-                        :font "JetBrains Mono" ;; Set your favorite type of font or download JetBrains Mono
-                        :height 120
-                        :weight 'medium)
-    ;; This sets the default font on all graphical frames created after restarting Emacs.
-    ;; Does the same thing as 'set-face-attribute default' above, but emacsclient fonts
-    ;; are not right unless I also add this method of setting the default font.
-
-    (add-to-list 'default-frame-alist '(font . "JetBrains Mono")) ;; Set your favorite font
-    (setq-default line-spacing 0.12)
 #+end_src
 
 ** Doom Modeline
@@ -953,10 +944,8 @@ For development
 
 * Runtime Performance
 Dial the GC threshold back down so that garbage collection happens more frequently but in less time.
-We also increase Read Process Output Max so Emacs can read more data.
 #+begin_src emacs-lisp
     ;; Make gc pauses faster by decreasing the threshold.
-    (setq gc-cons-threshold (* 2 1000 1000))
-    ;; Increase the amount of data which Emacs reads from the process
-    (setq read-process-output-max (* 1024 1024)) ;; 1mb
+    (setq gc-cons-threshold (* 1024 1024 2) ;; 2mb
+          gc-cons-percentage 0.2)
 #+end_src
