@@ -120,8 +120,24 @@
     "TAB" '(comment-line :wk "Comment lines")
     "q" '(flymake-show-buffer-diagnostics :wk "Flymake buffer diagnostic")
     "u" '(undo-tree-visualize :wk "Undotree")
+
+	;; Harpoon
+    "a" '(harpoon-toggle-quick-menu :wk "Harpoon toggle menu")
+    "h" '(harpoon-go-to-1 :wk "Harpoon select 1")
+    "j" '(harpoon-go-to-2 :wk "Harpoon select 2")
+    "k" '(harpoon-go-to-3 :wk "Harpoon select 3")
+    "l" '(harpoon-go-to-4 :wk "Harpoon select 4")
+
     "p" '(projectile-command-map :wk "Projectile")
     "s p" '(projectile-discover-projects-in-search-path :wk "Search for projects"))
+
+  (mark/leader-keys
+    "m" '(:ignore t :wk "Harpoon") ;; To get more help use C-h commands (describe variable, function, etc.)
+    "m a" '(harpoon-add-file :wk "Harpoon add")
+    "m f" '(harpoon-toggle-file :wk "harpoon-toggle-file")
+    "m c" '(harpoon-clear :wk "Harpoon Clear")
+    "m p" '(harpoon-go-to-prev :wk "Harpoon previus")
+    "m n" '(harpoon-go-to-next :wk "Harpoon next"))
 
   (mark/leader-keys
     "s" '(:ignore t :wk "Search")
@@ -163,9 +179,9 @@
     "g s" '(magit-status :wk "Magit status"))
 
   (mark/leader-keys
-    "h" '(:ignore t :wk "Help") ;; To get more help use C-h commands (describe variable, function, etc.)
-    "h q" '(save-buffers-kill-emacs :wk "Quit Emacs and Daemon")
-    "h r" '((lambda () (interactive)
+    "r" '(:ignore t :wk "Reload") ;; To get more help use C-h commands (describe variable, function, etc.)
+    "r q" '(save-buffers-kill-emacs :wk "Quit Emacs and Daemon")
+    "r r" '((lambda () (interactive)
               (load-file "~/.config/emacs/init.el"))
             :wk "Reload Emacs config"))
 
@@ -263,6 +279,8 @@
 
   ;; Adding to the list of consult-dir sources
   (add-to-list 'consult-dir-sources 'consult-dir--source-work t))
+
+(use-package harpoon :defer)
 
 (use-package eglot
   :ensure nil ;; Don't install eglot because it's now built-in
