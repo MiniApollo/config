@@ -102,7 +102,7 @@
   :after evil
   :config
   ;; Setting where to use evil-collection
-  (setq evil-collection-mode-list '(dired ibuffer magit corfu vertico consult info vterm))
+  (setq evil-collection-mode-list '(dired ibuffer magit corfu consult info vterm))
   (evil-collection-init))
 
 (use-package general
@@ -501,6 +501,8 @@
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
 (use-package vertico
+  :custom
+  (vertico-cycle t) ;; Enable cycling for `vertico-next/previous'
   :init
   (vertico-mode))
 

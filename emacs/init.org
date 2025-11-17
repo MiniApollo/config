@@ -218,7 +218,7 @@ Notes:
       :after evil
       :config
       ;; Setting where to use evil-collection
-      (setq evil-collection-mode-list '(dired ibuffer magit corfu vertico consult info vterm))
+      (setq evil-collection-mode-list '(dired ibuffer magit corfu consult info vterm))
       (evil-collection-init))
 #+end_src
 
@@ -801,6 +801,8 @@ Recommended for packages like vertico, corfu.
 We use these packages because they use Emacs native functions. Unlike Ivy or Helm.
 #+begin_src emacs-lisp
     (use-package vertico
+      :custom
+      (vertico-cycle t) ;; Enable cycling for `vertico-next/previous'
       :init
       (vertico-mode))
 
