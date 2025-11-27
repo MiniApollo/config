@@ -376,11 +376,12 @@
 (setq treesit-font-lock-level 4)
 
 ;; Or if there is no built in mode
-(use-package rust-ts-mode :ensure nil :mode "\\.rs\\'")
+(use-package cmake-ts-mode :ensure nil :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
 (use-package go-ts-mode :ensure nil :mode "\\.go\\'")
 (use-package go-mod-ts-mode :ensure nil :mode "\\.mod\\'")
+(use-package lua-ts-mode :ensure nil :mode "\\.lua\\'")
+(use-package rust-ts-mode :ensure nil :mode "\\.rs\\'")
 (use-package tsx-ts-mode :ensure nil :mode "\\.tsx\\'")
-(use-package cmake-ts-mode :ensure nil :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
 (use-package yaml-ts-mode :ensure nil :mode ("\\.yaml\\'"))
 
 (use-package markdown-mode
