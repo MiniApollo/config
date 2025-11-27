@@ -41,3 +41,14 @@
 (setq-default line-spacing 0.12)
 
 (prefer-coding-system 'utf-8)
+
+(setq package-enable-at-startup nil)
+
+;; Check if init.el exists, if not, tangle init.org to produce init.el
+(let ((init-el (expand-file-name "init.el" user-emacs-directory))
+	  (init-org (expand-file-name "init.org" user-emacs-directory)))
+  (unless (file-exists-p init-el)
+	(when (file-exists-p init-org)
+	  (require 'org)
+	  (org-babel-tangle-file init-org init-el)
+	  (message "Tangling %s to create missing %s" init-org init-el))))
