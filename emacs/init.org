@@ -270,7 +270,7 @@ Notes:
       :after evil
       :config
       ;; Setting where to use evil-collection
-      (setq evil-collection-mode-list '(dired ibuffer magit corfu consult info vterm))
+      (setq evil-collection-mode-list '(dired ibuffer magit corfu consult info vterm elpaca))
       (evil-collection-init))
 #+end_src
 
@@ -944,7 +944,7 @@ An alternative to the built-in Emacs help that provides much more contextual inf
 This package implements hiding or abbreviation of the modeline displays (lighters) of minor-modes.
 With this package installed, you can add ‘:diminish’ to any use-package block to hide that particular mode in the modeline.
 #+begin_src emacs-lisp
-    (use-package diminish)
+    (use-package diminish :ensure (:wait t))
 #+end_src
 
 ** Rainbow Delimiters
