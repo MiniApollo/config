@@ -675,7 +675,8 @@ Fast, POSIX compliant shell, handles UIs well.
     (use-package vterm
       :defer
       :custom
-      (vterm-max-scrollback 5000))
+      (vterm-max-scrollback 5000)
+      (vterm-always-compile-module t))
 #+end_src
 *** Multi-vterm
 Managing multiple vterm buffers in Emacs
