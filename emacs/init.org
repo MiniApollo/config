@@ -113,6 +113,52 @@ We use it because it makes package configuration really easy.
 
 With Emacs 29 use-package is now built-in.
 #+begin_src emacs-lisp
+    (defvar elpaca-installer-version 0.11)
+    (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
+    (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
+    (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
+    (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
+                                  :ref nil :depth 1 :inherit ignore
+                                  :files (:defaults "elpaca-test.el" (:exclude "extensions"))
+                                  :build (:not elpaca--activate-package)))
+    (let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
+           (build (expand-file-name "elpaca/" elpaca-builds-directory))
+           (order (cdr elpaca-order))
+           (default-directory repo))
+      (add-to-list 'load-path (if (file-exists-p build) build repo))
+      (unless (file-exists-p repo)
+        (make-directory repo t)
+        (when (<= emacs-major-version 28) (require 'subr-x))
+        (condition-case-unless-debug err
+            (if-let* ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
+                      ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
+                                                      ,@(when-let* ((depth (plist-get order :depth)))
+                                                          (list (format "--depth=%d" depth) "--no-single-branch"))
+                                                      ,(plist-get order :repo) ,repo))))
+                      ((zerop (call-process "git" nil buffer t "checkout"
+                                            (or (plist-get order :ref) "--"))))
+                      (emacs (concat invocation-directory invocation-name))
+                      ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
+                                            "--eval" "(byte-recompile-directory \".\" 0 'force)")))
+                      ((require 'elpaca))
+                      ((elpaca-generate-autoloads "elpaca" repo)))
+                (progn (message "%s" (buffer-string)) (kill-buffer buffer))
+              (error "%s" (with-current-buffer buffer (buffer-string))))
+          ((error) (warn "%s" err) (delete-directory repo 'recursive))))
+      (unless (require 'elpaca-autoloads nil t)
+        (require 'elpaca)
+        (elpaca-generate-autoloads "elpaca" repo)
+        (let ((load-source-file-function nil)) (load "./elpaca-autoloads"))))
+    (add-hook 'after-init-hook #'elpaca-process-queues)
+    (elpaca `(,@elpaca-order))
+#+end_src
+
+#+begin_src emacs-lisp
+    ;; Install use-package support
+    (elpaca elpaca-use-package
+            ;; Enable use-package :ensure support for Elpaca.
+            (elpaca-use-package-mode))
+
     (require 'use-package-ensure) ;; Load use-package-always-ensure
     (setq use-package-always-ensure t) ;; Always ensures that a package is installed
 #+end_src
@@ -135,13 +181,14 @@ The larger your configuration, the more it will be felt at startup.
 Package quickstart only works with package.el.
 If you plan to use a different package manager, remember to remove this section and the package-quickstart-refresh line in the Auto-tangle hook.
 #+begin_src emacs-lisp
-    (setq package-quickstart t) ;; For blazingly fast startup times, this line makes startup miles faster
+    ;; (setq package-quickstart t) ;; For blazingly fast startup times, this line makes startup miles faster
 #+end_src
 
 
 ** Good Defaults
 #+begin_src emacs-lisp
     (use-package emacs
+      :ensure nil
       :custom
       ;; Still needed for terminals
       (menu-bar-mode nil)         ;; Disable the menu bar
@@ -238,6 +285,7 @@ We use general because it gives:
 And it is also really customizable.
 #+begin_src emacs-lisp
     (use-package general
+      :ensure (:wait t)
       :config
       (general-evil-setup) ;; <- evil
       ;; Set up 'C-SPC' as the leader key
@@ -333,6 +381,7 @@ And it is also really customizable.
 
     ;; Fix general.el leader key not working instantly in messages buffer with evil mode
     (use-package emacs
+      :ensure nil
       :ghook ('after-init-hook
               (lambda (&rest _)
                 (when-let ((messages-buffer (get-buffer "*Messages*")))
@@ -365,7 +414,7 @@ A fancy, fast and customizable mode-line.
     (use-package doom-modeline
       :custom
       (doom-modeline-height 25) ;; Set modeline height
-      :hook (after-init . doom-modeline-mode))
+      :hook (elpaca-after-init . doom-modeline-mode))
 #+end_src
 
 ** Nerd Icons
@@ -516,6 +565,7 @@ To use it write out the full keyword (or use autocompletion) and press Tab.
         )
       )
     (use-package emacs
+      :ensure nil
       :after (yasnippet corfu)
       :bind
       (:map yas-keymap
