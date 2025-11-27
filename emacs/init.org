@@ -156,8 +156,8 @@ With Emacs 29 use-package is now built-in.
 #+begin_src emacs-lisp
     ;; Install use-package support
     (elpaca elpaca-use-package
-            ;; Enable use-package :ensure support for Elpaca.
-            (elpaca-use-package-mode))
+      ;; Enable use-package :ensure support for Elpaca.
+      (elpaca-use-package-mode))
 
     (require 'use-package-ensure) ;; Load use-package-always-ensure
     (setq use-package-always-ensure t) ;; Always ensures that a package is installed
@@ -723,6 +723,24 @@ Fully-fledged terminal emulator inside GNU Emacs.
 Fast, POSIX compliant shell, handles UIs well.
 #+begin_src emacs-lisp
     (use-package vterm
+      :ensure (vterm :post-build
+                     (progn
+                       (setq vterm-always-compile-module t)
+                       (require 'vterm)
+                       ;;print compilation info for elpaca
+                       (with-current-buffer (get-buffer-create vterm-install-buffer-name)
+                         (goto-char (point-min))
+                         (while (not (eobp))
+                           (message "%S"
+                                    (buffer-substring (line-beginning-position)
+                                                      (line-end-position)))
+                           (forward-line)))
+                       (when-let* ((so (expand-file-name "./vterm-module.so"))
+                                   ((file-exists-p so)))
+                         (make-symbolic-link
+                          so (expand-file-name (file-name-nondirectory so)
+                                               "../../builds/vterm")
+                          'ok-if-already-exists))))
       :defer
       :custom
       (vterm-max-scrollback 5000)
@@ -787,8 +805,8 @@ Notes:
       ;; Recommended: Enable Corfu globally.  This is recommended since Dabbrev can
       ;; be used globally (M-/).  See also the customization variable
       ;; `global-corfu-modes' to exclude certain modes.
-      :init
-      (global-corfu-mode))
+      :hook (elpaca-after-init . global-corfu-mode)
+      )
 
     (use-package nerd-icons-corfu
       :after corfu
@@ -832,6 +850,7 @@ Completion style that divides the pattern into space-separated components and ma
 Recommended for packages like vertico, corfu.
 #+begin_src emacs-lisp
     (use-package orderless
+      :defer
       :custom
       (completion-styles '(orderless basic))
       (completion-category-overrides '((file (styles basic partial-completion)))))
@@ -901,8 +920,7 @@ Check out their [[https://github.com/minad/consult][git repository]] for more aw
 Visualizes undo history.
 #+begin_src emacs-lisp
     (use-package undo-tree
-      :init
-      (global-undo-tree-mode)
+      :hook (elpaca-after-init . global-undo-tree-mode)
       :custom
       (undo-tree-visualizer-diff t)
       (undo-tree-visualizer-timestamps t)
@@ -922,7 +940,7 @@ Utilities for opening files with root privileges (also works with doas).
 Multiple-cursors for evil mode.
 #+begin_src emacs-lisp
     (use-package evil-mc
-      :commands (evil-mc-mode))
+      :defer)
 #+end_src
 
 ** Helpful
@@ -968,8 +986,7 @@ Which-key is a helper utility for keychords (which key to press).
 #+begin_src emacs-lisp
     (use-package which-key
       :ensure nil ;; Don't install which-key because it's now built-in
-      :init
-      (which-key-mode 1)
+      :hook (elpaca-after-init . which-key-mode)
       :diminish
       :custom
       (which-key-side-window-location 'bottom)
@@ -986,7 +1003,7 @@ Which-key is a helper utility for keychords (which key to press).
 Removes whitespace from the ends of lines.
 #+begin_src emacs-lisp
     (use-package ws-butler
-      :init (ws-butler-global-mode))
+      :hook (elpaca-after-init . ws-butler-global-mode))
 #+end_src
 
 ** Yaml parser
