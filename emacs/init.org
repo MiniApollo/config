@@ -435,9 +435,9 @@ More [[https://docs.projectile.mx/projectile/projectile_vs_project.html][reasons
 #+begin_src emacs-lisp
     (use-package consult-dir
       :defer
-      :custom 
+      :custom
       (consult-dir-default-command #'consult-dir-dired)
-      :config 
+      :config
       ;; A function that returns a list of directories
       (defun consult-dir--work-dirs ()
         "Return list of work dirs."
@@ -746,7 +746,6 @@ Managing multiple vterm buffers in Emacs
     (use-package exec-path-from-shell
       :hook (after-init . exec-path-from-shell-initialize))
 #+end_src
-
 
 * Version Control
 ** Magit
