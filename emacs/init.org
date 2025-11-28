@@ -143,13 +143,9 @@ If you plan to use a different package manager, remember to remove this section 
     (use-package async
       :defer
       :custom
-      (async-bytecomp-package-mode t)
-      (async-bytecomp-allowed-packages '(all))
-      (async-package-do-action t)
-      )
+      (dired-async-mode t)
+      (async-package-do-action t))
 #+end_src
-
-
 
 ** Good Defaults
 #+begin_src emacs-lisp
