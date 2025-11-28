@@ -635,7 +635,7 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
     	 ;; Function calls
          (call_expression
           function: (selector_expression
-                     field: (field_identifier) @font-lock-function-call-face))
+                     field: (field_identifier) @font-lock-function-call-face)) ;; Use 'describe-face' to find faces
     	 ;; Property values
          (argument_list
           (selector_expression
