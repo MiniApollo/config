@@ -605,7 +605,7 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
             (typescript-mode . typescript-ts-mode)
             (conf-toml-mode . toml-ts-mode)
             ))
-    (setq treesit-font-lock-level 4)
+    (setq treesit-font-lock-level 3)
 
     ;; Or if there is no built in mode
     (use-package cmake-ts-mode :ensure nil :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
@@ -620,6 +620,48 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
       :custom
       (hyprlang-ts-mode-indent-offset 4))
 #+end_src
+
+*** Fix go-ts-mode highlighting
+#+begin_src emacs-lisp
+    ;; Some custom faces for testing
+    ;; https://www.reddit.com/r/emacs/comments/1c5dkup/how_to_modify_syntax_highlighting_in_treesitter/
+    ;; https://github.com/emacs-mirror/emacs/blob/master/admin/notes/tree-sitter/starter-guide
+
+    (defface fa-ts-string-face
+      '((t (:foreground "light blue" :weight bold)))
+      "Face for the object identifier in a selector expression."
+      :group 'treesit-font-lock)
+
+    (defface fa-ts-field-face
+      '((t (:foreground "red" :weight bold)))
+      "Face for the object identifier in a selector expression."
+      :group 'treesit-font-lock)
+
+    (defvar fa/ts-font-lock-settings
+      (treesit-font-lock-rules
+       :language 'go ;; What language
+       :feature 'function-highlight ;; A unique feature name that we can toggle.
+       :override t ;; Override any default rule
+       `(
+    	 ;; Function calls
+         (call_expression
+          function: (selector_expression
+                     field: (field_identifier) @font-lock-function-call-face))
+    	 ;; Property values
+         (argument_list
+          (selector_expression
+           field: (field_identifier) @font-lock-property-use-face))
+         (expression_list
+          (selector_expression
+           field: (field_identifier) @font-lock-property-use-face))
+         ;; ((Treesit patern) @defface_Settings)
+         ))
+      "Go-ts-mode settings, fix not highlighting function calls and property values")
+
+    (add-hook 'go-ts-mode-hook
+              (lambda () (setq-local treesit-font-lock-settings
+                                     (append treesit-font-lock-settings
+                                             fa/ts-font-lock-settings))))
 #+end_src
 
 ** Language modes
