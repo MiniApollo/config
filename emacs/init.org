@@ -490,7 +490,8 @@ To control how a LSP server is started customize the eglot-server-programs list.
                         php-ts-mode cmake-ts-mode
                         go-ts-mode rust-ts-mode
                         haskell-mode bash-ts-mode
-                        gdscript-mode glsl-mode haskell-mode)
+                        gdscript-mode glsl-mode
+                        hyprlang-ts-mode haskell-mode)
              . eglot-ensure)
       :custom
       ;; Good default
