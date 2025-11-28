@@ -21,3 +21,8 @@ opacity = 0.95
 [window.padding]
 x = 6
 y = 6
+
+[keyboard]
+bindings= [
+  { key = "Back", mods = "Control", chars = "\u0017" },
+]
