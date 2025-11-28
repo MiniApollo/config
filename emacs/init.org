@@ -498,9 +498,9 @@ To control how a LSP server is started customize the eglot-server-programs list.
       (eglot-autoshutdown t);; Shutdown unused servers.
       (eglot-report-progress nil) ;; Disable LSP server logs (Don't show lsp messages at the bottom, java)
       ;; Manual lsp servers
-      ;;:config
-      ;;(add-to-list 'eglot-server-programs
-      ;;             `(lua-mode . ("PATH_TO_THE_LSP_FOLDER/bin/lua-language-server" "-lsp"))) ;; Adds our lua lsp server to eglot's server list
+      :config
+      (add-to-list 'eglot-server-programs
+                   `(hyprlang-ts-mode . ("hyprls" "-lsp")))
       )
 #+end_src
 
@@ -568,6 +568,7 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
             (go "https://github.com/tree-sitter/tree-sitter-go")
             (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
             (html "https://github.com/tree-sitter/tree-sitter-html")
+            (hyprlang "https://github.com/tree-sitter-grammars/tree-sitter-hyprlang")
             (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
             (json "https://github.com/tree-sitter/tree-sitter-json")
             (make "https://github.com/alemuller/tree-sitter-make")
@@ -614,6 +615,11 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
     (use-package rust-ts-mode :ensure nil :mode "\\.rs\\'")
     (use-package tsx-ts-mode :ensure nil :mode "\\.tsx\\'")
     (use-package yaml-ts-mode :ensure nil :mode ("\\.yaml\\'"))
+
+    (use-package hyprlang-ts-mode
+      :custom
+      (hyprlang-ts-mode-indent-offset 4))
+#+end_src
 #+end_src
 
 ** Language modes
