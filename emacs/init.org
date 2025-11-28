@@ -623,21 +623,9 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
 
 *** Fix go-ts-mode highlighting
 #+begin_src emacs-lisp
-    ;; Some custom faces for testing
     ;; https://www.reddit.com/r/emacs/comments/1c5dkup/how_to_modify_syntax_highlighting_in_treesitter/
     ;; https://github.com/emacs-mirror/emacs/blob/master/admin/notes/tree-sitter/starter-guide
-
-    (defface fa-ts-string-face
-      '((t (:foreground "light blue" :weight bold)))
-      "Face for the object identifier in a selector expression."
-      :group 'treesit-font-lock)
-
-    (defface fa-ts-field-face
-      '((t (:foreground "red" :weight bold)))
-      "Face for the object identifier in a selector expression."
-      :group 'treesit-font-lock)
-
-    (defvar fa/ts-font-lock-settings
+    (defvar mark/ts-font-lock-settings
       (treesit-font-lock-rules
        :language 'go ;; What language
        :feature 'function-highlight ;; A unique feature name that we can toggle.
@@ -661,7 +649,7 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
     (add-hook 'go-ts-mode-hook
               (lambda () (setq-local treesit-font-lock-settings
                                      (append treesit-font-lock-settings
-                                             fa/ts-font-lock-settings))))
+                                             mark/ts-font-lock-settings))))
 #+end_src
 
 ** Language modes
