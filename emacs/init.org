@@ -828,6 +828,7 @@ Read the [[https://github.com/minad/cape#configuration][configuration section]] 
       ;; used by `completion-at-point'.  The order of the functions matters, the
       ;; first function returning a result wins.  Note that the list of buffer-local
       ;; completion functions takes precedence over the global list.
+
       ;; The functions that are added later will be the first in the list
       (add-hook 'completion-at-point-functions #'cape-dabbrev) ;; Complete word from current buffers
       (add-hook 'completion-at-point-functions #'cape-dict) ;; Dictionary completion
