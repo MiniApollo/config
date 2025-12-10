@@ -522,11 +522,6 @@ To use it write out the full keyword (or use autocompletion) and press Tab.
     (use-package yasnippet-snippets
       :hook (prog-mode . yas-minor-mode))
 
-    (use-package yasnippet-capf
-      :after (cape yasnippet)
-      :config
-      (add-to-list 'completion-at-point-functions #'yasnippet-capf))
-
     (defun mark/corfu-yas-tab-handler ()
       "Prioritize corfu over yasnippet when yasnippet is active"
       (interactive)
@@ -815,6 +810,17 @@ Notes:
 - Be aware when adding Capfs (Completion-at-point-functions) to the list since each of the Capfs adds a small runtime cost.
 Read the [[https://github.com/minad/cape#configuration][configuration section]] in Cape's readme for more information.
 #+begin_src emacs-lisp
+    (use-package yasnippet-capf
+      :after (cape yasnippet)
+      :config
+      (add-to-list 'completion-at-point-functions #'yasnippet-capf))
+
+    (defun mark/eglot-capf ()
+      (setq-local completion-at-point-functions
+                  (list (cape-capf-super
+                         #'eglot-completion-at-point
+                         #'yasnippet-capf))))
+
     (use-package cape
       :after corfu
       :init
@@ -822,13 +828,13 @@ Read the [[https://github.com/minad/cape#configuration][configuration section]] 
       ;; used by `completion-at-point'.  The order of the functions matters, the
       ;; first function returning a result wins.  Note that the list of buffer-local
       ;; completion functions takes precedence over the global list.
-
       ;; The functions that are added later will be the first in the list
       (add-hook 'completion-at-point-functions #'cape-dabbrev) ;; Complete word from current buffers
       (add-hook 'completion-at-point-functions #'cape-dict) ;; Dictionary completion
       (add-hook 'completion-at-point-functions #'cape-file) ;; Path completion
       (add-hook 'completion-at-point-functions #'cape-elisp-block) ;; Complete elisp in Org or Markdown mode
       (add-hook 'completion-at-point-functions #'cape-keyword) ;; Keyword completion
+      (add-hook 'eglot-managed-mode-hook #'mark/eglot-capf)
 
       ;;(add-hook 'completion-at-point-functions #'cape-abbrev) ;; Complete abbreviation
       ;;(add-hook 'completion-at-point-functions #'cape-history) ;; Complete from Eshell, Comint or minibuffer history
