@@ -15,6 +15,7 @@
 - [[#important-to-load-first][Important to load first]]
   - [[#evil-mode][Evil Mode]]
   - [[#general-keybindings][General Keybindings]]
+  - [[#undo][Undo]]
 - [[#appearance][Appearance]]
   - [[#set-theme][Set Theme]]
   - [[#transparency][Transparency]]
@@ -40,7 +41,6 @@
   - [[#vertico-and-marginalia][Vertico and Marginalia]]
 - [[#other-packages][Other packages]]
   - [[#consult][Consult]]
-  - [[#undotree][UndoTree]]
   - [[#sudo-edit][Sudo edit]]
   - [[#evil-mc][Evil-mc]]
   - [[#helpful][Helpful]]
@@ -225,7 +225,7 @@ Notes:
       (evil-want-keybinding nil)    ;; Disable evil bindings in other modes (It's not consistent and not good)
       (evil-want-C-u-scroll t)      ;; Set C-u to scroll up
       (evil-want-C-i-jump nil)      ;; Disables C-i jump
-      (evil-undo-system 'undo-tree) ;; C-r to redo
+      (evil-undo-system 'undo-redo) ;; C-r to redo
       (org-return-follows-link t)   ;; Sets RETURN key in org-mode to follow links
       ;; Unmap keys in 'evil-maps. If not done, org-return-follows-link will not work
       :bind (:map evil-motion-state-map
@@ -236,7 +236,7 @@ Notes:
       :after evil
       :config
       ;; Setting where to use evil-collection
-      (setq evil-collection-mode-list '(dired ibuffer magit corfu consult info vterm))
+      (setq evil-collection-mode-list '(dired ibuffer magit corfu consult info vterm vundo))
       (evil-collection-init))
 #+end_src
 
@@ -264,7 +264,7 @@ And it is also really customizable.
         "." '(find-file :wk "Find file")
         "TAB" '(comment-line :wk "Comment lines")
         "q" '(flymake-show-buffer-diagnostics :wk "Flymake buffer diagnostic")
-        "u" '(undo-tree-visualize :wk "Undotree")
+        "u" '(vundo :wk "Vundo")
 
     	;; Harpoon
         "a" '(harpoon-toggle-quick-menu :wk "Harpoon toggle menu")
@@ -359,6 +359,20 @@ And it is also really customizable.
                     (evil-normalize-keymaps))))
               nil nil t)
       )
+#+end_src
+
+** Undo
+Vundo: Visualizes undo history.
+Undo-fu-session: Persistent undo history
+#+begin_src emacs-lisp
+    (use-package undo-fu-session
+      :custom (undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
+      :config
+      (undo-fu-session-global-mode))
+
+    (use-package vundo
+      :custom
+      (vundo-glyph-alist vundo-unicode-symbols))
 #+end_src
 
 * Appearance
@@ -927,18 +941,6 @@ Check out their [[https://github.com/minad/consult][git repository]] for more aw
       (autoload 'projectile-project-root "projectile")
       (setq consult-project-function (lambda (_) (projectile-project-root)))
       )
-#+end_src
-
-** UndoTree
-Visualizes undo history.
-#+begin_src emacs-lisp
-    (use-package undo-tree
-      :hook (after-init . global-undo-tree-mode)
-      :custom
-      (undo-tree-visualizer-diff t)
-      (undo-tree-visualizer-timestamps t)
-      ;; Use separate directory for undo history
-      (undo-tree-history-directory-alist '(("." . "~/.config/emacs/undoTree"))))
 #+end_src
 
 ** Sudo edit
