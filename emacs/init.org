@@ -448,6 +448,7 @@ More [[https://docs.projectile.mx/projectile/projectile_vs_project.html][reasons
       (projectile-switch-project-action #'projectile-dired) ;; Open dired when switching to a project
       (projectile-project-search-path '(("/mnt/Ext4D/Mark/Projektek/" . 2)
                                         ("/mnt/Ext4D/Mark/Projektek/Desktop/Gyakorlas/" . 2)
+                                        ("/mnt/Ext4D/Mark/Projektek/Desktop/Iskola/" . 3)
     									)))
 #+end_src
 
@@ -463,9 +464,8 @@ More [[https://docs.projectile.mx/projectile/projectile_vs_project.html][reasons
         "Return list of work dirs."
         (append
          (split-string (shell-command-to-string "find ~/.config -maxdepth 1 -type d") "\n" t)
-         (split-string (shell-command-to-string "find /mnt/Ext4D/Mark/Projektek/ /mnt/Ext4D/Mark/Projektek/Desktop/Gyakorlas/ -mindepth 2 -maxdepth 2 -type d") "\n" t)
-         )
-        )
+         (split-string (shell-command-to-string "find /mnt/Ext4D/Mark/Projektek/ /mnt/Ext4D/Mark/Projektek/Desktop/Gyakorlas/ /mnt/Ext4D/Mark/Projektek/Desktop/Iskola/ -mindepth 2 -maxdepth 2 -type d") "\n" t)
+         ))
 
       ;; A consult source that calls this function
       (defvar consult-dir--source-work
