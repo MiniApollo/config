@@ -366,8 +366,12 @@ Vundo: Visualizes undo history.
 Undo-fu-session: Persistent undo history
 #+begin_src emacs-lisp
     (use-package undo-fu-session
-      :custom (undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
+      :custom (undo-fu-session-incompatible-files '("\\.gpg$" "/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
       :config
+      ;; Increase undo history limits to reduce likelihood of data loss
+      (setq undo-limit 256000           ;; 256kb (default is 160kb)
+            undo-strong-limit (* 1024 1024 2)   ;; 2mb   (default is 240kb)
+            undo-outer-limit (* 1024 1024 36))  ;; 36mb  (default is 24mb)
       (undo-fu-session-global-mode))
 
     (use-package vundo
