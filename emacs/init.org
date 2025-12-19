@@ -444,6 +444,7 @@ We use projectile because it:
 More [[https://docs.projectile.mx/projectile/projectile_vs_project.html][reasons]] to use projectile.
 #+begin_src emacs-lisp
     (use-package projectile
+      :defer
       :config
       (projectile-mode)
       :custom
