@@ -226,8 +226,7 @@ Notes:
 - To paste without yank select the text and use P. This line is especially for ThePrimeagen :)
 #+begin_src emacs-lisp
     (use-package evil
-      :init
-      (evil-mode)
+      :hook (after-init . evil-mode)
       :config
       (evil-set-initial-state 'eat-mode 'insert) ;; Set initial state in eat terminal to insert mode
       (global-set-key [C-backspace] 'evil-delete-backward-word) ;; Make C-backspace less agressive
@@ -352,15 +351,17 @@ Vundo: Visualizes undo history.
 Undo-fu-session: Persistent undo history
 #+begin_src emacs-lisp
     (use-package undo-fu-session
+      :hook (after-init . undo-fu-session-global-mode)
       :custom (undo-fu-session-incompatible-files '("\\.gpg$" "/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
       :config
       ;; Increase undo history limits to reduce likelihood of data loss
       (setq undo-limit 256000           ;; 256kb (default is 160kb)
             undo-strong-limit (* 1024 1024 2)   ;; 2mb   (default is 240kb)
             undo-outer-limit (* 1024 1024 36))  ;; 36mb  (default is 24mb)
-      (undo-fu-session-global-mode))
+      )
 
     (use-package vundo
+      :defer
       :custom
       (vundo-glyph-alist vundo-unicode-symbols))
 #+end_src
@@ -601,7 +602,7 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
             (treesit-install-language-grammar lang)))))
 
     ;; Call this function to install missing grammars
-    (start/install-treesit-grammars)
+    (add-hook 'after-init-hook #'start/install-treesit-grammars)
 
     ;; Optionally, add any additional mode remappings not covered by defaults
     (setq major-mode-remap-alist
@@ -776,8 +777,8 @@ Highlights uncommitted changes on the left side of the window (area also known a
 #+begin_src emacs-lisp
     (use-package diff-hl
       :hook ((dired-mode         . diff-hl-dired-mode-unless-remote)
-             (magit-post-refresh . diff-hl-magit-post-refresh))
-      :init (global-diff-hl-mode))
+             (magit-post-refresh . diff-hl-magit-post-refresh)
+             (after-init . global-diff-hl-mode)))
 #+end_src
 
 * Completion
@@ -883,21 +884,21 @@ Recommended for packages like vertico, corfu.
 We use these packages because they use Emacs native functions. Unlike Ivy or Helm.
 #+begin_src emacs-lisp
     (use-package vertico
+      :hook (after-init . vertico-mode)
       :bind (:map vertico-map
-    			  ("C-j" . vertico-next)
-    			  ("C-k" . vertico-previous)
-    			  ("C-u" . vertico-scroll-down)
-    			  ("C-d" . vertico-scroll-up))
+          		  ("C-j" . vertico-next)
+          		  ("C-k" . vertico-previous)
+          		  ("C-u" . vertico-scroll-down)
+          		  ("C-d" . vertico-scroll-up))
       :custom
       (vertico-cycle t) ;; Enable cycling for `vertico-next/previous'
-      :init
-      (vertico-mode))
+      )
 
     (savehist-mode) ;; Enables save history mode
 
     (use-package marginalia
       :after vertico
-      :init
+      :config
       (marginalia-mode))
 
     (use-package nerd-icons-completion
@@ -905,7 +906,7 @@ We use these packages because they use Emacs native functions. Unlike Ivy or Hel
       :config
       (nerd-icons-completion-mode)
       :hook
-      ('marginalia-mode-hook . 'nerd-icons-completion-marginalia-setup))
+      (marginalia-mode . nerd-icons-completion-marginalia-setup))
 #+end_src
 
 ** Embark
@@ -981,7 +982,7 @@ An alternative to the built-in Emacs help that provides much more contextual inf
 This package implements hiding or abbreviation of the modeline displays (lighters) of minor-modes.
 With this package installed, you can add ‘:diminish’ to any use-package block to hide that particular mode in the modeline.
 #+begin_src emacs-lisp
-    (use-package diminish)
+    (use-package diminish :defer)
 #+end_src
 
 ** Rainbow Delimiters
