@@ -61,11 +61,11 @@ These are essential settings and small tweaks that must load before any packages
 They impact the entire configuration, skipping these could result in significantly slower configuration and potential breakage of your setup.
 
 ** Startup Performance
-Make startup faster by reducing the frequency of garbage collection. This will be set back when startup finishes.
-We also increase Read Process Output Max so Emacs can read more data.
+Core performace tweaks moved to early-init.el
+
+Enable lexical-binding
 #+begin_src emacs-lisp
     ;; -*- lexical-binding: t; -*-
-
 #+end_src
 
 ** Auto-tangle Configuration file

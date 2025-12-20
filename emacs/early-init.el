@@ -1,8 +1,10 @@
 ;; -*- lexical-binding: t; -*-
 
-;; Set garbage collector
+;; Make startup faster by reducing the frequency of garbage collection. This will be set back when startup finishes.
+;; We also increase Read Process Output Max so Emacs can read more data.
+
+;; Set garbage collector (from doom emacs)
 ;; About 0.02 faster
-;; From doom emacs
 (setq gc-cons-threshold (* 1024 1024 128)  ;; 128mb
 	  gc-cons-percentage 1.0) ;; Disable the dynamic percentage trigger to ensure GC frequency is fixed.
 
