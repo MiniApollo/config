@@ -53,6 +53,7 @@
   - [[#which-key][Which-Key]]
   - [[#ws-butler][Ws-butler]]
   - [[#yaml-parser][Yaml parser]]
+  - [[#esup][Esup]]
 - [[#runtime-performance][Runtime Performance]]
 
 * Core Setup & Performance
@@ -1032,6 +1033,15 @@ Removes whitespace from the ends of lines.
 For development
 #+begin_src emacs-lisp
     (use-package yaml :defer)
+#+end_src
+
+** Esup
+Emacs Start Up Profiler
+#+begin_src emacs-lisp
+    (use-package esup
+      :defer
+      :custom
+      (esup-depth 0))
 #+end_src
 
 * Runtime Performance
