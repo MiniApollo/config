@@ -632,7 +632,7 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
     (use-package yaml-ts-mode :ensure nil :mode ("\\.yaml\\'"))
 
     (use-package hyprlang-ts-mode
-      :defer
+      :mode ("/hypr/.*\\.conf\\'")
       :custom
       (hyprlang-ts-mode-indent-offset 4))
 #+end_src
