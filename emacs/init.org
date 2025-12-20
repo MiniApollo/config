@@ -278,6 +278,7 @@ Performance:
       (evil-set-leader '(normal visual motion) (kbd "SPC"))
       (evil-define-key '(normal visual motion) 'global
         (kbd "<leader>.") 'find-file
+        (kbd "<leader>,") 'embark-act
         (kbd "<leader>TAB") 'comment-line
         (kbd "<leader>q") 'flymake-show-buffer-diagnostics
         (kbd "<leader>u") 'vundo
