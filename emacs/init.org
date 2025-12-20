@@ -181,6 +181,12 @@ Also "fixes" multi-vterm not finding vterm (delays vterm module compile).
       (display-line-numbers-type 'relative) ;; Relative line numbers
       (global-display-line-numbers-mode t)  ;; Display line numbers
 
+      ;; (pixel-scroll-precision-mode t)     ;; Precise pixel scrolling. i.e. smooth scrolling
+      ;; (pixel-scroll-precision-use-momentum nil)
+
+      (native-comp-async-report-warnings-errors 'silent) ;; Don't show native comp errors
+      (warning-minimum-level :error) ;; Only show errors in warnings buffer
+
       (mouse-wheel-progressive-speed nil) ;; Disable progressive speed when scrolling
       (scroll-conservatively 10) ;; Smooth scrolling
       (scroll-margin 8)
