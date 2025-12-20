@@ -26,6 +26,7 @@
   - [[#consult-dir][Consult-dir]]
   - [[#harpoon][Harpoon]]
   - [[#eglot][Eglot]]
+  - [[#masonel][Mason.el]]
   - [[#sideline-flymake][Sideline-flymake]]
   - [[#eldoc-box][Eldoc-box]]
   - [[#yasnippet][Yasnippet]]
@@ -516,6 +517,14 @@ To control how a LSP server is started customize the eglot-server-programs list.
       (add-to-list 'eglot-server-programs
                    `(hyprlang-ts-mode . ("hyprls" "-lsp")))
       )
+#+end_src
+
+** Mason.el
+Package manager for LSP, DAP, linters, and more for the Emacs Operating System.
+I waited so long for a package like this.
+#+begin_src emacs-lisp
+    (use-package mason
+      :hook (after-init . mason-ensure))
 #+end_src
 
 ** Sideline-flymake
