@@ -49,6 +49,7 @@
   - [[#diminish][Diminish]]
   - [[#rainbow-delimiters][Rainbow Delimiters]]
   - [[#rainbow-mode][Rainbow Mode]]
+  - [[#indent-guide][Indent-guide]]
   - [[#which-key][Which-Key]]
   - [[#ws-butler][Ws-butler]]
   - [[#yaml-parser][Yaml parser]]
@@ -990,6 +991,16 @@ Display the actual color as a background for any hex color value (ex. #ffffff).
       :diminish
       :hook
       ((org-mode prog-mode) . rainbow-mode))
+#+end_src
+
+** Indent-guide
+Show indendation
+#+begin_src emacs-lisp
+    (use-package indent-guide
+      :hook
+      (prog-mode . indent-guide-mode)
+      :config
+      (setq indent-guide-char "│")) ;; Set the character used for the indent guide.
 #+end_src
 
 ** Which-Key
