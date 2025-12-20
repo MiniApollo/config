@@ -418,9 +418,7 @@ We use projectile because it:
 More [[https://docs.projectile.mx/projectile/projectile_vs_project.html][reasons]] to use projectile.
 #+begin_src emacs-lisp
     (use-package projectile
-      :defer
-      :config
-      (projectile-mode)
+      :hook (after-init . projectile-mode)
       :custom
       (projectile-auto-discover nil) ;; Disable auto search for better startup times ;; Search with a keybind
       (projectile-run-use-comint-mode t) ;; Interactive run dialog when running projects inside emacs (like giving input)
