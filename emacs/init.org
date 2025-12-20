@@ -40,6 +40,7 @@
   - [[#cape][Cape]]
   - [[#orderless][Orderless]]
   - [[#vertico-and-marginalia][Vertico and Marginalia]]
+  - [[#embark][Embark]]
 - [[#other-packages][Other packages]]
   - [[#consult][Consult]]
   - [[#sudo-edit][Sudo edit]]
@@ -897,6 +898,14 @@ We use these packages because they use Emacs native functions. Unlike Ivy or Hel
       (nerd-icons-completion-mode)
       :hook
       ('marginalia-mode-hook . 'nerd-icons-completion-marginalia-setup))
+#+end_src
+
+** Embark
+#+begin_src emacs-lisp
+    (use-package embark :defer)
+    (use-package embark-consult
+      :hook
+      (embark-collect-mode . consult-preview-at-point-mode))
 #+end_src
 
 * Other packages
