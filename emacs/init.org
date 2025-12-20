@@ -771,7 +771,14 @@ Complete text-based user interface to Git.
     (use-package magit
       :defer
       :custom (magit-diff-refine-hunk (quote all)) ;; Shows inline diff
-      :config (define-key transient-map (kbd "<escape>") 'transient-quit-one) ;; Make escape quit magit prompts
+      :config
+      (define-key transient-map (kbd "<escape>") 'transient-quit-one) ;; Make escape quit magit prompts
+      (setopt magit-format-file-function #'magit-format-file-nerd-icons) ;; Magit nerd icons
+      ;; Fix evil mode 'SPC' leader key
+      :bind (:map magit-mode-map
+                  ("SPC" . nil)
+                  :map magit-diff-mode-map
+                  ("SPC" . nil))
       )
 #+end_src
 
