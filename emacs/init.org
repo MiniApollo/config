@@ -27,6 +27,7 @@
   - [[#harpoon][Harpoon]]
   - [[#eglot][Eglot]]
   - [[#sideline-flymake][Sideline-flymake]]
+  - [[#eldoc-box][Eldoc-box]]
   - [[#yasnippet][Yasnippet]]
   - [[#tree-sitter][Tree-Sitter]]
   - [[#language-modes][Language modes]]
@@ -512,6 +513,13 @@ Show flymake errors with sideline
       :custom
       (sideline-flymake-display-mode 'line) ;; show errors on the current line
       (sideline-backends-right '(sideline-flymake)))
+#+end_src
+
+** Eldoc-box
+Display eldoc documentation in a popup box
+#+begin_src emacs-lisp
+    (use-package eldoc-box
+      :hook (prog-mode . eldoc-box-hover-at-point-mode))
 #+end_src
 
 ** Yasnippet
