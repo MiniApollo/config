@@ -625,7 +625,6 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
 
     ;; Or if there is no built in mode
     (use-package cmake-ts-mode :ensure nil :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
-    (use-package go-ts-mode :ensure nil :mode "\\.go\\'")
     (use-package go-mod-ts-mode :ensure nil :mode "\\.mod\\'")
     (use-package lua-ts-mode :ensure nil :mode "\\.lua\\'")
     (use-package rust-ts-mode :ensure nil :mode "\\.rs\\'")
@@ -633,6 +632,7 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
     (use-package yaml-ts-mode :ensure nil :mode ("\\.yaml\\'"))
 
     (use-package hyprlang-ts-mode
+      :defer
       :custom
       (hyprlang-ts-mode-indent-offset 4))
 #+end_src
@@ -641,31 +641,36 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
 #+begin_src emacs-lisp
     ;; https://www.reddit.com/r/emacs/comments/1c5dkup/how_to_modify_syntax_highlighting_in_treesitter/
     ;; https://github.com/emacs-mirror/emacs/blob/master/admin/notes/tree-sitter/starter-guide
-    (defvar mark/ts-font-lock-settings
-      (treesit-font-lock-rules
-       :language 'go ;; What language
-       :feature 'function-highlight ;; A unique feature name that we can toggle.
-       :override t ;; Override any default rule
-       `(
-    	 ;; Function calls
-         (call_expression
-          function: (selector_expression
-                     field: (field_identifier) @font-lock-function-call-face)) ;; Use 'describe-face' to find faces
-    	 ;; Property values
-         (argument_list
-          (selector_expression
-           field: (field_identifier) @font-lock-property-use-face))
-         (expression_list
-          (selector_expression
-           field: (field_identifier) @font-lock-property-use-face))
-         ;; ((Treesit patern) @defface_Settings)
-         ))
-      "Go-ts-mode settings, fix not highlighting function calls and property values")
+    (use-package go-ts-mode
+      :ensure nil
+      :mode "\\.go\\'"
+      :config
+      (defvar mark/ts-font-lock-settings
+        (treesit-font-lock-rules
+         :language 'go ;; What language
+         :feature 'function-highlight ;; A unique feature name that we can toggle.
 
-    (add-hook 'go-ts-mode-hook
-              (lambda () (setq-local treesit-font-lock-settings
-                                     (append treesit-font-lock-settings
-                                             mark/ts-font-lock-settings))))
+         `(
+           ;; Function calls
+           (call_expression
+            function: (selector_expression
+                       field: (field_identifier) @font-lock-function-call-face)) ;; Use 'describe-face' to find faces
+           ;; Property values
+           (argument_list
+            (selector_expression
+             field: (field_identifier) @font-lock-property-use-face))
+           (expression_list
+            (selector_expression
+             field: (field_identifier) @font-lock-property-use-face))
+           ;; ((Treesit patern) @defface_Settings)
+           ))
+        "Go-ts-mode settings, fix not highlighting function calls and property values")
+
+      (add-hook 'go-ts-mode-hook
+                (lambda () (setq-local treesit-font-lock-settings
+                                       (append treesit-font-lock-settings
+                                               mark/ts-font-lock-settings))))
+      )
 #+end_src
 
 ** Language modes
