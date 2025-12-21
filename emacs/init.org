@@ -42,6 +42,7 @@
   - [[#orderless][Orderless]]
   - [[#vertico-and-marginalia][Vertico and Marginalia]]
   - [[#embark][Embark]]
+  - [[#jinx][Jinx]]
 - [[#other-packages][Other packages]]
   - [[#consult][Consult]]
   - [[#sudo-edit][Sudo edit]]
@@ -308,6 +309,9 @@ Performance:
         (kbd "<leader>si") 'consult-imenu
         (kbd "<leader>se") 'sudo-edit
         (kbd "<leader>su") 'sudo-edit-find-file
+
+        (kbd "<leader>so") 'jinx-correct
+        (kbd "<leader>sg") 'jinx-languages
 
         (kbd "<leader>ds") 'consult-buffer
         (kbd "<leader>dk") 'kill-current-buffer
@@ -939,6 +943,13 @@ We use these packages because they use Emacs native functions. Unlike Ivy or Hel
     (use-package embark-consult
       :hook
       (embark-collect-mode . consult-preview-at-point-mode))
+#+end_src
+
+** Jinx
+Enchanted Spell Checker
+#+begin_src emacs-lisp
+    (use-package jinx
+      :hook (after-init . global-jinx-mode))
 #+end_src
 
 * Other packages
