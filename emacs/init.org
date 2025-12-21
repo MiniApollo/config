@@ -938,6 +938,7 @@ We use these packages because they use Emacs native functions. Unlike Ivy or Hel
 #+end_src
 
 ** Embark
+Emacs Mini-Buffer Actions Rooted in Keymaps
 #+begin_src emacs-lisp
     (use-package embark :defer)
     (use-package embark-consult
