@@ -642,7 +642,7 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
     (use-package lua-ts-mode :ensure nil :mode "\\.lua\\'")
     (use-package rust-ts-mode :ensure nil :mode "\\.rs\\'")
     (use-package tsx-ts-mode :ensure nil :mode "\\.tsx\\'")
-    (use-package yaml-ts-mode :ensure nil :mode ("\\.yaml\\'"))
+    (use-package yaml-ts-mode :ensure nil :mode ("\\.yaml\\'" "\\.yml\\'"))
 
     (use-package hyprlang-ts-mode
       :mode ("/hypr/.*\\.conf\\'")
