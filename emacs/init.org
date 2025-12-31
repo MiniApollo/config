@@ -57,7 +57,6 @@
   - [[#ws-butler][Ws-butler]]
   - [[#yaml-parser][Yaml parser]]
   - [[#esup][Esup]]
-- [[#runtime-performance][Runtime Performance]]
 
 * Core Setup & Performance
 These are essential settings and small tweaks that must load before any packages.
@@ -1170,12 +1169,4 @@ Emacs Start Up Profiler
       :defer
       :custom
       (esup-depth 0))
-#+end_src
-
-* Runtime Performance
-Dial the GC threshold back down so that garbage collection happens more frequently but in less time.
-#+begin_src emacs-lisp
-    ;; Make gc pauses faster by decreasing the threshold.
-    (setq gc-cons-threshold (* 1024 1024 2) ;; 2mb
-          gc-cons-percentage 0.2)
 #+end_src

@@ -8,6 +8,14 @@
 (setq gc-cons-threshold (* 1024 1024 128)  ;; 128mb
 	  gc-cons-percentage 1.0) ;; Disable the dynamic percentage trigger to ensure GC frequency is fixed.
 
+;; Runtime performance
+;; Dial the GC threshold back down so that garbage collection happens more frequently but in less time.
+;; Make gc pauses faster by decreasing the threshold.
+(add-hook 'emacs-startup-hook (lambda ()
+								(setq gc-cons-threshold (* 1024 1024 2) ;; 2mb
+									  gc-cons-percentage 0.2)
+								))
+
 ;; Increase the amount of data which Emacs reads from the process
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 
