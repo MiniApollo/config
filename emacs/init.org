@@ -563,6 +563,8 @@ To control how a LSP server is started customize the eglot-server-programs list.
       :config
       (add-to-list 'eglot-server-programs
                    `(hyprlang-ts-mode . ("hyprls" "-lsp")))
+      (add-to-list 'eglot-server-programs
+                   `(vue-ts-mode . ("vue-language-server" "-lsp")))
       )
 #+end_src
 
@@ -650,6 +652,7 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
             (toml "https://github.com/tree-sitter/tree-sitter-toml")
             (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
             (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+            (vue "https://github.com/ikatyang/tree-sitter-vue")
             (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
 
     (defun start/install-treesit-grammars ()
@@ -692,6 +695,11 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
       :mode ("/hypr/.*\\.conf\\'")
       :custom
       (hyprlang-ts-mode-indent-offset 4))
+
+    ;; (use-package vue-ts-mode
+    ;;   :vc (:url "https://github.com/8uff3r/vue-ts-mode.git"
+    ;;             :branch "main")
+    ;;   :mode "\\.vue\\'")
 #+end_src
 
 *** Fix go-ts-mode highlighting
