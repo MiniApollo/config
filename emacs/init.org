@@ -631,7 +631,7 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
             (python-mode . python-ts-mode)
             (mhtml-mode . html-ts-mode)
             (javascript-mode . js-ts-mode)
-            (json-mode . json-ts-mode)
+            (js-json-mode . json-ts-mode)
             (typescript-mode . typescript-ts-mode)
             (conf-toml-mode . toml-ts-mode)
             ))
