@@ -546,7 +546,7 @@ Show flymake errors with sideline
 Display eldoc documentation in a popup box
 #+begin_src emacs-lisp
     (use-package eldoc-box
-      :hook (prog-mode . eldoc-box-hover-at-point-mode))
+      :hook (prog-mode . eldoc-box-hover-mode))
 #+end_src
 
 ** Yasnippet
