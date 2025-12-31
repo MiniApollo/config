@@ -14,7 +14,7 @@
   - [[#good-defaults][Good Defaults]]
 - [[#important-to-load-first][Important to load first]]
   - [[#evil-mode][Evil Mode]]
-  - [[#keybinds][Keybinds]]
+  - [[#general-keybindings][General Keybindings]]
   - [[#undo][Undo]]
 - [[#appearance][Appearance]]
   - [[#set-theme][Set Theme]]
@@ -254,13 +254,20 @@ Notes:
       (evil-collection-init))
 #+end_src
 
-** Keybinds
-My keybindings
+** General Keybindings
+A keybinding framework to set keybindings easily.
 
-Performance:
-- Without keybinds: 0.56
-- With evil keybinds: 0.56
-- With General keybinds: 0.60
+We use general because it gives:
+- a convenient method for binding keys.
+- easy leader key integration.
+- good evil-mode and which-key support.
+- a consistent and unified interface for managing keybinds.
+And it is also really customizable.
+
+Performance and startup time is about the same when lazy loaded.
+Much more convenient to use:
+- Like :keymaps 'override
+- Which key macro
 #+begin_src emacs-lisp
     (defun mark/open-init-file ()
       "Open init.org configuration file"
@@ -272,87 +279,122 @@ Performance:
       (interactive)
       (load-file "~/.config/emacs/init.el"))
 
-    (use-package emacs
+    (use-package general
       :after (evil)
       :config
-      ;; Fix leader key 'SPC'
-      (evil-collection-define-key '(normal visual motion) 'dired-mode-map " " 'nil)
+      (general-evil-setup) ;; <- evil
+      ;; Set up 'C-SPC' as the leader key
+      (general-create-definer start/leader-keys
+        :states '(normal insert visual motion emacs) ;; <- evil
+        :keymaps 'override
+        :prefix "SPC"
+        :global-prefix "C-SPC") ;; Set global leader key so we can access our keybindings from any state
 
-      (evil-set-leader '(normal visual motion) (kbd "SPC"))
-      (evil-define-key '(normal visual motion) 'global
-        (kbd "<leader>.") 'find-file
-        (kbd "<leader>,") 'embark-act
-        (kbd "<leader>TAB") 'comment-line
-        (kbd "<leader>q") 'flymake-show-buffer-diagnostics
-        (kbd "<leader>u") 'vundo
+      (start/leader-keys
+    	"." '(find-file :wk "Find file")
+    	"," '(embark-act :wk "Embark act")
+    	"TAB" '(comment-line :wk "Comment lines")
+    	"q" '(flymake-show-buffer-diagnostics :wk "Flymake buffer diagnostic")
+    	"u" '(vundo :wk "Vundo")
 
-        ;; Harpoon
-        (kbd "<leader>a") 'harpoon-toggle-quick-menu
-        (kbd "<leader>h") 'harpoon-go-to-1
-        (kbd "<leader>j") 'harpoon-go-to-2
-        (kbd "<leader>k") 'harpoon-go-to-3
-        (kbd "<leader>l") 'harpoon-go-to-4
+    	;; Projectile
+    	"p" '(projectile-command-map :wk "Projectile")
+    	"s p" '(projectile-discover-projects-in-search-path :wk "Search for projects"))
 
-        (kbd "<leader>ma") 'harpoon-add-file
-        (kbd "<leader>mf") 'harpoon-toggle-file
-        (kbd "<leader>mc") 'harpoon-clear
-        (kbd "<leader>mp") 'harpoon-go-to-prev
-        (kbd "<leader>mn") 'harpoon-go-to-next
+      ;; Harpoon
+      (start/leader-keys
+    	"a" '(harpoon-toggle-quick-menu :wk "Harpoon quick menu")
+    	"h" '(harpoon-go-to-1 :wk "Harpoon go to 1")
+    	"j" '(harpoon-go-to-2 :wk "Harpoon go to 2")
+    	"k" '(harpoon-go-to-3 :wk "Harpoon go to 3")
+    	"l" '(harpoon-go-to-4 :wk "Harpoon go to 4"))
 
-        (kbd "<leader>p") 'projectile-command-map
-        (kbd "<leader>sp") 'projectile-discover-projects-in-search-path
+      (start/leader-keys
+    	"m" '(:ignore t :wk "Harpoon")
+    	"m a" '(harpoon-add-file :wk "Harpoon add file")
+    	"m f" '(harpoon-toggle-file :wk "Harpoon toggle file")
+    	"m c" '(harpoon-clear :wk "Harpoon clear")
+    	"m p" '(harpoon-go-to-prev :wk "Harpoon previous")
+    	"m n" '(harpoon-go-to-next :wk "Harpoon next"))
 
-        (kbd "<leader>sc") 'mark/open-init-file
-        (kbd "<leader>sr") 'consult-recent-file
-        (kbd "<leader>sf") 'consult-fd
-        (kbd "<leader>sg") 'consult-ripgrep
-        (kbd "<leader>sl") 'consult-line
-        (kbd "<leader>si") 'consult-imenu
-        (kbd "<leader>se") 'sudo-edit
-        (kbd "<leader>su") 'sudo-edit-find-file
+      (start/leader-keys
+    	"s" '(:ignore t :wk "Search")
+    	"s c" '(mark/open-init-file :wk "Open init file")
+    	"s r" '(consult-recent-file :wk "Search recent files")
+    	"s f" '(consult-fd :wk "Search files with fd")
+    	"s g" '(consult-ripgrep :wk "Search with ripgrep")
+    	"s l" '(consult-line :wk "Search line")
+    	"s i" '(consult-imenu :wk "Search Imenu buffer locations")  ;; This one is really cool
 
-        (kbd "<leader>so") 'jinx-correct
-        (kbd "<leader>sg") 'jinx-languages
+    	"s e" '(sudo-edit :wk "Sudo edit current file")
+    	"s u" '(sudo-edit-find-file :wk "Sudo edit find file")
+    	"s o" '(jinx-correct :wk "Jinx correct")
+    	"s g" '(jinx-languages :wk "Jinx choose language"))
 
-        (kbd "<leader>ds") 'consult-buffer
-        (kbd "<leader>dk") 'kill-current-buffer
-        (kbd "<leader>di") 'ibuffer
-        (kbd "<leader>dn") 'next-buffer
-        (kbd "<leader>dp") 'previous-buffer
-        (kbd "<leader>dr") 'revert-buffer
-        (kbd "<leader>dv") 'dired
-        (kbd "<leader>dj") 'dired-jump
-        (kbd "<leader>da") 'consult-dir
+      (start/leader-keys
+    	"d" '(:ignore t :wk "Buffers & Dired")
+    	"d s" '(consult-buffer :wk "Switch buffer")
+    	"d k" '(kill-current-buffer :wk "Kill current buffer")
+    	"d i" '(ibuffer :wk "Ibuffer")
+    	"d n" '(next-buffer :wk "Next buffer")
+    	"d p" '(previous-buffer :wk "Previous buffer")
+    	"d r" '(revert-buffer :wk "Reload buffer")
+    	"d v" '(dired :wk "Open dired")
+    	"d j" '(dired-jump :wk "Dired jump to current")
+    	"d a" '(consult-dir :wk "Consult dir"))
 
-        (kbd "<leader>ee") 'eglot-reconnect
-        (kbd "<leader>ed") 'eldoc-doc-buffer
-        (kbd "<leader>ef") 'eglot-format
-        (kbd "<leader>el") 'consult-flymake
-        (kbd "<leader>en") 'flymake-goto-next-error
-        (kbd "<leader>ep") 'flymake-goto-prev-error
+      (start/leader-keys
+    	"e" '(:ignore t :wk "Languages")
+    	"e e" '(eglot-reconnect :wk "Eglot Reconnect")
+    	"e d" '(eldoc-doc-buffer :wk "Eldoc Buffer")
+    	"e f" '(eglot-format :wk "Eglot Format")
 
-        (kbd "<leader>ea") 'eglot-code-actions
-        (kbd "<leader>er") 'eglot-rename
-        (kbd "<leader>ei") 'xref-find-definitions
-        (kbd "<leader>es") 'xref-find-references
+    	"e l" '(consult-flymake :wk "Consult Flymake")
+    	"e n" '(flymake-goto-next-error :wk "Flymake next error")
+    	"e p" '(flymake-goto-prev-error :wk "Flymake previous error")
 
-        (kbd "<leader>evb") 'eval-buffer
-        (kbd "<leader>evr") 'eval-region
+    	"e a" '(eglot-code-actions :wk "Eglot code actions")
+    	"e r" '(eglot-rename :wk "Eglot Rename")
+    	"e i" '(xref-find-definitions :wk "Find definition")
+    	"e s" '(xref-find-references :wk "Find references")
 
-        (kbd "<leader>gs") 'magit-status
+    	"e v" '(:ignore t :wk "Elisp")
+    	"e v b" '(eval-buffer :wk "Evaluate elisp in buffer")
+    	"e v r" '(eval-region :wk "Evaluate elisp in region"))
 
-        (kbd "<leader>rq") 'save-buffers-kill-emacs
-        (kbd "<leader>rr") 'mark/reload-config
+      (start/leader-keys
+    	"g" '(:ignore t :wk "Git")
+    	"g s" '(magit-status :wk "Magit status"))
 
-        (kbd "<leader>vm") 'multi-vterm
-        (kbd "<leader>vn") 'multi-vterm-next
-        (kbd "<leader>vp") 'multi-vterm-prev
-        (kbd "<leader>vd") 'multi-vterm-dedicated-toggle
+      (start/leader-keys
+    	"r" '(:ignore t :wk "Reload") ;; To get more help use C-h commands (describe variable, function, etc.)
+    	"r q" '(save-buffers-kill-emacs :wk "Quit Emacs and Daemon")
+    	"r r" '(mark/reload-config :wk "Reload Emacs config"))
 
-        (kbd "<leader>tt") 'visual-line-mode
-        (kbd "<leader>tl") 'display-line-numbers-mode
-        (kbd "<leader>tm") 'evil-mc-mode
-        ))
+      (start/leader-keys
+    	"v" '(:ignore t :wk "Vterm")
+    	"v m" '(multi-vterm :wk "New multi-vterm")
+    	"v n" '(multi-vterm-next :wk "Multi vterm next")
+    	"v p" '(multi-vterm-prev :wk "Multi vterm prev")
+    	"v d" '(multi-vterm-dedicated-toggle :wk "Toggle multi-vterm dedicated"))
+
+      (start/leader-keys
+    	"t" '(:ignore t :wk "Toggle")
+    	"t t" '(visual-line-mode :wk "Toggle truncated lines (wrap)")
+    	"t l" '(display-line-numbers-mode :wk "Toggle line numbers")
+    	"t m" '(evil-mc-mode :wk "Toggle Evil mc mode"))
+      )
+
+    ;; Fix general.el leader key not working instantly in messages buffer with evil mode
+    (use-package emacs
+      :after (evil general)
+      :ghook ('after-init-hook
+              (lambda (&rest _)
+                (when-let ((messages-buffer (get-buffer "*Messages*")))
+                  (with-current-buffer messages-buffer
+                    (evil-normalize-keymaps))))
+              nil nil t)
+      )
 #+end_src
 
 ** Undo
