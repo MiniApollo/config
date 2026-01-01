@@ -127,7 +127,6 @@ With Emacs 29 use-package is now built-in.
 Like Linux distributions, Emacs uses repositories to manage its packages.
 #+begin_src emacs-lisp
     (setq package-archives '(("melpa" . "https://melpa.org/packages/") ;; Sets default package repositories
-                             ("org" . "https://orgmode.org/elpa/")
                              ("elpa" . "https://elpa.gnu.org/packages/")
                              ("nongnu" . "https://elpa.nongnu.org/nongnu/"))) ;; For Eat Terminal
 #+end_src
