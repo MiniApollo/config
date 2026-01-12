@@ -84,12 +84,12 @@ To fix this, you need to find this file (C-x C-f), fix the error and press C-c C
       "Automatically tangle our init.org config file and refresh package-quickstart when we save it. Credit to Emacs From Scratch for this one!"
       (interactive)
       (when (string-equal (file-name-directory (buffer-file-name))
-    					  (expand-file-name user-emacs-directory))
+                          (expand-file-name user-emacs-directory))
         ;; Dynamic scoping to the rescue
         (let ((org-confirm-babel-evaluate nil))
-    	  (org-babel-tangle)
-    	  (package-quickstart-refresh)
-    	  )
+          (org-babel-tangle)
+          (package-quickstart-refresh)
+          )
         ))
 
     (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'start/org-babel-tangle-config)))
@@ -102,7 +102,7 @@ To fix this, you need to find this file (C-x C-f), fix the error and press C-c C
       (message "Emacs loaded in %s with %d garbage collections."
                (format "%.2f seconds"
                        (float-time
-    					(time-subtract after-init-time before-init-time)))
+                        (time-subtract after-init-time before-init-time)))
                gcs-done))
 
     (add-hook 'emacs-startup-hook #'start/display-startup-time)
@@ -289,15 +289,11 @@ Much more convenient to use:
         :global-prefix "C-SPC") ;; Set global leader key so we can access our keybindings from any state
 
       (start/leader-keys
-    	"." '(find-file :wk "Find file")
-    	"," '(embark-act :wk "Embark act")
-    	"TAB" '(comment-line :wk "Comment lines")
-    	"q" '(flymake-show-buffer-diagnostics :wk "Flymake buffer diagnostic")
-    	"u" '(vundo :wk "Vundo")
-
-    	;; Projectile
-    	"p" '(projectile-command-map :wk "Projectile")
-    	"s p" '(projectile-discover-projects-in-search-path :wk "Search for projects"))
+        "." '(find-file :wk "Find file")
+        "," '(embark-act :wk "Embark act")
+        "TAB" '(comment-line :wk "Comment lines")
+        "q" '(flymake-show-buffer-diagnostics :wk "Flymake buffer diagnostic")
+        "u" '(vundo :wk "Vundo")
 
       ;; Harpoon
       (start/leader-keys
@@ -306,6 +302,9 @@ Much more convenient to use:
     	"j" '(harpoon-go-to-2 :wk "Harpoon go to 2")
     	"k" '(harpoon-go-to-3 :wk "Harpoon go to 3")
     	"l" '(harpoon-go-to-4 :wk "Harpoon go to 4"))
+        ;; Projectile
+        "p" '(projectile-command-map :wk "Projectile")
+        "s p" '(projectile-discover-projects-in-search-path :wk "Search for projects"))
 
       (start/leader-keys
     	"m" '(:ignore t :wk "Harpoon")
@@ -316,71 +315,72 @@ Much more convenient to use:
     	"m n" '(harpoon-go-to-next :wk "Harpoon next"))
 
       (start/leader-keys
-    	"s" '(:ignore t :wk "Search")
-    	"s c" '(mark/open-init-file :wk "Open init file")
-    	"s r" '(consult-recent-file :wk "Search recent files")
-    	"s f" '(consult-fd :wk "Search files with fd")
-    	"s g" '(consult-ripgrep :wk "Search with ripgrep")
-    	"s l" '(consult-line :wk "Search line")
-    	"s i" '(consult-imenu :wk "Search Imenu buffer locations")  ;; This one is really cool
+        "s" '(:ignore t :wk "Search")
+        "s c" '(mark/open-init-file :wk "Open init file")
+        "s r" '(consult-recent-file :wk "Search recent files")
+        "s f" '(consult-fd :wk "Search files with fd")
+        "s g" '(consult-ripgrep :wk "Search with ripgrep")
+        "s l" '(consult-line :wk "Search line")
+        "s i" '(consult-imenu :wk "Search Imenu buffer locations")  ;; This one is really cool
 
-    	"s e" '(sudo-edit :wk "Sudo edit current file")
-    	"s u" '(sudo-edit-find-file :wk "Sudo edit find file")
-    	"s o" '(jinx-correct :wk "Jinx correct")
-    	"s g" '(jinx-languages :wk "Jinx choose language"))
-
-      (start/leader-keys
-    	"d" '(:ignore t :wk "Buffers & Dired")
-    	"d s" '(consult-buffer :wk "Switch buffer")
-    	"d k" '(kill-current-buffer :wk "Kill current buffer")
-    	"d i" '(ibuffer :wk "Ibuffer")
-    	"d n" '(next-buffer :wk "Next buffer")
-    	"d p" '(previous-buffer :wk "Previous buffer")
-    	"d r" '(revert-buffer :wk "Reload buffer")
-    	"d v" '(dired :wk "Open dired")
-    	"d j" '(dired-jump :wk "Dired jump to current")
-    	"d a" '(consult-dir :wk "Consult dir"))
+        "s e" '(sudo-edit :wk "Sudo edit current file")
+        "s u" '(sudo-edit-find-file :wk "Sudo edit find file")
+        "s o" '(jinx-correct :wk "Jinx correct")
+        "s g" '(jinx-languages :wk "Jinx choose language"))
 
       (start/leader-keys
-    	"e" '(:ignore t :wk "Languages")
-    	"e e" '(eglot-reconnect :wk "Eglot Reconnect")
-    	"e d" '(eldoc-doc-buffer :wk "Eldoc Buffer")
-    	"e f" '(eglot-format :wk "Eglot Format")
-
-    	"e l" '(consult-flymake :wk "Consult Flymake")
-    	"e n" '(flymake-goto-next-error :wk "Flymake next error")
-    	"e p" '(flymake-goto-prev-error :wk "Flymake previous error")
-
-    	"e a" '(eglot-code-actions :wk "Eglot code actions")
-    	"e r" '(eglot-rename :wk "Eglot Rename")
-    	"e i" '(xref-find-definitions :wk "Find definition")
-    	"e s" '(xref-find-references :wk "Find references")
-
-    	"e v" '(:ignore t :wk "Elisp")
-    	"e v b" '(eval-buffer :wk "Evaluate elisp in buffer")
-    	"e v r" '(eval-region :wk "Evaluate elisp in region"))
+        "d" '(:ignore t :wk "Buffers & Dired")
+        "d s" '(consult-buffer :wk "Switch buffer")
+        "d k" '(kill-current-buffer :wk "Kill current buffer")
+        "d i" '(ibuffer :wk "Ibuffer")
+        "d n" '(next-buffer :wk "Next buffer")
+        "d p" '(previous-buffer :wk "Previous buffer")
+        "d r" '(revert-buffer :wk "Reload buffer")
+        "d v" '(dired :wk "Open dired")
+        "d j" '(dired-jump :wk "Dired jump to current")
+        "d a" '(consult-dir :wk "Consult dir"))
 
       (start/leader-keys
-    	"g" '(:ignore t :wk "Git")
-    	"g s" '(magit-status :wk "Magit status"))
+        "e" '(:ignore t :wk "Languages")
+        "e e" '(eglot-reconnect :wk "Eglot Reconnect")
+        "e d" '(eldoc-doc-buffer :wk "Eldoc Buffer")
+        "e f" '(eglot-format :wk "Eglot Format")
+
+        "e l" '(consult-flymake :wk "Consult Flymake")
+        "e n" '(flymake-goto-next-error :wk "Flymake next error")
+        "e p" '(flymake-goto-prev-error :wk "Flymake previous error")
+
+        "e a" '(eglot-code-actions :wk "Eglot code actions")
+        "e r" '(eglot-rename :wk "Eglot Rename")
+        "e i" '(xref-find-definitions :wk "Find definition")
+        "e s" '(xref-find-references :wk "Find references")
+
+        "e v" '(:ignore t :wk "Elisp")
+        "e v b" '(eval-buffer :wk "Evaluate elisp in buffer")
+        "e v r" '(eval-region :wk "Evaluate elisp in region"))
 
       (start/leader-keys
-    	"r" '(:ignore t :wk "Reload") ;; To get more help use C-h commands (describe variable, function, etc.)
-    	"r q" '(save-buffers-kill-emacs :wk "Quit Emacs and Daemon")
-    	"r r" '(mark/reload-config :wk "Reload Emacs config"))
+        "g" '(:ignore t :wk "Git")
+        "g s" '(magit-status :wk "Magit status"))
 
       (start/leader-keys
-    	"v" '(:ignore t :wk "Vterm")
-    	"v m" '(multi-vterm :wk "New multi-vterm")
-    	"v n" '(multi-vterm-next :wk "Multi vterm next")
-    	"v p" '(multi-vterm-prev :wk "Multi vterm prev")
-    	"v d" '(multi-vterm-dedicated-toggle :wk "Toggle multi-vterm dedicated"))
+        "r" '(:ignore t :wk "Reload") ;; To get more help use C-h commands (describe variable, function, etc.)
+        "r q" '(save-buffers-kill-emacs :wk "Quit Emacs and Daemon")
+        "r r" '(mark/reload-config :wk "Reload Emacs config"))
 
       (start/leader-keys
-    	"t" '(:ignore t :wk "Toggle")
-    	"t t" '(visual-line-mode :wk "Toggle truncated lines (wrap)")
-    	"t l" '(display-line-numbers-mode :wk "Toggle line numbers")
-    	"t m" '(evil-mc-mode :wk "Toggle Evil mc mode"))
+        "v" '(:ignore t :wk "Vterm")
+        "v m" '(multi-vterm :wk "New multi-vterm")
+        "v n" '(multi-vterm-next :wk "Multi vterm next")
+        "v p" '(multi-vterm-prev :wk "Multi vterm prev")
+        "v d" '(multi-vterm-dedicated-toggle :wk "Toggle multi-vterm dedicated"))
+
+      (start/leader-keys
+        "t" '(:ignore t :wk "Toggle")
+        "t t" '(visual-line-mode :wk "Toggle truncated lines (wrap)")
+        "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
+        "t j" '(jinx-mode :wk "Toggle Jinx Spell Checker")
+        "t m" '(evil-mc-mode :wk "Toggle Evil mc mode"))
       )
 
     ;; Fix general.el leader key not working instantly in messages buffer with evil mode
@@ -488,7 +488,7 @@ More [[https://docs.projectile.mx/projectile/projectile_vs_project.html][reasons
       (projectile-project-search-path '(("/mnt/Ext4D/Mark/Projektek/" . 2)
                                         ("/mnt/Ext4D/Mark/Projektek/Desktop/Gyakorlas/" . 2)
                                         ("/mnt/Ext4D/Mark/Projektek/Desktop/Iskola/" . 3)
-    									)))
+                                        )))
 #+end_src
 
 ** Consult-dir
@@ -959,10 +959,10 @@ We use these packages because they use Emacs native functions. Unlike Ivy or Hel
     (use-package vertico
       :hook (after-init . vertico-mode)
       :bind (:map vertico-map
-          		  ("C-j" . vertico-next)
-          		  ("C-k" . vertico-previous)
-          		  ("C-u" . vertico-scroll-down)
-          		  ("C-d" . vertico-scroll-up))
+                  ("C-j" . vertico-next)
+                  ("C-k" . vertico-previous)
+                  ("C-u" . vertico-scroll-down)
+                  ("C-d" . vertico-scroll-up))
       :custom
       (vertico-cycle t) ;; Enable cycling for `vertico-next/previous'
       )
