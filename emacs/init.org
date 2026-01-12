@@ -24,7 +24,7 @@
 - [[#development][Development]]
   - [[#projectile][Projectile]]
   - [[#consult-dir][Consult-dir]]
-  - [[#harpoon][Harpoon]]
+  - [[#javelin][Javelin]]
   - [[#eglot][Eglot]]
   - [[#masonel][Mason.el]]
   - [[#sideline-flymake][Sideline-flymake]]
@@ -295,24 +295,20 @@ Much more convenient to use:
         "q" '(flymake-show-buffer-diagnostics :wk "Flymake buffer diagnostic")
         "u" '(vundo :wk "Vundo")
 
-      ;; Harpoon
-      (start/leader-keys
-    	"a" '(harpoon-toggle-quick-menu :wk "Harpoon quick menu")
-    	"h" '(harpoon-go-to-1 :wk "Harpoon go to 1")
-    	"j" '(harpoon-go-to-2 :wk "Harpoon go to 2")
-    	"k" '(harpoon-go-to-3 :wk "Harpoon go to 3")
-    	"l" '(harpoon-go-to-4 :wk "Harpoon go to 4"))
         ;; Projectile
         "p" '(projectile-command-map :wk "Projectile")
         "s p" '(projectile-discover-projects-in-search-path :wk "Search for projects"))
 
+      ;; Javelin (Harpoon)
       (start/leader-keys
-    	"m" '(:ignore t :wk "Harpoon")
-    	"m a" '(harpoon-add-file :wk "Harpoon add file")
-    	"m f" '(harpoon-toggle-file :wk "Harpoon toggle file")
-    	"m c" '(harpoon-clear :wk "Harpoon clear")
-    	"m p" '(harpoon-go-to-prev :wk "Harpoon previous")
-    	"m n" '(harpoon-go-to-next :wk "Harpoon next"))
+        "a" '(javelin-toggle-quick-menu :wk "Javelin quick menu")
+        "m" '(:ignore t :wk "Javelin")
+        "m a" '(javelin-add-file :wk "Javelin add file")
+        "m d" '(javelin-delete :wk "Javelin Delete")
+        "m c" '(javelin-clear :wk "Javelin clear")
+        "m C" '(javelin-clear :wk "Javelin clear all")
+        "m p" '(javelin-go-to-prev :wk "Javelin previous")
+        "m n" '(javelin-go-to-next :wk "Javelin next"))
 
       (start/leader-keys
         "s" '(:ignore t :wk "Search")
@@ -521,9 +517,11 @@ More [[https://docs.projectile.mx/projectile/projectile_vs_project.html][reasons
       (add-to-list 'consult-dir-sources 'consult-dir--source-work t))
 #+end_src
 
-** Harpoon
+** Javelin
+Modern, better maintained version of harpoon.el
 #+begin_src emacs-lisp
-    (use-package harpoon :defer)
+    (use-package javelin
+      :hook (after-init . global-javelin-minor-mode))
 #+end_src
 
 ** Eglot
