@@ -11,6 +11,12 @@ vim.keymap.set("n", "<leader>dp", vim.cmd.bprevious, { desc = "Buffer previus" }
 vim.keymap.set("n", "<leader>dk", vim.cmd.bd, { desc = "Buffer close" })
 vim.keymap.set("n", "<leader>dj", vim.cmd.Ex, { desc = "Explore" })
 
+vim.keymap.set("n", "<leader>dl", vim.cmd.Lazy, { desc = "Lazy" })
+vim.keymap.set("n", "<leader>dm", vim.cmd.Mason, { desc = "Mason" })
+vim.keymap.set("n", "<leader>dc", function()
+	vim.cmd("edit " .. vim.fn.stdpath("config"))
+end, { desc = "Open Config Directory" })
+
 -- Move lines with JK
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
