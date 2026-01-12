@@ -197,11 +197,16 @@ Also "fixes" multi-vterm not finding vterm (delays vterm module compile).
       (c-ts-mode-indent-offset 4) ;; Fix weird indentation in c-ts (C, C++)
       (go-ts-mode-indent-offset 4) ;; Fix weird indentation in go-ts
 
+      (display-fill-column-indicator-column 80) ;; Set line length indicator to 80 characters
+      (whitespace-style '(face tabs tab-mark trailing))
+
       (make-backup-files nil) ;; Stop creating ~ backup files
       (auto-save-default nil) ;; Stop creating # auto save files
       (delete-by-moving-to-trash t)
       :hook
-      (prog-mode . (lambda () (hs-minor-mode t))) ;; Enable folding hide/show globally
+      (prog-mode . hs-minor-mode) ;; Enable folding hide/show globally
+      (prog-mode . display-fill-column-indicator-mode) ;; Display line length indicator
+      (prog-mode . whitespace-mode)
       :config
       ;; Move customization variables to a separate file and load it, avoid filling up init.el with unnecessary variables
       (setq custom-file (locate-user-emacs-file "custom-vars.el"))
