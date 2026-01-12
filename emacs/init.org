@@ -192,6 +192,7 @@ Also "fixes" multi-vterm not finding vterm (delays vterm module compile).
       (scroll-conservatively 10) ;; Smooth scrolling
       (scroll-margin 8)
 
+      (indent-tabs-mode nil) ;; Only use spaces for indentation
       (tab-width 4)
       (sgml-basic-offset 4) ;; Set Html mode indentation to 4
       (c-ts-mode-indent-offset 4) ;; Fix weird indentation in c-ts (C, C++)
