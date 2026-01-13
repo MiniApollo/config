@@ -371,6 +371,9 @@ Much more convenient to use:
 
       (start/leader-keys
         "r" '(:ignore t :wk "Reload & Packages") ;; To get more help use C-h commands (describe variable, function, etc.)
+        ;; Mason.el
+        "r m" '(mason-manager :wk "Mason manager")
+        "r i" '(mason-install :wk "Mason install")
         ;; Package-mode
         "r p" '(list-packages :wk "List packages")
         "r c" '(package-menu-clear-filter :wk "Package clear filters")
