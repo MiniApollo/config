@@ -254,7 +254,7 @@ Notes:
       :after evil
       :config
       ;; Setting where to use evil-collection
-      (setq evil-collection-mode-list '(dired ibuffer magit corfu consult info vterm vundo))
+      (setq evil-collection-mode-list '(dired ibuffer magit corfu consult info vterm vundo (package-menu package)))
       (evil-collection-init))
 #+end_src
 
@@ -366,7 +366,15 @@ Much more convenient to use:
         "g s" '(magit-status :wk "Magit status"))
 
       (start/leader-keys
-        "r" '(:ignore t :wk "Reload") ;; To get more help use C-h commands (describe variable, function, etc.)
+        "r" '(:ignore t :wk "Reload & Packages") ;; To get more help use C-h commands (describe variable, function, etc.)
+        ;; Package-mode
+        "r p" '(list-packages :wk "List packages")
+        "r c" '(package-menu-clear-filter :wk "Package clear filters")
+        "r n" '(package-menu-filter-by-name :wk "Package filter by name")
+        "r N" '(package-menu-filter-by-name-or-description :wk "Package filter by name or descriptions")
+        "r s" '(package-menu-filter-by-status :wk "Package filter by status")
+        "r u" '(package-menu-filter-upgradable :wk "Package filter by upgradable")
+
         "r q" '(save-buffers-kill-emacs :wk "Quit Emacs and Daemon")
         "r r" '(mark/reload-config :wk "Reload Emacs config"))
 
