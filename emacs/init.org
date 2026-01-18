@@ -63,7 +63,7 @@ These are essential settings and small tweaks that must load before any packages
 They impact the entire configuration, skipping these could result in significantly slower configuration and potential breakage of your setup.
 
 ** Startup Performance
-Core performace tweaks moved to early-init.el
+Core performance tweaks moved to early-init.el
 
 Enable lexical-binding
 #+begin_src emacs-lisp
@@ -89,8 +89,7 @@ To fix this, you need to find this file (C-x C-f), fix the error and press C-c C
         (let ((org-confirm-babel-evaluate nil))
           (org-babel-tangle)
           (package-quickstart-refresh)
-          )
-        ))
+          )))
 
     (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'start/org-babel-tangle-config)))
 #+end_src
@@ -223,8 +222,7 @@ Also "fixes" multi-vterm not finding vterm (delays vterm module compile).
              ("C--" . text-scale-decrease)
              ("<C-wheel-up>" . text-scale-increase)
              ("<C-wheel-down>" . text-scale-decrease)
-             )
-      )
+             ))
 #+end_src
 
 * Important to load first
@@ -408,8 +406,7 @@ Much more convenient to use:
                 (when-let ((messages-buffer (get-buffer "*Messages*")))
                   (with-current-buffer messages-buffer
                     (evil-normalize-keymaps))))
-              nil nil t)
-      )
+              nil nil t))
 #+end_src
 
 ** Undo
@@ -624,14 +621,12 @@ To use it write out the full keyword (or use autocompletion) and press Tab.
       (if (> corfu--index -1)
           (corfu-complete)
         (yas-next-field-or-maybe-expand)
-        )
-      )
+        ))
     (use-package emacs
       :after (yasnippet corfu)
       :bind
       (:map yas-keymap
-            ("TAB" . mark/corfu-yas-tab-handler))
-      )
+            ("TAB" . mark/corfu-yas-tab-handler)))
 #+end_src
 
 ** Tree-Sitter
@@ -731,7 +726,6 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
         (treesit-font-lock-rules
          :language 'go ;; What language
          :feature 'function-highlight ;; A unique feature name that we can toggle.
-
          `(
            ;; Function calls
            (call_expression
@@ -837,6 +831,7 @@ Fast, POSIX compliant shell, handles UIs well.
       (vterm-max-scrollback 5000)
       (vterm-always-compile-module t))
 #+end_src
+
 *** Multi-vterm
 Managing multiple vterm buffers in Emacs
 #+begin_src emacs-lisp
@@ -904,8 +899,7 @@ Notes:
       ;; Recommended: Enable Corfu globally.  This is recommended since Dabbrev can
       ;; be used globally (M-/).  See also the customization variable
       ;; `global-corfu-modes' to exclude certain modes.
-      :hook (after-init . global-corfu-mode)
-      )
+      :hook (after-init . global-corfu-mode))
 
     (use-package nerd-icons-corfu
       :after corfu
@@ -1059,8 +1053,7 @@ Utilities for opening files with root privileges (also works with doas).
 ** Evil-mc
 Multiple-cursors for evil mode.
 #+begin_src emacs-lisp
-    (use-package evil-mc
-      :defer)
+    (use-package evil-mc :defer)
 #+end_src
 
 ** Helpful
@@ -1074,8 +1067,7 @@ An alternative to the built-in Emacs help that provides much more contextual inf
       ("C-h f" . helpful-callable)
       ("C-h v" . helpful-variable)
       ("C-h k" . helpful-key)
-      ("C-h x" . helpful-command)
-      )
+      ("C-h x" . helpful-command))
 #+end_src
 
 ** Diminish
