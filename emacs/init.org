@@ -469,8 +469,7 @@ Don't forget nerd-icons-install-fonts to install the resource fonts.
 We use nerd-icons because it supports both GUI and TUI unlike all-the-icons.
 Also Doom modeline requires nerd icons.
 #+begin_src emacs-lisp
-    (use-package nerd-icons
-      :if (display-graphic-p))
+    (use-package nerd-icons :defer)
 
     (use-package nerd-icons-dired
       :hook (dired-mode . nerd-icons-dired-mode))
