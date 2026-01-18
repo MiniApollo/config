@@ -147,7 +147,7 @@ If you plan to use a different package manager, remember to remove this section 
 #+end_src
 
 *** Package Async
-Makes package installation about 15 sec faster.
+Makes package installation about 30 sec faster.
 Also "fixes" multi-vterm not finding vterm (delays vterm module compile).
 #+begin_src emacs-lisp
     (use-package async
