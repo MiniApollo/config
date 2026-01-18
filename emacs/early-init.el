@@ -14,8 +14,7 @@
 ;; About 0.02 faster
 (add-hook 'emacs-startup-hook (lambda ()
                                 (setq gc-cons-threshold (* 1024 1024 2) ;; 2mb
-                                      gc-cons-percentage 0.2)
-                                ))
+                                      gc-cons-percentage 0.2)))
 
 ;; Increase the amount of data which Emacs reads from the process
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
@@ -33,8 +32,7 @@
 (unless (or (daemonp) (not initial-window-system))
   (setq default-frame-alist '(
                               (foreground-color . "white")
-                              (background-color . "#181818"))
-        ))
+                              (background-color . "#181818"))))
 
 ;; Disable UI elements before UI initialization.
 ;; For faster startup times. It gives 0.05 sec.
