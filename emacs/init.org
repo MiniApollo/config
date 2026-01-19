@@ -43,6 +43,9 @@
   - [[#vertico-and-marginalia][Vertico and Marginalia]]
   - [[#embark][Embark]]
   - [[#jinx][Jinx]]
+- [[#ai][AI]]
+  - [[#gptel][Gptel]]
+  - [[#mcpel][Mcp.el]]
 - [[#other-packages][Other packages]]
   - [[#consult][Consult]]
   - [[#sudo-edit][Sudo edit]]
@@ -390,6 +393,14 @@ Much more convenient to use:
         "v n" '(multi-vterm-next :wk "Multi vterm next")
         "v p" '(multi-vterm-prev :wk "Multi vterm prev")
         "v d" '(multi-vterm-dedicated-toggle :wk "Toggle multi-vterm dedicated"))
+
+      (start/leader-keys
+        "l" '(:ignore t :wk "LLM")
+        "l a" '(gptel :wk "Launch Gptel")
+        "l m" '(gptel-menu :wk "Gptel Menu")
+        "l s" '(gptel-send :wk "Gptel send")
+        "l r" '(gptel-rewrite :wk "Gptel rewrite")
+        "l c" '(gptel-abort :wk "Cancel prompt"))
 
       (start/leader-keys
         "t" '(:ignore t :wk "Toggle")
@@ -999,6 +1010,55 @@ Enchanted Spell Checker
 #+begin_src emacs-lisp
     (use-package jinx
       :hook (after-init . global-jinx-mode))
+#+end_src
+
+* AI
+** Gptel
+A simple, extensible LLM client for Emacs
+#+begin_src emacs-lisp
+    (use-package gptel
+      :defer
+      :custom
+      (gptel-default-mode 'org-mode)
+      (gptel-post-response-functions #'gptel-end-of-response)
+      :config
+      (require 'gptel-integrations)
+      (setq gptel--known-backends nil) ;; Remove chatgpt backend
+      ;; OPTIONAL configuration
+      (setq
+       gptel-model 'functiongemma:latest
+       gptel-model 'qwen3:8b
+       gptel-backend (gptel-make-ollama "Ollama"
+                       :host "localhost:11434"
+                       :stream t
+                       :models '((qwen3:8b
+                                  :description "Qwen3 with 8b")
+                                 (functiongemma:latest
+                                  :description "Specialized Gemma3, fine-tuned for function calling")
+                                 ))
+       ))
+#+end_src
+
+** Mcp.el
+An Mcp client inside Emacs
+#+begin_src emacs-lisp
+    (use-package mcp
+      :after gptel
+      :custom (mcp-hub-servers
+               `(
+                 ("my-test-server" . (
+                                      :command "uv"
+                                      :args ("run" "--with" "mcp" "/home/mark/Downloads/mcpTest/server.py")))
+                 ("duckduckgo-mcp" . (
+                                      :command "uvx"
+                                      :args ("duckduckgo-mcp-server")))
+                 ("Fetch-mcp" . (
+                                 :command "uvx"
+                                 :args ("mcp-server-fetch")))
+                 ))
+      :config
+      (require 'mcp-hub)
+      (gptel-mcp-connect nil))
 #+end_src
 
 * Other packages
