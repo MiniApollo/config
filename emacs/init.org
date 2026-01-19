@@ -446,11 +446,11 @@ With Emacs version 29, true transparency has been added.
     (add-to-list 'default-frame-alist '(alpha-background . 90)) ;; For all new frames henceforth
 
     ;; Transparency in terminal
-    (defun start/on-after-init ()
+    (defun start/tui-enable-transparency ()
       (unless (display-graphic-p (selected-frame))
         (set-face-background 'default "unspecified-bg" (selected-frame))))
 
-    (add-hook 'window-setup-hook 'start/on-after-init)
+    (add-hook 'window-setup-hook 'start/tui-enable-transparency)
 #+end_src
 
 ** Doom Modeline
