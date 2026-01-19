@@ -246,6 +246,7 @@ Notes:
       (org-return-follows-link t)   ;; Sets RETURN key in org-mode to follow links
       (evil-undo-system 'undo-redo) ;; C-r to redo
       (evil-want-fine-undo t)
+      (evil-respect-visual-line-mode t)
       ;; Unmap keys in 'evil-maps. If not done, org-return-follows-link will not work
       :bind
       (:map evil-motion-state-map
