@@ -260,7 +260,7 @@ Notes:
       :after evil
       :config
       ;; Setting where to use evil-collection
-      (setq evil-collection-mode-list '(dired ibuffer magit corfu consult info vterm vundo (package-menu package)))
+      (setq evil-collection-mode-list '(dired ibuffer magit corfu consult info vterm vundo (package-menu package) bookmark))
       (evil-collection-init))
 #+end_src
 
@@ -325,16 +325,16 @@ Much more convenient to use:
         "m l" '(bookmark-bmenu-list :wk "Bookmark bmenu list")
         "m c" '(consult-bookmark :wk "Consult Bookmark"))
 
+      ;; Javelin (Harpoon)
       (start/leader-keys
-        ;; Javelin (Harpoon)
         "a" '(javelin-toggle-quick-menu :wk "Javelin quick menu")
-        "m" '(:ignore t :wk "Javelin")
-        "m a" '(javelin-add-file :wk "Javelin add file")
-        "m d" '(javelin-delete :wk "Javelin Delete")
-        "m c" '(javelin-clear :wk "Javelin clear")
-        "m C" '(javelin-clear-all :wk "Javelin clear all")
-        "m p" '(javelin-go-to-prev :wk "Javelin previous")
-        "m n" '(javelin-go-to-next :wk "Javelin next"))
+        "j" '(:ignore t :wk "Javelin")
+        "j a" '(javelin-add-file :wk "Javelin add file")
+        "j d" '(javelin-delete :wk "Javelin Delete")
+        "j c" '(javelin-clear :wk "Javelin clear")
+        "j C" '(javelin-clear-all :wk "Javelin clear all")
+        "j p" '(javelin-go-to-prev :wk "Javelin previous")
+        "j n" '(javelin-go-to-next :wk "Javelin next"))
 
       (start/leader-keys
         "s" '(:ignore t :wk "Search")
