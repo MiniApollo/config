@@ -37,3 +37,11 @@ vim.keymap.set("i", "<C-c>", "<Esc>")
 
 -- Launch Tmux sessionizer in vim
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww sessionizer-tmux<CR>")
+
+local ls = require("luasnip")
+
+vim.keymap.set({ "i", "s" }, "<C-E>", function()
+	if ls.choice_active() then
+		ls.change_choice(1)
+	end
+end, { silent = true })
