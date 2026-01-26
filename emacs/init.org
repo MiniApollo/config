@@ -576,7 +576,7 @@ To control how a LSP server is started customize the eglot-server-programs list.
                         php-ts-mode cmake-ts-mode
                         go-ts-mode rust-ts-mode
                         haskell-mode bash-ts-mode
-                        gdscript-mode glsl-mode
+                        gdscript-ts-mode glsl-mode
                         hyprlang-ts-mode haskell-mode)
              . eglot-ensure)
       :custom
@@ -662,6 +662,7 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
             (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
             (css "https://github.com/tree-sitter/tree-sitter-css")
             (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+            (gdscript "https://github.com/PrestonKnopp/tree-sitter-gdscript")
             (go "https://github.com/tree-sitter/tree-sitter-go")
             (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
             (html "https://github.com/tree-sitter/tree-sitter-html")
@@ -702,6 +703,7 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
             (js-json-mode . json-ts-mode)
             (typescript-mode . typescript-ts-mode)
             (conf-toml-mode . toml-ts-mode)
+            (gdscript-mode . gdscript-ts-mode)
             ))
     (setq treesit-font-lock-level 3)
 
@@ -778,6 +780,13 @@ These packages are often necessary for features like syntax highlighting, code f
 #+begin_src emacs-lisp
     (use-package haskell-mode
       :mode "\\.hs\\'")
+#+end_src
+
+*** GDScript
+An Emacs package to get GDScript support and syntax highlighting.
+#+begin_src emacs-lisp
+    (use-package gdscript-mode
+      :mode "\\.gd\\'")
 #+end_src
 
 *** Org Mode
