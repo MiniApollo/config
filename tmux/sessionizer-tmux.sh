@@ -12,7 +12,7 @@ if [[ $# -eq 1 ]]; then
 else
     directories=$(find ~/.config -maxdepth 1 -type d)
     # Fix list concate with newline
-    directories+=$'\n'$(find /mnt/Ext4D/Mark/Projektek/ /mnt/Ext4D/Mark/Projektek/Desktop/Gyakorlas/ -mindepth 2 -maxdepth 2 -type d)
+    directories+=$'\n'$(find /mnt/Ext4D/Mark/Projektek/ /mnt/Ext4D/Mark/Projektek/Desktop/Gyakorlas/ /mnt/Ext4D/Mark/Projektek/Desktop/Iskola/ -mindepth 2 -maxdepth 2 -type d)
     selected=$(echo "$directories" | fzf)
 fi
 
