@@ -311,14 +311,28 @@ Much more convenient to use:
         "p" '(projectile-command-map :wk "Projectile")
         "s p" '(projectile-discover-projects-in-search-path :wk "Search for projects"))
 
-      ;; Javelin (Harpoon)
       (start/leader-keys
+        "m" '(:ignore t :wk "Bookmarks & Registers")
+        ;; Registers
+        "m s" '(consult-register :wk "Consult register")
+        "m k" '(jump-to-register :wk "Jump to register")
+        "m e" '(point-to-register :wk "Point to register")
+        ;; Bookmarks
+        "m a" '(bookmark-set :wk "Bookmark Set")
+        "m d" '(bookmark-jump :wk "Bookmark Jump")
+        "m r" '(bookmark-delete :wk "Bookmark Delete")
+        "m R" '(bookmark-delete-all :wk "Bookmark Delete All")
+        "m l" '(bookmark-bmenu-list :wk "Bookmark bmenu list")
+        "m c" '(consult-bookmark :wk "Consult Bookmark"))
+
+      (start/leader-keys
+        ;; Javelin (Harpoon)
         "a" '(javelin-toggle-quick-menu :wk "Javelin quick menu")
         "m" '(:ignore t :wk "Javelin")
         "m a" '(javelin-add-file :wk "Javelin add file")
         "m d" '(javelin-delete :wk "Javelin Delete")
         "m c" '(javelin-clear :wk "Javelin clear")
-        "m C" '(javelin-clear :wk "Javelin clear all")
+        "m C" '(javelin-clear-all :wk "Javelin clear all")
         "m p" '(javelin-go-to-prev :wk "Javelin previous")
         "m n" '(javelin-go-to-next :wk "Javelin next"))
 
