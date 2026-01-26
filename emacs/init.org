@@ -348,7 +348,7 @@ Much more convenient to use:
         "s e" '(sudo-edit :wk "Sudo edit current file")
         "s u" '(sudo-edit-find-file :wk "Sudo edit find file")
         "s o" '(jinx-correct :wk "Jinx correct")
-        "s g" '(jinx-languages :wk "Jinx choose language"))
+        "s x" '(jinx-languages :wk "Jinx choose language"))
 
       (start/leader-keys
         "d" '(:ignore t :wk "Buffers & Dired")
@@ -390,7 +390,7 @@ Much more convenient to use:
         ;; Mason.el
         "r m" '(mason-manager :wk "Mason manager")
         "r i" '(mason-install :wk "Mason install")
-        ;; Package-mode
+        ;; Package-menu-mode
         "r p" '(list-packages :wk "List packages")
         "r c" '(package-menu-clear-filter :wk "Package clear filters")
         "r n" '(package-menu-filter-by-name :wk "Package filter by name")
