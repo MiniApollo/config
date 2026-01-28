@@ -7,7 +7,7 @@ vim.o.relativenumber = true
 vim.g.have_nerd_font = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
-vim.o.mouse = 'a'
+vim.o.mouse = "a"
 
 -- Don't show the mode, since it's already in the status line
 vim.o.showmode = false
@@ -17,7 +17,7 @@ vim.o.showmode = false
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.schedule(function()
-  vim.o.clipboard = 'unnamedplus'
+	vim.o.clipboard = "unnamedplus"
 end)
 
 -- Enable break indent
@@ -31,7 +31,7 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 
 -- Keep signcolumn on by default
-vim.o.signcolumn = 'yes'
+vim.o.signcolumn = "yes"
 
 -- Decrease mapped sequence wait time
 vim.o.timeoutlen = 300
@@ -42,10 +42,10 @@ vim.o.splitbelow = true
 
 -- Show invisible characters like space tab with different icons
 vim.o.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
 -- Preview substitutions live, as you type!
-vim.o.inccommand = 'split'
+vim.o.inccommand = "split"
 
 -- Show which line your cursor is on
 vim.o.cursorline = true
@@ -87,4 +87,4 @@ vim.opt.autochdir = true
 vim.g.netrw_keepdir = 0
 
 vim.opt.spell = true
-vim.opt.spelllang = { 'en_us' }
+vim.opt.spelllang = { "en_us" }
