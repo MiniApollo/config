@@ -7,6 +7,7 @@
 
 * Table Of Contents :toc:
 - [[#core-setup--performance][Core Setup & Performance]]
+  - [[#todos][TODOS]]
   - [[#startup-performance][Startup Performance]]
   - [[#auto-tangle-configuration-file][Auto-tangle Configuration file]]
   - [[#show-startup-time][Show startup time]]
@@ -63,6 +64,13 @@
 * Core Setup & Performance
 These are essential settings and small tweaks that must load before any packages.
 They impact the entire configuration, skipping these could result in significantly slower configuration and potential breakage of your setup.
+
+** TODOS
+Where Emacs lacks for me:
+Neovim has more developers.
+Undotree:
+I want a vim like undotree. Vundo breaks down with large files. Undotree is old and hacky gets corrupted.
+Snippet engine: Want to use vscode snippets
 
 ** Startup Performance
 Core performance tweaks moved to early-init.el
