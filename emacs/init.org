@@ -187,6 +187,7 @@ Also "fixes" multi-vterm not finding vterm (delays vterm module compile).
       (global-visual-line-mode t)           ;; Enable truncated lines
       (display-line-numbers-type 'relative) ;; Relative line numbers
       (global-display-line-numbers-mode t)  ;; Display line numbers
+      (global-hl-line-mode t)               ;; Highlight current line
 
       ;; (pixel-scroll-precision-mode t)     ;; Precise pixel scrolling. i.e. smooth scrolling
       ;; (pixel-scroll-precision-use-momentum nil)
