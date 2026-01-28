@@ -10,6 +10,7 @@ alias sudo='doas'
 complete -F _root_command doas
 
 alias vi='nvim'
+alias ollmcp='uvx ollmcp -j ~/.config/ollmcp/mcp-servers/config.json'
 alias ls='ls --color=auto'
 alias ll='ls -lav --ignore=..'   # show long listing of all except ".."
 alias l='ls -lav --ignore=.?*'   # show long listing but no hidden dotfiles except "."
