@@ -5,9 +5,8 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 require("config.lazy")
-require("config.set")
+require("config.settings")
 require("config.keymaps")
 require("config.harpoon")
 
-vim.o.background = "dark"
-vim.cmd([[colorscheme gruvbox]])
+-- What I miss in Emacs, the responsivnes. Neovim is much more snappy.
