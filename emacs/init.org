@@ -858,6 +858,7 @@ Fast, POSIX compliant shell, handles UIs well.
 #+begin_src emacs-lisp
     (use-package vterm
       :defer
+      :hook (vterm-mode . (lambda () (setq-local global-hl-line-mode nil)))
       :custom
       (vterm-max-scrollback 5000)
       (vterm-always-compile-module t))
