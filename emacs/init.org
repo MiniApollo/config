@@ -58,7 +58,6 @@
   - [[#indent-guide][Indent-guide]]
   - [[#which-key][Which-Key]]
   - [[#ws-butler][Ws-butler]]
-  - [[#yaml-parser][Yaml parser]]
   - [[#esup][Esup]]
 
 * Core Setup & Performance
@@ -1235,12 +1234,6 @@ Removes whitespace from the ends of lines.
 #+begin_src emacs-lisp
     (use-package ws-butler
       :hook (after-init . ws-butler-global-mode))
-#+end_src
-
-** Yaml parser
-For development
-#+begin_src emacs-lisp
-    (use-package yaml :defer)
 #+end_src
 
 ** Esup
