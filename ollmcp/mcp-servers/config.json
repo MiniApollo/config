@@ -1,0 +1,25 @@
+{
+  "mcpServers": {
+    "my-test-server": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--with",
+        "mcp",
+        "/home/mark/Downloads/mcpTest/server.py"
+      ]
+    },
+    "duckduckgo-mcp": {
+      "command": "uvx",
+      "args": [
+        "duckduckgo-mcp-server"
+      ]
+    },
+    "Fetch-mcp": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-fetch"
+      ]
+    }
+  }
+}
