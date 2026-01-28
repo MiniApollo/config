@@ -67,10 +67,58 @@ They impact the entire configuration, skipping these could result in significant
 
 ** TODOS
 Where Emacs lacks for me:
-Neovim has more developers.
 Undotree:
 I want a vim like undotree. Vundo breaks down with large files. Undotree is old and hacky gets corrupted.
-Snippet engine: Want to use vscode snippets
+
+Where to make better:
+- Undotree: Neovim/vim like undotree setup (Good tree view, change date, diffs)
+- Yasnippet: Vscode snippet support
+- Gruvbox theme: Better colors from neovim setup.
+- Corfu/cape setup: Faster completion
+- GPTel setup: Include under heading prompt
+
+Neovim setup compared to Emacs:
+TLDR: Neovim has more developers
+Marks:
++ Emacs setup Better
+[] Same
+- Emacs setup Worse
+
+[] Lazy.nvim to Elpaca
+[] Harpoon to Javelin
+- blink/Luasnip to Corfu/Cape + ... (Yasnippet)
+- Autoformat to ... (eglot format with evil manual formating) Maybe: format-all
+
+[] Autopairs to Electric-Pair-Mode
+[] Comment.nvim to comment-line
+- Guess indent to ...
+[] Todo comments to hl-todo
+- undotree.nvim to ... (undotree)
++ buffer manager to consult-buffer
+
+[] gitsigns to diff-hl
++ lazygit to magit
++ nvim-lspconfig to eglot
+[] mason.nvim to mason.el
+[] telescope to consult
+[] lualine to doom-modeline
+[] gruvbox.nvim to gruvbox.el
++ nvim-treesitter to treesit
+[] which-key to which-key
+
+The last thing that annoys me about Emacs is there are a lot of useless buffers like:
+I don’t need these buffers at all:
+- Async-native-compile-log
+- Native-compile-log
+- Compile-log
+- Warnings
+
+I also don't need these but good to have:
+- Scratch
+- Messages
+- Eglot
+
+They are just annoying and make navigation more challenging.
 
 ** Startup Performance
 Core performance tweaks moved to early-init.el
