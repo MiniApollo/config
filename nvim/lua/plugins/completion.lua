@@ -20,13 +20,22 @@ return { -- Autocompletion
 				-- `friendly-snippets` contains a variety of premade snippets.
 				--    See the README about individual language/framework/plugin snippets:
 				--    https://github.com/rafamadriz/friendly-snippets
-				-- {
-				--   'rafamadriz/friendly-snippets',
-				--   config = function()
-				--     require('luasnip.loaders.from_vscode').lazy_load()
-				--   end,
-				-- },
+				{
+					"rafamadriz/friendly-snippets",
+					config = function()
+						require("luasnip.loaders.from_vscode").lazy_load()
+					end,
+				},
 			},
+			config = function()
+				-- Cycle through options in snippet
+				local ls = require("luasnip")
+				vim.keymap.set({ "i", "s" }, "<C-E>", function()
+					if ls.choice_active() then
+						ls.change_choice(1)
+					end
+				end, { silent = true })
+			end,
 			opts = {},
 		},
 		"folke/lazydev.nvim",
@@ -56,6 +65,19 @@ return { -- Autocompletion
 			-- <c-k>: Toggle signature help
 			--
 			-- See :h blink-cmp-config-keymap for defining your own keymap
+			["<C-d>"] = {
+				function(cmp)
+					return cmp.select_next({ count = 5 })
+				end,
+				"fallback",
+			},
+			["<C-u>"] = {
+				function(cmp)
+					return cmp.select_prev({ count = 5 })
+				end,
+				"fallback",
+			},
+
 			preset = "super-tab",
 
 			-- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:

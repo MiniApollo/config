@@ -64,14 +64,6 @@ vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" }
 vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
 vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
 
--- Cycle through options in snippet
-local ls = require("luasnip")
-vim.keymap.set({ "i", "s" }, "<C-E>", function()
-	if ls.choice_active() then
-		ls.change_choice(1)
-	end
-end, { silent = true })
-
 -- Toggle spell checking on and off
 vim.keymap.set("n", "<leader>ts", function()
 	vim.opt.spell = not (vim.opt.spell:get())
@@ -81,3 +73,4 @@ vim.keymap.set("n", "<leader>ts", function()
 		print("Spell check: OFF")
 	end
 end, { desc = "[T]oggle [S]pell" })
+
