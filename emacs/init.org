@@ -303,7 +303,7 @@ Notes:
       (evil-want-C-u-scroll t)      ;; Set C-u to scroll up
       (evil-want-C-i-jump nil)      ;; Disables C-i jump
       (org-return-follows-link t)   ;; Sets RETURN key in org-mode to follow links
-      (evil-undo-system 'undo-redo) ;; C-r to redo
+      (evil-undo-system 'undo-fu) ;; C-r to redo
       (evil-want-fine-undo t)
       (evil-respect-visual-line-mode t)
       ;; Unmap keys in 'evil-maps. If not done, org-return-follows-link will not work
@@ -497,15 +497,21 @@ Much more convenient to use:
 Vundo: Visualizes undo history.
 Undo-fu-session: Persistent undo history
 #+begin_src emacs-lisp
+    (use-package undo-fu
+      :config
+      ;; Increase undo history limits to reduce likelihood of data loss
+      (setq undo-limit (* 1024 1024 64)          ;; 64mb  (default is 160kb)
+            undo-strong-limit (* 1024 1024 96)   ;; 96mb  (default is 240kb)
+            undo-outer-limit (* 1024 1024 960))) ;; 960mb (default is 24mb)
+
     (use-package undo-fu-session
       :hook (after-init . undo-fu-session-global-mode)
       :custom (undo-fu-session-incompatible-files '("\\.gpg$" "/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
       :config
-      ;; Increase undo history limits to reduce likelihood of data loss
-      (setq undo-limit 256000           ;; 256kb (default is 160kb)
-            undo-strong-limit (* 1024 1024 2)   ;; 2mb   (default is 240kb)
-            undo-outer-limit (* 1024 1024 36))  ;; 36mb  (default is 24mb)
-      )
+      (when (executable-find "zstd")
+        ;; There are other algorithms available, but zstd is the fastest, and speed
+        ;; is our priority within Emacs
+        (setq undo-fu-session-compression 'zst)))
 
     (use-package vundo
       :defer
