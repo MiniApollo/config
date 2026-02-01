@@ -69,7 +69,6 @@ They impact the entire configuration, skipping these could result in significant
 ** TODOS
 Where to make better:
 - Maitanance workspace: Don't want to see 10 "log" buffers
-- GPTel setup: Include under heading prompt
 
 Neovim setup compared to Emacs:
 TLDR: Neovim has more developers
@@ -80,7 +79,7 @@ Marks:
 
 [] Lazy.nvim to Elpaca
 [] Harpoon to Javelin
-- blink/Luasnip to Corfu/Cape + Snippy.el
++ blink/Luasnip to Corfu/Cape + Snippy.el
 - Autoformat to ... (eglot format with evil manual formating) Maybe: format-all
 
 [] Autopairs to Electric-Pair-Mode
