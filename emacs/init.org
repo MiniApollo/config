@@ -239,7 +239,7 @@ Also "fixes" multi-vterm not finding vterm (delays vterm module compile).
       (dired-kill-when-opening-new-dired-buffer t) ;; Dired don't create new buffer
       (recentf-mode t) ;; Enable recent file mode
 
-      (global-visual-line-mode t)           ;; Enable truncated lines
+      ;; (global-visual-line-mode t)           ;; Enable line wrapping
       (display-line-numbers-type 'relative) ;; Relative line numbers
       (global-display-line-numbers-mode t)  ;; Display line numbers
       (global-hl-line-mode t)               ;; Highlight current line
