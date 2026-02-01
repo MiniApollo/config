@@ -295,7 +295,6 @@ Notes:
       (evil-want-keybinding nil)    ;; Disable evil bindings in other modes (It's not consistent and not good)
       (evil-want-C-u-scroll t)      ;; Set C-u to scroll up
       (evil-want-C-i-jump nil)      ;; Disables C-i jump
-      (org-return-follows-link t)   ;; Sets RETURN key in org-mode to follow links
       (evil-undo-system 'undo-fu) ;; C-r to redo
       (evil-want-fine-undo t)
       (evil-respect-visual-line-mode t)
@@ -893,6 +892,7 @@ Much easier than org-tempo
       :ensure nil
       :custom
       (org-edit-src-content-indentation 4) ;; Set src block automatic indent to 4 instead of 2.
+      (org-return-follows-link t)   ;; Sets RETURN key in org-mode to follow links
       :hook
       (org-mode . org-indent-mode) ;; Indent text
       )
@@ -1121,6 +1121,7 @@ Emacs Mini-Buffer Actions Rooted in Keymaps
 
 ** Jinx
 Enchanted Spell Checker
+Jinx can cause performance problems in large markdown files.
 #+begin_src emacs-lisp
     (use-package jinx
       :hook (after-init . global-jinx-mode))
