@@ -31,6 +31,7 @@
   - [[#sideline-flymake][Sideline-flymake]]
   - [[#eldoc-box][Eldoc-box]]
   - [[#yasnippet][Yasnippet]]
+  - [[#snippy][Snippy]]
   - [[#tree-sitter][Tree-Sitter]]
   - [[#language-modes][Language modes]]
   - [[#terminal][Terminal]]
@@ -717,6 +718,20 @@ To use it write out the full keyword (or use autocompletion) and press Tab.
       :bind
       (:map yas-keymap
             ("TAB" . mark/corfu-yas-tab-handler)))
+#+end_src
+
+** Snippy
+VSCode/LSP snippet support for Emacs with Yasnippet.
+#+begin_src emacs-lisp
+    (use-package snippy
+      :vc (:url "https://github.com/MiniApollo/snippy.git"
+                :branch "main"
+                :rev :newest)
+      :hook (after-init . global-snippy-minor-mode)
+      :custom
+      (snippy-global-languages '("global")) ;; Recomended
+      :config
+      (snippy-install-or-update-snippets)) ;; Autoupdate git repo
 #+end_src
 
 ** Tree-Sitter
