@@ -67,15 +67,8 @@ These are essential settings and small tweaks that must load before any packages
 They impact the entire configuration, skipping these could result in significantly slower configuration and potential breakage of your setup.
 
 ** TODOS
-Where Emacs lacks for me:
-Undotree:
-I want a vim like undotree. Vundo breaks down with large files. Undotree is old and hacky gets corrupted.
-
 Where to make better:
-- Undotree: Neovim/vim like undotree setup (Good tree view, change date, diffs)
-- Yasnippet: Vscode snippet support
-- Gruvbox theme: Better colors from neovim setup.
-- Corfu/cape setup: Faster completion
+- Maitanance workspace: Don't want to see 10 "log" buffers
 - GPTel setup: Include under heading prompt
 
 Neovim setup compared to Emacs:
@@ -87,14 +80,14 @@ Marks:
 
 [] Lazy.nvim to Elpaca
 [] Harpoon to Javelin
-- blink/Luasnip to Corfu/Cape + ... (Yasnippet)
+- blink/Luasnip to Corfu/Cape + Snippy.el
 - Autoformat to ... (eglot format with evil manual formating) Maybe: format-all
 
 [] Autopairs to Electric-Pair-Mode
 [] Comment.nvim to comment-line
 - Guess indent to ...
 [] Todo comments to hl-todo
-- undotree.nvim to ... (undotree)
+[] undotree.nvim to vundo with undo-fu, Undo-fu-session (lacks date support)
 + buffer manager to consult-buffer
 
 [] gitsigns to diff-hl
