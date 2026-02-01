@@ -1018,7 +1018,6 @@ Read the [[https://github.com/minad/cape#configuration][configuration section]] 
       ;; Take care when adding Capfs to the list since each of the Capfs adds a small runtime cost.
       (let ((merge-backends (list
                              #'cape-keyword      ;; Keyword completion
-                             #'cape-elisp-symbol ;; Emacs Lisp code (functions, variables)
                              ;; #'cape-abbrev       ;; Complete abbreviation
                              #'cape-dabbrev      ;; Complete word from current buffers
                              ;; #'cape-line         ;; Complete entire line from current buffer
@@ -1034,6 +1033,13 @@ Read the [[https://github.com/minad/cape#configuration][configuration section]] 
                                 #'cape-file ;; Path completion
                                 #'cape-elisp-block ;; Complete elisp in Org or Markdown mode
                                 )))
+        ;; Remove keyword completion in git commits
+        (when (derived-mode-p 'git-commit-mode)
+          (setq merge-backends (remq #'cape-keyword merge-backends)))
+
+        ;; Add Elisp symbols only in Elisp modes
+        (when (derived-mode-p 'emacs-lisp-mode 'ielm-mode)
+          (setq merge-backends (cons #'cape-elisp-symbol merge-backends))) ;; Emacs Lisp code (functions, variables)
 
         ;; Add Eglot to the front of the list if it's active
         (when (bound-and-true-p eglot--managed-mode)
