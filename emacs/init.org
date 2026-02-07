@@ -231,6 +231,7 @@ Also "fixes" multi-vterm not finding vterm (delays vterm module compile).
 
       (dired-kill-when-opening-new-dired-buffer t) ;; Dired don't create new buffer
       (recentf-mode t) ;; Enable recent file mode
+      (context-menu-mode t) ;; Right-click menu
 
       ;; (global-visual-line-mode t)           ;; Enable line wrapping
       (display-line-numbers-type 'relative) ;; Relative line numbers
