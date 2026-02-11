@@ -61,3 +61,8 @@ site-lisp/package/
 /bookmarks
 /custom-vars.el
 /custom.el
+/package-quickstart.*
+/undo-fu-session
+/mason
+/friendly-snippets
+/init.el
