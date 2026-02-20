@@ -29,7 +29,6 @@
   - [[#eglot][Eglot]]
   - [[#masonel][Mason.el]]
   - [[#sideline-flymake][Sideline-flymake]]
-  - [[#eldoc-box][Eldoc-box]]
   - [[#yasnippet][Yasnippet]]
   - [[#snippy][Snippy]]
   - [[#tree-sitter][Tree-Sitter]]
@@ -681,13 +680,6 @@ Show flymake errors with sideline
       :custom
       (sideline-flymake-display-mode 'line) ;; show errors on the current line
       (sideline-backends-right '(sideline-flymake)))
-#+end_src
-
-** Eldoc-box
-Display eldoc documentation in a popup box
-#+begin_src emacs-lisp
-    (use-package eldoc-box
-      :hook (prog-mode . eldoc-box-hover-mode))
 #+end_src
 
 ** Yasnippet
