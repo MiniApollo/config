@@ -32,6 +32,7 @@
   - [[#yasnippet][Yasnippet]]
   - [[#snippy][Snippy]]
   - [[#tree-sitter][Tree-Sitter]]
+  - [[#emmet-mode][Emmet mode]]
   - [[#language-modes][Language modes]]
   - [[#terminal][Terminal]]
 - [[#version-control][Version Control]]
@@ -845,6 +846,16 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
                                        (append treesit-font-lock-settings
                                                mark/ts-font-lock-settings))))
       )
+#+end_src
+
+** Emmet mode
+Emmet's support for emacs.
+#+begin_src emacs-lisp
+    (use-package emmet-mode
+      :hook
+      ((sgml-mode css-base-mode) . emmet-mode) ;; Auto-start on any markup modes
+      :config
+      (sgml-electric-tag-pair-mode)) ;; Auto close tags
 #+end_src
 
 ** Language modes
