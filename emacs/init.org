@@ -518,10 +518,15 @@ Undo-fu-session: Persistent undo history
 Set gruvbox theme, if you want some themes try out doom-themes.
 Use consult-theme to easily try out themes (*Epilepsy* Warning).
 #+begin_src emacs-lisp
-    (use-package gruvbox-theme
+    (use-package doom-themes
+      :custom
+      ;; Global settings (defaults)
+      (doom-themes-enable-bold t)   ; if nil, bold is universally disabled
+      (doom-themes-enable-italic t) ; if nil, italics is universally disabled
       :config
-      (setq gruvbox-bold-constructs t)
-      (load-theme 'gruvbox-dark-medium t)) ;; We need to add t to trust this package
+      (load-theme 'doom-gruvbox t)
+      ;; Corrects (and improves) org-mode's native fontification.
+      (doom-themes-org-config))
 #+end_src
 
 ** Transparency
