@@ -1,0 +1,24 @@
+{
+  "permission": {
+    "bash": "ask",
+    "edit": "ask",
+    "read": "ask",
+    "glob": "ask",
+    "grep": "ask"
+  },
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "searxng": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "mcp-searxng"
+      ],
+      "enabled": true,
+      "environment": {
+        "SEARXNG_URL": "http://localhost:3001"
+      }
+    }
+  }
+}
