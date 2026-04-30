@@ -234,6 +234,7 @@ Also "fixes" multi-vterm not finding vterm (delays vterm module compile).
       (context-menu-mode t) ;; Right-click menu
 
       ;; (global-visual-line-mode t)           ;; Enable line wrapping
+      (truncate-lines t)                    ;; Enable long lines
       (display-line-numbers-type 'relative) ;; Relative line numbers
       (global-display-line-numbers-mode t)  ;; Display line numbers
       (global-hl-line-mode t)               ;; Highlight current line
