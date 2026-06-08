@@ -12,13 +12,13 @@ hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 })
 ---- Variables ----
 ---------------------
 
-terminal    = "alacritty"
-editor      = "emacs"
-fileManager = "thunar"
-webBrowser  = "librewolf"
-office      = "libreoffice"
-menu        = "rofi -show drun"
-mainMod     = "SUPER" -- Sets "Windows" key as main modifier
+Terminal    = "alacritty"
+Editor      = "emacs"
+FileManager = "thunar"
+WebBrowser  = "librewolf"
+Office      = "libreoffice"
+Menu        = "rofi -show drun"
+MainMod     = "SUPER" -- Sets "Windows" key as main modifier
 
 -------------------
 ---- AUTOSTART ----

@@ -2,53 +2,53 @@
 ---- KEYBINDINGS ----
 ---------------------
 
-hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(editor))
-hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd('emacsclient -c -a ""'))
+hl.bind(MainMod .. " + RETURN", hl.dsp.exec_cmd(Terminal))
+hl.bind(MainMod .. " + A", hl.dsp.exec_cmd(Editor))
+hl.bind(MainMod .. " + SHIFT + A", hl.dsp.exec_cmd('emacsclient -c -a ""'))
 
-hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(webBrowser))
-hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(office))
+hl.bind(MainMod .. " + E", hl.dsp.exec_cmd(FileManager))
+hl.bind(MainMod .. " + Q", hl.dsp.exec_cmd(WebBrowser))
+hl.bind(MainMod .. " + C", hl.dsp.exec_cmd(Office))
 
 hl.bind("XF86Calculator", hl.dsp.exec_cmd("galculator"))
-hl.bind(mainMod .. " + SHIFT + G", hl.dsp.exec_cmd("galculator"))
+hl.bind(MainMod .. " + SHIFT + G", hl.dsp.exec_cmd("galculator"))
 
 -- Rofi
-hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(menu))
-hl.bind(mainMod .. " + SHIFT + D", hl.dsp.exec_cmd("~/.config/hypr/scripts/gpu_hybrid.sh"))
-hl.bind(mainMod .. " + CTRL + D", hl.dsp.exec_cmd("~/.config/rofi/powermenu/powermenu.sh"))
+hl.bind(MainMod .. " + D", hl.dsp.exec_cmd(Menu))
+hl.bind(MainMod .. " + SHIFT + D", hl.dsp.exec_cmd("~/.config/hypr/scripts/gpu_hybrid.sh"))
+hl.bind(MainMod .. " + CTRL + D", hl.dsp.exec_cmd("~/.config/rofi/powermenu/powermenu.sh"))
 
-hl.bind(mainMod .. " + SHIFT + C", hl.dsp.window.close())
-hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exit())
-hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
-hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(MainMod .. " + SHIFT + C", hl.dsp.window.close())
+hl.bind(MainMod .. " + SHIFT + T", hl.dsp.exit())
+hl.bind(MainMod .. " + F", hl.dsp.window.fullscreen())
+hl.bind(MainMod .. " + SHIFT + F", hl.dsp.window.float({ action = "toggle" }))
 
-hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("killall waybar ; waybar"))
-hl.bind(mainMod .. " + CTRL + I", hl.dsp.exec_cmd("~/.config/hypr/scripts/toggle-hypridle.sh"))
-hl.bind(mainMod .. " + CTRL + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/wallpaper.sh"))
-hl.bind(mainMod .. " + CTRL + SHIFT + L", hl.dsp.exec_cmd("hyprlock"))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("hyprpicker -a"))
+hl.bind(MainMod .. " + SHIFT + R", hl.dsp.exec_cmd("killall waybar ; waybar"))
+hl.bind(MainMod .. " + CTRL + I", hl.dsp.exec_cmd("~/.config/hypr/scripts/toggle-hypridle.sh"))
+hl.bind(MainMod .. " + CTRL + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/wallpaper.sh"))
+hl.bind(MainMod .. " + CTRL + SHIFT + L", hl.dsp.exec_cmd("hyprlock"))
+hl.bind(MainMod .. " + R", hl.dsp.exec_cmd("hyprpicker -a"))
 
 -- System Controls
-hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd("poweroff"))
-hl.bind(mainMod .. " + SHIFT + U", hl.dsp.exec_cmd("reboot"))
+hl.bind(MainMod .. " + SHIFT + P", hl.dsp.exec_cmd("poweroff"))
+hl.bind(MainMod .. " + SHIFT + U", hl.dsp.exec_cmd("reboot"))
 
 -- Printscreen
 hl.bind("Print", hl.dsp.exec_cmd('grim -g "$(slurp)" - | wl-copy'))                                                     -- Select screen
-hl.bind(mainMod .. " + CTRL + Print",
+hl.bind(MainMod .. " + CTRL + Print",
     hl.dsp.exec_cmd('grim -g "$(slurp)" $(xdg-user-dir PICTURES)/ps_$(date +"%Y%m%d%H%M%S").png'))                      -- Save Select screen
 
-hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd("grim - | wl-copy"))                                                     -- Entire screen
-hl.bind(mainMod .. " + SHIFT + Print", hl.dsp.exec_cmd('grim $(xdg-user-dir PICTURES)/ps_$(date +"%Y%m%d%H%M%S").png')) -- Save Entire screen
+hl.bind(MainMod .. " + Print", hl.dsp.exec_cmd("grim - | wl-copy"))                                                     -- Entire screen
+hl.bind(MainMod .. " + SHIFT + Print", hl.dsp.exec_cmd('grim $(xdg-user-dir PICTURES)/ps_$(date +"%Y%m%d%H%M%S").png')) -- Save Entire screen
 
 -- Example special workspace (scratchpad)
-hl.bind(mainMod .. " + S", hl.dsp.workspace.toggle_special("magic"))
-hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
+hl.bind(MainMod .. " + S", hl.dsp.workspace.toggle_special("magic"))
+hl.bind(MainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
 
 hl.define_submap("passthru", function()
-    hl.bind(mainMod .. " + Escape", hl.dsp.submap("reset"))
+    hl.bind(MainMod .. " + Escape", hl.dsp.submap("reset"))
 end)
-hl.bind(mainMod .. " + SHIFT + B", hl.dsp.submap("passthru"))
+hl.bind(MainMod .. " + SHIFT + B", hl.dsp.submap("passthru"))
 
 -- Laptop multimedia keys for volume and LCD brightness
 -- Change volume by: amixer set Capture 5%- or 5%+
@@ -69,38 +69,38 @@ hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
 
--- Scroll through existing workspaces with mainMod + scroll
-hl.bind(mainMod .. " + right", hl.dsp.focus({ workspace = "e+1" }))
-hl.bind(mainMod .. " + left", hl.dsp.focus({ workspace = "e-1" }))
-hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e+1" }))
-hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e-1" }))
+-- Scroll through existing workspaces with MainMod + scroll
+hl.bind(MainMod .. " + right", hl.dsp.focus({ workspace = "e+1" }))
+hl.bind(MainMod .. " + left", hl.dsp.focus({ workspace = "e-1" }))
+hl.bind(MainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e+1" }))
+hl.bind(MainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e-1" }))
 
--- Move/resize windows with mainMod + LMB/RMB and dragging
-hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
-hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+-- Move/resize windows with MainMod + LMB/RMB and dragging
+hl.bind(MainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
+hl.bind(MainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
--- Switch workspaces with mainMod + [0-9]
--- Move active window to a workspace with mainMod + SHIFT + [0-9]
+-- Switch workspaces with MainMod + [0-9]
+-- Move active window to a workspace with MainMod + SHIFT + [0-9]
 for i = 1, 10 do
     local key = i % 10 -- 10 maps to key 0
-    hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
-    hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+    hl.bind(MainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
+    hl.bind(MainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 
--- Move focus with mainMod + arrow keys
-hl.bind(mainMod .. " + H", hl.dsp.focus({ direction = "left" }))
-hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "right" }))
-hl.bind(mainMod .. " + K", hl.dsp.focus({ direction = "up" }))
-hl.bind(mainMod .. " + J", hl.dsp.focus({ direction = "down" }))
+-- Move focus with MainMod + arrow keys
+hl.bind(MainMod .. " + H", hl.dsp.focus({ direction = "left" }))
+hl.bind(MainMod .. " + L", hl.dsp.focus({ direction = "right" }))
+hl.bind(MainMod .. " + K", hl.dsp.focus({ direction = "up" }))
+hl.bind(MainMod .. " + J", hl.dsp.focus({ direction = "down" }))
 
 -- Window Resizing
-hl.bind(mainMod .. " + SHIFT + H", hl.dsp.window.resize({ x = -25, y = 0, relative = true }), { repeating = true })
-hl.bind(mainMod .. " + SHIFT + L", hl.dsp.window.resize({ x = 25, y = 0, relative = true }), { repeating = true })
-hl.bind(mainMod .. " + SHIFT + K", hl.dsp.window.resize({ x = 0, y = -25, relative = true }), { repeating = true })
-hl.bind(mainMod .. " + SHIFT + J", hl.dsp.window.resize({ x = 0, y = 25, relative = true }), { repeating = true })
+hl.bind(MainMod .. " + SHIFT + H", hl.dsp.window.resize({ x = -25, y = 0, relative = true }), { repeating = true })
+hl.bind(MainMod .. " + SHIFT + L", hl.dsp.window.resize({ x = 25, y = 0, relative = true }), { repeating = true })
+hl.bind(MainMod .. " + SHIFT + K", hl.dsp.window.resize({ x = 0, y = -25, relative = true }), { repeating = true })
+hl.bind(MainMod .. " + SHIFT + J", hl.dsp.window.resize({ x = 0, y = 25, relative = true }), { repeating = true })
 
 -- Window Move
-hl.bind(mainMod .. " + CTRL + H", hl.dsp.window.move({ direction = "left" }))
-hl.bind(mainMod .. " + CTRL + L", hl.dsp.window.move({ direction = "right" }))
-hl.bind(mainMod .. " + CTRL + K", hl.dsp.window.move({ direction = "up" }))
-hl.bind(mainMod .. " + CTRL + J", hl.dsp.window.move({ direction = "down" }))
+hl.bind(MainMod .. " + CTRL + H", hl.dsp.window.move({ direction = "left" }))
+hl.bind(MainMod .. " + CTRL + L", hl.dsp.window.move({ direction = "right" }))
+hl.bind(MainMod .. " + CTRL + K", hl.dsp.window.move({ direction = "up" }))
+hl.bind(MainMod .. " + CTRL + J", hl.dsp.window.move({ direction = "down" }))
