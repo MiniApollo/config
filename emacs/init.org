@@ -45,9 +45,6 @@
   - [[#vertico-and-marginalia][Vertico and Marginalia]]
   - [[#embark][Embark]]
   - [[#jinx][Jinx]]
-- [[#ai][AI]]
-  - [[#gptel][Gptel]]
-  - [[#mcpel][Mcp.el]]
 - [[#other-packages][Other packages]]
   - [[#consult][Consult]]
   - [[#sudo-edit][Sudo edit]]
@@ -132,7 +129,8 @@ If you like to auto tangle an Org file, don't forget to add the following line t
 To fix this, you need to find this file (C-x C-f), fix the error and press C-c C-v t to tangle it manually.
 #+begin_src emacs-lisp
     (defun start/org-babel-tangle-config ()
-      "Automatically tangle our init.org config file and refresh package-quickstart when we save it. Credit to Emacs From Scratch for this one!"
+      "Automatically tangle our init.org config file and refresh package-quickstart when we save it.
+    Credit to Emacs From Scratch for this one!"
       (interactive)
       (when (string-equal (file-name-directory (buffer-file-name))
                           (expand-file-name user-emacs-directory))
@@ -174,7 +172,7 @@ With Emacs 29 use-package is now built-in.
 
     ;; This only shows which built-in package is upgradable. It does not auto update it
     ;; TODO: Autoupdate built-in packages. Especially Eglot.
-    ;; (setq package-install-upgrade-built-in t) ;; Update built-in packages
+    (setq package-install-upgrade-built-in t) ;; Update built-in packages
 #+end_src
 
 *** Setting package repositories
@@ -581,6 +579,7 @@ We use projectile because it:
 - has better documentation.
 - is developed faster.
 More [[https://docs.projectile.mx/projectile/projectile_vs_project.html][reasons]] to use projectile.
+
 #+begin_src emacs-lisp
     (use-package projectile
       :hook (after-init . projectile-mode)
@@ -653,9 +652,9 @@ To control how a LSP server is started customize the eglot-server-programs list.
                         js-ts-mode typescript-ts-mode
                         php-ts-mode cmake-ts-mode
                         go-ts-mode rust-ts-mode
-                        haskell-mode bash-ts-mode
-                        gdscript-ts-mode glsl-mode
-                        hyprlang-ts-mode)
+                        bash-ts-mode gdscript-ts-mode
+                        glsl-mode python-ts-mode
+                        lua-ts-mode)
              . eglot-ensure)
       :custom
       ;; Good default
@@ -802,11 +801,6 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
     (use-package tsx-ts-mode :ensure nil :mode "\\.tsx\\'")
     (use-package yaml-ts-mode :ensure nil :mode ("\\.yaml\\'" "\\.yml\\'"))
 
-    (use-package hyprlang-ts-mode
-      :mode ("/hypr/.*\\.conf\\'")
-      :custom
-      (hyprlang-ts-mode-indent-offset 4))
-
     (use-package markdown-ts-mode
       :mode ("\\.md\\'")
       :config
@@ -820,7 +814,7 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
 #+end_src
 
 *** Fix go-ts-mode highlighting
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp 
     ;; https://www.reddit.com/r/emacs/comments/1c5dkup/how_to_modify_syntax_highlighting_in_treesitter/
     ;; https://github.com/emacs-mirror/emacs/blob/master/admin/notes/tree-sitter/starter-guide
     (use-package go-ts-mode
@@ -871,12 +865,6 @@ For more: C-h i: g: (emacs)Modes
 
 Some programming languages require the installation of specific modes to fully integrate and function within Emacs.
 These packages are often necessary for features like syntax highlighting, code formatting, linting, and language-specific features.
-
-*** Haskell mode
-#+begin_src emacs-lisp
-    (use-package haskell-mode
-      :mode "\\.hs\\'")
-#+end_src
 
 *** GDScript
 An Emacs package to get GDScript support and syntax highlighting.
@@ -1136,55 +1124,6 @@ Jinx can cause performance problems in large markdown files.
 #+begin_src emacs-lisp
     (use-package jinx
       :hook (after-init . global-jinx-mode))
-#+end_src
-
-* AI
-** Gptel
-A simple, extensible LLM client for Emacs
-#+begin_src emacs-lisp
-    (use-package gptel
-      :defer
-      :custom
-      (gptel-default-mode 'org-mode)
-      (gptel-post-response-functions #'gptel-end-of-response)
-      :config
-      (require 'gptel-integrations)
-      (setq gptel--known-backends nil) ;; Remove chatgpt backend
-      ;; OPTIONAL configuration
-      (setq
-       gptel-model 'functiongemma:latest
-       gptel-model 'qwen3:8b
-       gptel-backend (gptel-make-ollama "Ollama"
-                       :host "localhost:11434"
-                       :stream t
-                       :models '((qwen3:8b
-                                  :description "Qwen3 with 8b")
-                                 (functiongemma:latest
-                                  :description "Specialized Gemma3, fine-tuned for function calling")
-                                 ))
-       ))
-#+end_src
-
-** Mcp.el
-An Mcp client inside Emacs
-#+begin_src emacs-lisp
-    (use-package mcp
-      :after gptel
-      :custom (mcp-hub-servers
-               `(
-                 ("my-test-server" . (
-                                      :command "uv"
-                                      :args ("run" "--with" "mcp" "/home/mark/Downloads/mcpTest/server.py")))
-                 ("duckduckgo-mcp" . (
-                                      :command "uvx"
-                                      :args ("duckduckgo-mcp-server")))
-                 ("Fetch-mcp" . (
-                                 :command "uvx"
-                                 :args ("mcp-server-fetch")))
-                 ))
-      :config
-      (require 'mcp-hub)
-      (gptel-mcp-connect nil))
 #+end_src
 
 * Other packages
