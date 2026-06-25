@@ -7,7 +7,6 @@
 
 * Table Of Contents :toc:
 - [[#core-setup--performance][Core Setup & Performance]]
-  - [[#todos][TODOS]]
   - [[#startup-performance][Startup Performance]]
   - [[#auto-tangle-configuration-file][Auto-tangle Configuration file]]
   - [[#show-startup-time][Show startup time]]
@@ -59,56 +58,6 @@
   - [[#esup][Esup]]
 
 * Core Setup & Performance
-These are essential settings and small tweaks that must load before any packages.
-They impact the entire configuration, skipping these could result in significantly slower configuration and potential breakage of your setup.
-
-** TODOS
-Where to make better:
-- Maitanance workspace: Don't want to see 10 "log" buffers
-
-Neovim setup compared to Emacs:
-TLDR: Neovim has more developers
-Marks:
-+ Emacs setup Better
-[] Same
-- Emacs setup Worse
-
-[] Lazy.nvim to Elpaca
-[] Harpoon to Javelin
-+ blink/Luasnip to Corfu/Cape + Snippy.el
-- Autoformat to ... (eglot format with evil manual formating) Maybe: format-all
-
-[] Autopairs to Electric-Pair-Mode
-[] Comment.nvim to comment-line
-- Guess indent to ...
-[] Todo comments to hl-todo
-[] undotree.nvim to vundo with undo-fu, Undo-fu-session (lacks date support)
-+ buffer manager to consult-buffer
-
-[] gitsigns to diff-hl
-+ lazygit to magit
-+ nvim-lspconfig to eglot
-[] mason.nvim to mason.el
-[] telescope to consult
-[] lualine to doom-modeline
-[] gruvbox.nvim to gruvbox.el
-+ nvim-treesitter to treesit
-[] which-key to which-key
-
-The last thing that annoys me about Emacs is there are a lot of useless buffers like:
-I don’t need these buffers at all:
-- Async-native-compile-log
-- Native-compile-log
-- Compile-log
-- Warnings
-
-I also don't need these but good to have:
-- Scratch
-- Messages
-- Eglot
-
-They are just annoying and make navigation more challenging.
-
 ** Startup Performance
 Core performance tweaks moved to early-init.el
 
@@ -119,7 +68,6 @@ Enable lexical-binding
 
 ** Auto-tangle Configuration file
 Auto-Tangle Org configuration file for better startup times, it refreshes the package-quickstart file.
-We'll cover package quickstart in the package manager section later.
 
 If you like to auto tangle an Org file, don't forget to add the following line to the top of your Org document:
 (#+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes)
@@ -168,9 +116,6 @@ With Emacs 29 use-package is now built-in.
 #+begin_src emacs-lisp
     (require 'use-package-ensure) ;; Load use-package-always-ensure
     (setq use-package-always-ensure t) ;; Always ensures that a package is installed
-
-    ;; This only shows which built-in package is upgradable. It does not auto update it
-    ;; TODO: Autoupdate built-in packages. Especially Eglot.
     (setq package-install-upgrade-built-in t) ;; Update built-in packages
 #+end_src
 
@@ -514,7 +459,6 @@ Undo-fu-session: Persistent undo history
 
 * Appearance
 ** Set Theme
-Set gruvbox theme, if you want some themes try out doom-themes.
 Use consult-theme to easily try out themes (*Epilepsy* Warning).
 #+begin_src emacs-lisp
     (use-package doom-themes
@@ -740,8 +684,6 @@ Using Tree-Sitter is somewhat hacky because it requires you to:
 - manually manage a source list of the parsers you want to use.
 - remap the major modes you want to use.
 You can also use treesit-auto, but it is updated quite slowly so we don't use it.
-
-*To use it, remove :tangle no from the beginning of the source code block.*
 #+begin_src emacs-lisp
     (setq treesit-language-source-alist
           '((bash "https://github.com/tree-sitter/tree-sitter-bash")
@@ -863,13 +805,6 @@ Emmet's support for emacs.
 #+end_src
 
 ** Language modes
-Emacs contains many “editing modes” that alter its basic behavior in
-useful ways. These are divided into “major modes” and “minor modes”.
-For more: C-h i: g: (emacs)Modes
-
-Some programming languages require the installation of specific modes to fully integrate and function within Emacs.
-These packages are often necessary for features like syntax highlighting, code formatting, linting, and language-specific features.
-
 *** GDScript
 An Emacs package to get GDScript support and syntax highlighting.
 #+begin_src emacs-lisp
@@ -878,11 +813,6 @@ An Emacs package to get GDScript support and syntax highlighting.
 #+end_src
 
 *** Org Mode
-One of the things that Emacs is loved for.
-Once you've used it for a bit, you'll understand why people love it. Even reading about it can be inspiring!
-For example, this document is effectively the source code and descriptions bound into the one document,
-much like the literate programming ideas that Donald Knuth made famous.
-
 We use an Org mode document for our Emacs configuration because it provides:
 - Better organization: It lets us structure with outlines, headings, and tags.
 - Literate Documentation: It's a document, not just source code.
