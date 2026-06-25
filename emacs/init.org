@@ -696,6 +696,8 @@ A template system for Emacs. And yasnippet-snippets is a snippet collection pack
 To use it write out the full keyword (or use autocompletion) and press Tab.
 #+begin_src emacs-lisp
     (use-package yasnippet-snippets
+      :custom
+      (yas-key-syntaxes '("w_" "w_." "^ ")) ;; Fixes prefixes that have characters like: !,@ etc.
       :hook (prog-mode . yas-minor-mode))
 
     (defun mark/corfu-yas-tab-handler ()
@@ -716,15 +718,14 @@ To use it write out the full keyword (or use autocompletion) and press Tab.
 ** Snippy
 VSCode/LSP snippet support for Emacs with Yasnippet.
 #+begin_src emacs-lisp
-    (use-package snippy
-      :vc (:url "https://github.com/MiniApollo/snippy.git"
-                :branch "main"
-                :rev :newest)
-      :hook (after-init . global-snippy-minor-mode)
-      :custom
-      (snippy-global-languages '("global")) ;; Recomended
-      :config
-      (snippy-install-or-update-snippets)) ;; Autoupdate git repo
+      (use-package snippy
+        :vc (:url "https://github.com/MiniApollo/snippy.git")
+        :hook (after-init . global-snippy-minor-mode)
+        :custom
+        (snippy-global-languages '("global")) ;; Recomended
+        :config
+        (snippy-fix-lsp-snippet-mode) ;; Fixes lsp server snippets (e.g java lsp)
+        (snippy-install-or-update-snippets)) ;; Autoupdate git repo
 #+end_src
 
 ** Tree-Sitter
@@ -1018,6 +1019,11 @@ Read the [[https://github.com/minad/cape#configuration][configuration section]] 
       "Configure completion backends"
       ;; Take care when adding Capfs to the list since each of the Capfs adds a small runtime cost.
       (let ((merge-backends (list
+                             ;; Snippy-capf needed to be first, so characters like !,@, etc. Works with Snippy.
+                             ;; When cape-capf-super combines multiple completion functions, it uses the prefix boundaries of the first capf.
+                             ;; Other capf have different prefix boundaries.
+                             #'snippy-capf       ;; Vscode Snippets
+                             #'yasnippet-capf    ;; Yasnippet snippets
                              #'cape-keyword      ;; Keyword completion
                              ;; #'cape-abbrev       ;; Complete abbreviation
                              #'cape-dabbrev      ;; Complete word from current buffers
@@ -1027,8 +1033,6 @@ Read the [[https://github.com/minad/cape#configuration][configuration section]] 
                              ;; #'cape-tex          ;; Complete Unicode char from TeX command, e.g. \hbar
                              ;; #'cape-sgml         ;; Complete Unicode char from SGML entity, e.g., &alpha
                              ;; #'cape-rfc1345      ;; Complete Unicode char using RFC 1345 mnemonics
-                             #'snippy-capf       ;; Vscode Snippets
-                             #'yasnippet-capf    ;; Yasnippet snippets
                              ))
             (seperate-backends (list
                                 #'cape-file ;; Path completion
