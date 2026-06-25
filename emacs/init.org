@@ -128,7 +128,7 @@ If you like to auto tangle an Org file, don't forget to add the following line t
 To fix this, you need to find this file (C-x C-f), fix the error and press C-c C-v t to tangle it manually.
 #+begin_src emacs-lisp
     (defun start/org-babel-tangle-config ()
-      "Automatically tangle our init.org config file and refresh package-quickstart when we save it.
+      "Automatically tangle our init.org config file and refresh package-quickstart.
     Credit to Emacs From Scratch for this one!"
       (interactive)
       (when (string-equal (file-name-directory (buffer-file-name))
@@ -604,8 +604,11 @@ More [[https://docs.projectile.mx/projectile/projectile_vs_project.html][reasons
         "Return list of work dirs."
         (append
          (split-string (shell-command-to-string "find ~/.config -maxdepth 1 -type d") "\n" t)
-         (split-string (shell-command-to-string "find /mnt/Ext4D/Mark/Projektek/ /mnt/Ext4D/Mark/Projektek/Desktop/Gyakorlas/ /mnt/Ext4D/Mark/Projektek/Desktop/Iskola/ -mindepth 2 -maxdepth 2 -type d") "\n" t)
-         ))
+         (split-string (shell-command-to-string
+                        (concat "find /mnt/Ext4D/Mark/Projektek/ "
+                                "/mnt/Ext4D/Mark/Projektek/Desktop/Gyakorlas/ "
+                                "/mnt/Ext4D/Mark/Projektek/Desktop/Iskola/ "
+                                "-mindepth 2 -maxdepth 2 -type d")) "\n" t)))
 
       ;; A consult source that calls this function
       (defvar consult-dir--source-work
