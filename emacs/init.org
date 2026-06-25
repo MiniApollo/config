@@ -84,8 +84,7 @@ To fix this, you need to find this file (C-x C-f), fix the error and press C-c C
         ;; Dynamic scoping to the rescue
         (let ((org-confirm-babel-evaluate nil))
           (org-babel-tangle)
-          (package-quickstart-refresh)
-          )))
+          (package-quickstart-refresh))))
 
     (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'start/org-babel-tangle-config)))
 #+end_src
@@ -219,8 +218,7 @@ Also "fixes" multi-vterm not finding vterm (delays vterm module compile).
              ("C-+" . text-scale-increase)
              ("C--" . text-scale-decrease)
              ("<C-wheel-up>" . text-scale-increase)
-             ("<C-wheel-down>" . text-scale-decrease)
-             ))
+             ("<C-wheel-down>" . text-scale-decrease)))
 #+end_src
 
 * Important to load first
@@ -422,8 +420,7 @@ Much more convenient to use:
         "t t" '(visual-line-mode :wk "Toggle truncated lines (wrap)")
         "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
         "t j" '(jinx-mode :wk "Toggle Jinx Spell Checker")
-        "t m" '(evil-mc-mode :wk "Toggle Evil mc mode"))
-      )
+        "t m" '(evil-mc-mode :wk "Toggle Evil mc mode")))
 
     ;; Fix general.el leader key not working instantly in messages buffer with evil mode
     (use-package emacs
@@ -540,8 +537,7 @@ More [[https://docs.projectile.mx/projectile/projectile_vs_project.html][reasons
       (projectile-switch-project-action #'projectile-dired) ;; Open dired when switching to a project
       (projectile-project-search-path '(("/mnt/Ext4D/Mark/Projektek/" . 2)
                                         ("/mnt/Ext4D/Mark/Projektek/Desktop/Gyakorlas/" . 2)
-                                        ("/mnt/Ext4D/Mark/Projektek/Desktop/Iskola/" . 3)
-                                        )))
+                                        ("/mnt/Ext4D/Mark/Projektek/Desktop/Iskola/" . 3))))
 #+end_src
 
 ** Consult-dir
@@ -618,10 +614,7 @@ To control how a LSP server is started customize the eglot-server-programs list.
       ;; Manual lsp servers
       :config
       (add-to-list 'eglot-server-programs
-                   `(hyprlang-ts-mode . ("hyprls" "-lsp")))
-      (add-to-list 'eglot-server-programs
-                   `(vue-ts-mode . ("vue-language-server" "-lsp")))
-      )
+                   `(vue-ts-mode . ("vue-language-server" "-lsp"))))
 #+end_src
 
 ** Mason.el
@@ -797,8 +790,7 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
       (add-hook 'go-ts-mode-hook
                 (lambda () (setq-local treesit-font-lock-settings
                                        (append treesit-font-lock-settings
-                                               mark/ts-font-lock-settings))))
-      )
+                                               mark/ts-font-lock-settings)))))
 #+end_src
 
 ** Emmet mode
@@ -834,8 +826,7 @@ Much easier than org-tempo
       (org-edit-src-content-indentation 4) ;; Set src block automatic indent to 4 instead of 2.
       (org-return-follows-link t)   ;; Sets RETURN key in org-mode to follow links
       :hook
-      (org-mode . org-indent-mode) ;; Indent text
-      )
+      (org-mode . org-indent-mode)) ;; Indent text
 #+end_src
 
 **** Table of Contents
@@ -892,8 +883,7 @@ Complete text-based user interface to Git.
       :defer
       :custom (magit-diff-refine-hunk (quote all)) ;; Shows inline diff
       :config
-      (setopt magit-format-file-function #'magit-format-file-nerd-icons) ;; Magit nerd icons
-      )
+      (setopt magit-format-file-function #'magit-format-file-nerd-icons)) ;; Magit nerd icons
 #+end_src
 
 ** Diff-hl
@@ -991,9 +981,7 @@ Read the [[https://github.com/minad/cape#configuration][configuration section]] 
         (setq-local completion-at-point-functions
                     (append
                      seperate-backends
-                     (list (apply #'cape-capf-super merge-backends)))
-                    )))
-
+                     (list (apply #'cape-capf-super merge-backends))))))
     (use-package cape
       :after (corfu)
       :init
@@ -1035,8 +1023,7 @@ We use these packages because they use Emacs native functions. Unlike Ivy or Hel
                   ("C-u" . vertico-scroll-down)
                   ("C-d" . vertico-scroll-up))
       :custom
-      (vertico-cycle t) ;; Enable cycling for `vertico-next/previous'
-      )
+      (vertico-cycle t)) ;; Enable cycling for `vertico-next/previous'
 
     (savehist-mode) ;; Enables save history mode
 
@@ -1088,8 +1075,7 @@ Check out their [[https://github.com/minad/consult][git repository]] for more aw
       :config
        ;;;; 4. projectile.el (projectile-project-root)
       (autoload 'projectile-project-root "projectile")
-      (setq consult-project-function (lambda (_) (projectile-project-root)))
-      )
+      (setq consult-project-function (lambda (_) (projectile-project-root))))
 #+end_src
 
 ** Sudo edit
@@ -1172,8 +1158,7 @@ Highlight TODO keywords
               ;; from project to project.
               ("NOTE" success bold)
               ("BUG" error bold)
-              ("XXX" font-lock-constant-face bold)))
-      )
+              ("XXX" font-lock-constant-face bold))))
 #+end_src
 
 ** Indent-guide
