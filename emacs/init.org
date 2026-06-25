@@ -93,6 +93,7 @@ To fix this, you need to find this file (C-x C-f), fix the error and press C-c C
 ** Show startup time
 #+begin_src emacs-lisp
     (defun start/display-startup-time ()
+      "Display Emacs startup time and the number of garbage collections in the echo area."
       (interactive)
       (message "Emacs loaded in %s with %d garbage collections."
                (format "%.2f seconds"
@@ -479,6 +480,7 @@ With Emacs version 29, true transparency has been added.
 
     ;; Transparency in terminal
     (defun start/tui-enable-transparency ()
+      "Enable background transparency when running Emacs in a terminal emulator."
       (unless (display-graphic-p (selected-frame))
         (set-face-background 'default "unspecified-bg" (selected-frame))))
 
