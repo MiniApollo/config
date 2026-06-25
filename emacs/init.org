@@ -338,6 +338,7 @@ Much more convenient to use:
         "s g" '(consult-ripgrep :wk "Search with ripgrep")
         "s l" '(consult-line :wk "Search line")
         "s i" '(consult-imenu :wk "Search Imenu buffer locations")  ;; This one is really cool
+        "s a" '(query-replace :wk "Search & Replace")
 
         "s e" '(sudo-edit :wk "Sudo edit current file")
         "s u" '(sudo-edit-find-file :wk "Sudo edit find file")
