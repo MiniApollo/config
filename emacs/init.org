@@ -24,7 +24,6 @@
 - [[#development][Development]]
   - [[#projectile][Projectile]]
   - [[#consult-dir][Consult-dir]]
-  - [[#javelin][Javelin]]
   - [[#eglot][Eglot]]
   - [[#masonel][Mason.el]]
   - [[#sideline-flymake][Sideline-flymake]]
@@ -321,17 +320,6 @@ Much more convenient to use:
         "m l" '(bookmark-bmenu-list :wk "Bookmark bmenu list")
         "m c" '(consult-bookmark :wk "Consult Bookmark"))
 
-      ;; Javelin (Harpoon)
-      (start/leader-keys
-        "a" '(javelin-toggle-quick-menu :wk "Javelin quick menu")
-        "j" '(:ignore t :wk "Javelin")
-        "j a" '(javelin-add-file :wk "Javelin add file")
-        "j d" '(javelin-delete :wk "Javelin Delete")
-        "j c" '(javelin-clear :wk "Javelin clear")
-        "j C" '(javelin-clear-all :wk "Javelin clear all")
-        "j p" '(javelin-go-to-prev :wk "Javelin previous")
-        "j n" '(javelin-go-to-next :wk "Javelin next"))
-
       (start/leader-keys
         "s" '(:ignore t :wk "Search")
         "s c" '(mark/open-init-file :wk "Open init file")
@@ -404,16 +392,6 @@ Much more convenient to use:
         "v n" '(multi-vterm-next :wk "Multi vterm next")
         "v p" '(multi-vterm-prev :wk "Multi vterm prev")
         "v d" '(multi-vterm-dedicated-toggle :wk "Toggle multi-vterm dedicated"))
-
-      (start/leader-keys
-        "l" '(:ignore t :wk "LLM")
-        "l a" '(gptel :wk "Launch Gptel")
-        "l m" '(gptel-menu :wk "Gptel Menu")
-        "l s" '(gptel-send :wk "Gptel send")
-        "l d" '(gptel-add :wk "Gptel add region")
-        "l f" '(gptel-add-file :wk "Gptel add file")
-        "l r" '(gptel-rewrite :wk "Gptel rewrite")
-        "l c" '(gptel-abort :wk "Cancel prompt"))
 
       (start/leader-keys
         "t" '(:ignore t :wk "Toggle")
@@ -527,7 +505,6 @@ We use projectile because it:
 - has better documentation.
 - is developed faster.
 More [[https://docs.projectile.mx/projectile/projectile_vs_project.html][reasons]] to use projectile.
-
 #+begin_src emacs-lisp
     (use-package projectile
       :hook (after-init . projectile-mode)
@@ -571,13 +548,6 @@ More [[https://docs.projectile.mx/projectile/projectile_vs_project.html][reasons
 
       ;; Adding to the list of consult-dir sources
       (add-to-list 'consult-dir-sources 'consult-dir--source-work t))
-#+end_src
-
-** Javelin
-Modern, better maintained version of harpoon.el
-#+begin_src emacs-lisp
-    (use-package javelin
-      :hook (after-init . global-javelin-minor-mode))
 #+end_src
 
 ** Eglot
