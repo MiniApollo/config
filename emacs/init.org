@@ -634,14 +634,16 @@ To use it write out the full keyword (or use autocompletion) and press Tab.
 ** Snippy
 VSCode/LSP snippet support for Emacs with Yasnippet.
 #+begin_src emacs-lisp
-      (use-package snippy
-        :vc (:url "https://github.com/MiniApollo/snippy.git")
-        :hook (after-init . global-snippy-minor-mode)
-        :custom
-        (snippy-global-languages '("global")) ;; Recomended
-        :config
-        (snippy-fix-lsp-snippet-mode) ;; Fixes lsp server snippets (e.g java lsp)
-        (snippy-install-or-update-snippets)) ;; Autoupdate git repo
+    (use-package snippy
+      :vc (:url "https://github.com/MiniApollo/snippy.git"
+                :branch "main"
+                :rev :newest)
+      :hook (after-init . global-snippy-minor-mode)
+      :custom
+      (snippy-global-languages '("global" "license")) ;; Recomended
+      :config
+      (snippy-fix-lsp-snippet-mode) ;; Fixes lsp server snippets (e.g java lsp)
+      (snippy-install-or-update-snippets)) ;; Autoupdate git repo
 #+end_src
 
 ** Tree-Sitter
