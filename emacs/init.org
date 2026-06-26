@@ -303,6 +303,7 @@ Much more convenient to use:
         "TAB" '(comment-line :wk "Comment lines")
         "q" '(flymake-show-buffer-diagnostics :wk "Flymake buffer diagnostic")
         "u" '(vundo :wk "Vundo")
+        "j" '(jump-to-register :wk "Jump to register")
 
         ;; Projectile
         "p" '(projectile-command-map :wk "Projectile")
@@ -312,7 +313,6 @@ Much more convenient to use:
         "m" '(:ignore t :wk "Bookmarks & Registers")
         ;; Registers
         "m s" '(consult-register :wk "Consult register")
-        "m k" '(jump-to-register :wk "Jump to register")
         "m e" '(point-to-register :wk "Point to register")
         ;; Bookmarks
         "m a" '(bookmark-set :wk "Bookmark Set")
