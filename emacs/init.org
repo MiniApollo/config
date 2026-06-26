@@ -56,6 +56,7 @@
   - [[#which-key][Which-Key]]
   - [[#ws-butler][Ws-butler]]
   - [[#esup][Esup]]
+  - [[#package-lint][Package-Lint]]
 
 * Core Setup & Performance
 ** Startup Performance
@@ -1183,4 +1184,9 @@ Emacs Start Up Profiler
       :defer
       :custom
       (esup-depth 0))
+#+end_src
+
+** Package-Lint
+#+begin_src emacs-lisp
+    (use-package package-lint :defer)
 #+end_src
