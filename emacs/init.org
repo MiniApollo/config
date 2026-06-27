@@ -640,7 +640,7 @@ VSCode/LSP snippet support for Emacs with Yasnippet.
                 :rev :newest)
       :hook (after-init . global-snippy-minor-mode)
       :custom
-      (snippy-global-languages '("global" "license")) ;; Recomended
+      (snippy-global-languages '("global")) ;; Recomended
       :config
       (snippy-fix-lsp-snippet-mode) ;; Fixes lsp server snippets (e.g java lsp)
       (snippy-install-or-update-snippets)) ;; Autoupdate git repo
