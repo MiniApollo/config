@@ -295,7 +295,7 @@ Much more convenient to use:
         :states '(normal insert visual motion emacs) ;; <- evil
         :keymaps 'override
         :prefix "SPC"
-        :global-prefix "M-SPC") ;; Set global leader key so we can access our keybindings from any state
+        :global-prefix "M-m") ;; Set global leader key so we can access our keybindings from any state
 
       (start/leader-keys
         "." '(find-file :wk "Find file")
@@ -312,14 +312,14 @@ Much more convenient to use:
       (start/leader-keys
         "m" '(:ignore t :wk "Bookmarks & Registers")
         ;; Registers
-        "m s" '(consult-register :wk "Consult register")
-        "m e" '(point-to-register :wk "Point to register")
+        "m l" '(consult-register :wk "Consult register")
+        "m k" '(point-to-register :wk "Point to register")
         ;; Bookmarks
         "m a" '(bookmark-set :wk "Bookmark Set")
         "m d" '(bookmark-jump :wk "Bookmark Jump")
         "m r" '(bookmark-delete :wk "Bookmark Delete")
         "m R" '(bookmark-delete-all :wk "Bookmark Delete All")
-        "m l" '(bookmark-bmenu-list :wk "Bookmark bmenu list")
+        "m b" '(bookmark-bmenu-list :wk "Bookmark bmenu list")
         "m c" '(consult-bookmark :wk "Consult Bookmark"))
 
       (start/leader-keys
