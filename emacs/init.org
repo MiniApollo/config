@@ -925,9 +925,9 @@ Read the [[https://github.com/minad/cape#configuration][configuration section]] 
                              ;; Other capf have different prefix boundaries.
                              #'snippy-capf       ;; Vscode Snippets
                              #'yasnippet-capf    ;; Yasnippet snippets
-                             #'cape-keyword      ;; Keyword completion
                              ;; #'cape-abbrev       ;; Complete abbreviation
                              #'cape-dabbrev      ;; Complete word from current buffers
+                             #'cape-keyword      ;; Keyword completion
                              ;; #'cape-line         ;; Complete entire line from current buffer
                              ;; #'cape-history      ;; Complete from Eshell, Comint or minibuffer history
                              ;; #'cape-dict         ;; Dictionary completion (Needs Dictionary file installed)
@@ -949,7 +949,7 @@ Read the [[https://github.com/minad/cape#configuration][configuration section]] 
 
         ;; Add Eglot to the front of the list if it's active
         (when (bound-and-true-p eglot--managed-mode)
-          (setq merge-backends (cons #'eglot-completion-at-point merge-backends)))
+          (setq merge-backends (append merge-backends (list #'eglot-completion-at-point))))
 
         ;; Create the super-capf and set it buffer-locally
         (setq-local completion-at-point-functions
