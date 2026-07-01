@@ -886,6 +886,7 @@ Notes:
       (corfu-popupinfo-mode t)       ;; Enable popup information
       (corfu-popupinfo-delay 0.5)    ;; Lower popup info delay to 0.5 seconds from 2 seconds
       (corfu-separator ?\s)          ;; Orderless field separator, Use M-SPC to enter separator
+      (corfu-on-exact-match 'show)   ;; Initiate completion even for a single match only.
 
       (completion-ignore-case t)
       ;; Emacs 30 and newer: Disable Ispell completion function.
