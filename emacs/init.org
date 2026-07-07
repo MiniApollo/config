@@ -376,6 +376,7 @@ Much more convenient to use:
         "r" '(:ignore t :wk "Reload & Packages") ;; To get more help use C-h commands (describe variable, function, etc.)
         ;; Mason.el
         "r m" '(mason-manager :wk "Mason manager")
+        "r l" '(mason-update-all :wk "Mason update all")
         "r i" '(mason-install :wk "Mason install")
         ;; Package-menu-mode
         "r p" '(list-packages :wk "List packages")
@@ -585,6 +586,8 @@ To control how a LSP server is started customize the eglot-server-programs list.
       (eglot-report-progress nil) ;; Disable LSP server logs (Don't show lsp messages at the bottom, java)
       ;; Manual lsp servers
       :config
+      (add-to-list 'eglot-server-programs
+                   `(asm-mode . ("asm-lsp")))
       (add-to-list 'eglot-server-programs
                    `(vue-ts-mode . ("vue-language-server" "-lsp"))))
 #+end_src
