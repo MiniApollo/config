@@ -533,10 +533,9 @@ More [[https://docs.projectile.mx/projectile/projectile_vs_project.html][reasons
       (defun consult-dir--work-dirs ()
         "Return list of work dirs."
         (append
-         (split-string (shell-command-to-string "find ~/.config -maxdepth 1 -type d") "\n" t)
+         (split-string (shell-command-to-string "find ~/.config/ ~/SystemFiles/ -maxdepth 1 -type d") "\n" t)
          (split-string (shell-command-to-string
                         (concat "find ~/Projects/ "
-                                "~/SystemFiles/ "
                                 "/mnt/Ext4D/Mark/Projektek/ "
                                 "/mnt/Ext4D/Mark/Projektek/Desktop/Gyakorlas/ "
                                 "/mnt/Ext4D/Mark/Projektek/Desktop/Iskola/ "
