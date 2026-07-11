@@ -524,23 +524,47 @@ More [[https://docs.projectile.mx/projectile/projectile_vs_project.html][reasons
 
 ** Consult-dir
 #+begin_src emacs-lisp
+    (defvar mark/work-dirs-cache nil
+      "Cache for `mark/get-work-dirs'.")
+
+    (defun mark/depth-searcher (paths max-depth)
+      "Search for directories in PATHS up to MAX-DEPTH using fd."
+      (let (valid-paths)
+        (dolist (path paths)
+          (when (file-directory-p (expand-file-name path))
+            (push (shell-quote-argument (expand-file-name path)) valid-paths)))
+
+        (when valid-paths
+          (split-string
+           (shell-command-to-string
+            (format "fd --type d --max-depth %d . %s"
+                    max-depth
+                    (string-join (nreverse valid-paths) " ")))
+           "\n" t))))
+
+    (defun mark/get-work-dirs ()
+      "Return list of work directories for consult.
+    If called interactively, forces a refresh of the cache."
+      (interactive)
+      (when (called-interactively-p 'any)
+        (setq mark/work-dirs-cache nil)
+        (message "Refreshing work directories cache."))
+
+      (or mark/work-dirs-cache
+          (setq mark/work-dirs-cache
+                (let ((depth1 '("~/.config/" "~/SystemFiles/"))
+                      (depth2 '("~/Projects/"
+                                "/mnt/Ext4D/Mark/Projektek/"
+                                "/mnt/Ext4D/Mark/Projektek/Desktop/Gyakorlas/"
+                                "/mnt/Ext4D/Mark/Projektek/Desktop/Iskola/")))
+                  (append (mark/depth-searcher depth1 1)
+                          (mark/depth-searcher depth2 2))))))
+
     (use-package consult-dir
-      :defer
+      :defer t
       :custom
       (consult-dir-default-command #'consult-dir-dired)
       :config
-      ;; A function that returns a list of directories
-      (defun consult-dir--work-dirs ()
-        "Return list of work dirs."
-        (append
-         (split-string (shell-command-to-string "find ~/.config/ ~/SystemFiles/ -maxdepth 1 -type d") "\n" t)
-         (split-string (shell-command-to-string
-                        (concat "find ~/Projects/ "
-                                "/mnt/Ext4D/Mark/Projektek/ "
-                                "/mnt/Ext4D/Mark/Projektek/Desktop/Gyakorlas/ "
-                                "/mnt/Ext4D/Mark/Projektek/Desktop/Iskola/ "
-                                "-mindepth 2 -maxdepth 2 -type d")) "\n" t)))
-
       ;; A consult source that calls this function
       (defvar consult-dir--source-work
         `(:name     "Work Directories"
@@ -548,10 +572,9 @@ More [[https://docs.projectile.mx/projectile/projectile_vs_project.html][reasons
                     :category file
                     :face     consult-file
                     :history  file-name-history
-                    :enabled  ,(lambda () (executable-find "find"))
-                    :items    ,#'consult-dir--work-dirs)
+                    :enabled  ,(lambda () (executable-find "fd"))
+                    :items    ,#'mark/get-work-dirs)
         "Work directory source for `consult-dir'.")
-
       ;; Adding to the list of consult-dir sources
       (add-to-list 'consult-dir-sources 'consult-dir--source-work t))
 #+end_src
