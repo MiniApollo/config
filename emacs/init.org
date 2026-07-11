@@ -944,9 +944,12 @@ Read the [[https://github.com/minad/cape#configuration][configuration section]] 
                                 #'cape-file ;; Path completion
                                 #'cape-elisp-block ;; Complete elisp in Org or Markdown mode
                                 )))
-        ;; Remove keyword completion in git commits
-        (when (derived-mode-p 'git-commit-mode)
-          (setq merge-backends (remq #'cape-keyword merge-backends)))
+
+        ;; Remove keyword and snippet completion in git commits
+        (when (bound-and-true-p git-commit-mode)
+          (setq merge-backends (remq #'cape-keyword merge-backends))
+          (setq merge-backends (remq #'snippy-capf merge-backends))
+          (setq merge-backends (remq #'yasnippet-capf merge-backends)))
 
         ;; Add Elisp symbols only in Elisp modes
         (when (derived-mode-p 'emacs-lisp-mode 'ielm-mode)
@@ -972,7 +975,8 @@ Read the [[https://github.com/minad/cape#configuration][configuration section]] 
       ;; Seperate function needed, because we use setq-local (everything is replaced)
       (add-hook 'eglot-managed-mode-hook #'mark/setup-capfs)
       (add-hook 'prog-mode-hook #'mark/setup-capfs)
-      (add-hook 'text-mode-hook #'mark/setup-capfs))
+      (add-hook 'text-mode-hook #'mark/setup-capfs)
+      (add-hook 'git-commit-setup-hook #'mark/setup-capfs)) ;; Fixes completion in magit commits
 #+end_src
 
 ** Orderless
