@@ -390,11 +390,10 @@ Much more convenient to use:
         "r r" '(mark/reload-config :wk "Reload Emacs config"))
 
       (start/leader-keys
-        "v" '(:ignore t :wk "Vterm")
-        "v m" '(multi-vterm :wk "New multi-vterm")
-        "v n" '(multi-vterm-next :wk "Multi vterm next")
-        "v p" '(multi-vterm-prev :wk "Multi vterm prev")
-        "v d" '(multi-vterm-dedicated-toggle :wk "Toggle multi-vterm dedicated"))
+        "v" '(:ignore t :wk "Terminal")
+        "v m" '((lambda () (interactive) (ghostel '(4))) :wk "New Ghostel session")
+        "v n" '(ghostel-next :wk "Multi vterm next")
+        "v p" '(ghostel-previous :wk "Multi vterm prev"))
 
       (start/leader-keys
         "t" '(:ignore t :wk "Toggle")
@@ -848,23 +847,14 @@ Prettify headings and plain lists in Org mode. Modern version of org-bullets.
 #+end_src
 
 ** Terminal
-*** VTerm
-Fully-fledged terminal emulator inside GNU Emacs.
-Fast, POSIX compliant shell, handles UIs well.
+*** Ghostel
+Terminal emulator powered by libghostty.
 #+begin_src emacs-lisp
-    (use-package vterm
-      :defer
-      :hook (vterm-mode . (lambda () (setq-local global-hl-line-mode nil)))
-      :custom
-      (vterm-max-scrollback 5000)
-      (vterm-always-compile-module t))
-#+end_src
+    (use-package ghostel)
 
-*** Multi-vterm
-Managing multiple vterm buffers in Emacs
-#+begin_src emacs-lisp
-    (use-package multi-vterm
-      :after vterm)
+    (use-package evil-ghostel
+      :after (ghostel evil)
+      :hook (ghostel-mode . evil-ghostel-mode))
 #+end_src
 
 *** Exec-path-from-shell
@@ -900,9 +890,7 @@ Highlights uncommitted changes on the left side of the window (area also known a
 
 * Completion
 ** Corfu
-Enhances in-buffer completion with a small completion popup.
 Corfu is a small package, which relies on the Emacs completion facilities and concentrates on providing a polished completion.
-For more configuration options check out their [[https://github.com/minad/corfu][git repository]].
 Notes:
 - To enter Orderless field separator, use M-SPC.
 #+begin_src emacs-lisp
