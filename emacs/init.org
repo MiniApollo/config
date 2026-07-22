@@ -75,7 +75,7 @@ If you like to auto tangle an Org file, don't forget to add the following line t
 To fix this, you need to find this file (C-x C-f), fix the error and press C-c C-v t to tangle it manually.
 #+begin_src emacs-lisp
     (defun start/org-babel-tangle-config ()
-      "Automatically tangle our init.org config file and refresh package-quickstart.
+      "Automatically tangle our init.org config file and refresh `package-quickstart'.
     Credit to Emacs From Scratch for this one!"
       (interactive)
       (when (string-equal (file-name-directory (buffer-file-name))
@@ -274,12 +274,12 @@ Much more convenient to use:
 - Which key macro
 #+begin_src emacs-lisp
     (defun mark/open-init-file ()
-      "Open init.org configuration file"
+      "Open init.org configuration file."
       (interactive)
       (find-file "~/.config/emacs/init.org"))
 
     (defun mark/reload-config()
-      "Reload Emacs config"
+      "Reload Emacs config."
       (interactive)
       (load-file "~/.config/emacs/init.el"))
 
@@ -604,7 +604,7 @@ To use it write out the full keyword (or use autocompletion) and press Tab.
       :hook (prog-mode . yas-minor-mode))
 
     (defun mark/corfu-yas-tab-handler ()
-      "Prioritize corfu over yasnippet when yasnippet is active"
+      "Prioritize corfu over yasnippet when yasnippet is active."
       (interactive)
       ;; There is no direct way to get if corfu is currently displayed so we watch the completion index
       (if (> corfu--index -1)
@@ -671,7 +671,7 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
             (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
 
     (defun start/install-treesit-grammars ()
-      "Install missing treesitter grammars"
+      "Install missing treesitter grammars."
       (interactive)
       (dolist (grammar treesit-language-source-alist)
         (let ((lang (car grammar)))
@@ -890,7 +890,7 @@ Read the [[https://github.com/minad/cape#configuration][configuration section]] 
     (use-package yasnippet-capf :defer t)
 
     (defun mark/setup-capfs ()
-      "Configure completion backends"
+      "Configure completion backends."
       ;; Take care when adding Capfs to the list since each of the Capfs adds a small runtime cost.
       (let ((merge-backends (list
                              ;; Snippy-capf needed to be first, so characters like !,@, etc. Works with Snippy.
