@@ -171,6 +171,7 @@ Also "fixes" multi-vterm not finding vterm (delays vterm module compile).
 
       (dired-kill-when-opening-new-dired-buffer t) ;; Dired don't create new buffer
       (recentf-mode t) ;; Enable recent file mode
+      (savehist-mode t) ;; Enables save history mode
       (context-menu-mode t) ;; Right-click menu
 
       ;; (global-visual-line-mode t)           ;; Enable line wrapping
@@ -964,8 +965,6 @@ We use these packages because they use Emacs native functions. Unlike Ivy or Hel
                   ("C-d" . vertico-scroll-up))
       :custom
       (vertico-cycle t)) ;; Enable cycling for `vertico-next/previous'
-
-    (savehist-mode) ;; Enables save history mode
 
     (use-package marginalia
       :after vertico
