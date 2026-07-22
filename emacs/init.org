@@ -298,6 +298,7 @@ Much more convenient to use:
         "TAB" '(comment-line :wk "Comment lines")
         "g" '(magit-status :wk "Magit status")
         "j" '(jump-to-register :wk "Jump to register")
+        "p"   '(:keymap project-prefix-map :wk "Projects")
         "q" '(flymake-show-buffer-diagnostics :wk "Flymake buffer diagnostic")
         "u" '(vundo :wk "Vundo"))
 
