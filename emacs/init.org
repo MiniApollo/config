@@ -905,9 +905,8 @@ Read the [[https://github.com/minad/cape#configuration][configuration section]] 
 
         ;; Remove keyword and snippet completion in git commits
         (when (bound-and-true-p git-commit-mode)
-          (setq merge-backends (remq #'cape-keyword merge-backends))
-          (setq merge-backends (remq #'snippy-capf merge-backends))
-          (setq merge-backends (remq #'yasnippet-capf merge-backends)))
+          (dolist (backend '(cape-keyword snippy-capf yasnippet-capf))
+            (setq merge-backends (remq backend merge-backends))))
 
         ;; Add Elisp symbols only in Elisp modes
         (when (derived-mode-p 'emacs-lisp-mode 'ielm-mode)
