@@ -143,7 +143,7 @@ Makes package installation about 30 sec faster.
 Also "fixes" multi-vterm not finding vterm (delays vterm module compile).
 #+begin_src emacs-lisp
     (use-package async
-      :defer
+      :defer t
       :custom
       (dired-async-mode t)
       (async-bytecomp-package-mode t)
@@ -227,7 +227,6 @@ An extensible vi/vim layer for Emacs.
 
 Notes:
 - You can toggle evil mode with C-z.
-- To paste without yank select the text and use P. This line is especially for ThePrimeagen :)
 #+begin_src emacs-lisp
     (use-package evil
       :hook (after-init . evil-mode)
@@ -428,7 +427,7 @@ Undo-fu-session: Persistent undo history
         (setq undo-fu-session-compression 'zst)))
 
     (use-package vundo
-      :defer
+      :defer t
       :custom
       (vundo-glyph-alist vundo-unicode-symbols)
       (vundo-compact-display t))
@@ -477,7 +476,7 @@ Don't forget nerd-icons-install-fonts to install the resource fonts.
 We use nerd-icons because it supports both GUI and TUI unlike all-the-icons.
 Also Doom modeline requires nerd icons.
 #+begin_src emacs-lisp
-    (use-package nerd-icons :defer)
+    (use-package nerd-icons :defer t)
 
     (use-package nerd-icons-dired
       :hook (dired-mode . nerd-icons-dired-mode))
@@ -754,7 +753,7 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
              field: (field_identifier) @font-lock-property-use-face))
            ;; ((Treesit patern) @defface_Settings)
            ))
-        "Go-ts-mode settings, fix not highlighting function calls and property values")
+        "Go-ts-mode settings, fix not highlighting function calls and property values.")
 
       (add-hook 'go-ts-mode-hook
                 (lambda () (setq-local treesit-font-lock-settings
@@ -835,12 +834,12 @@ Terminal emulator powered by libghostty.
 Complete text-based user interface to Git.
 #+begin_src emacs-lisp
     (use-package transient
-      :defer
+      :defer t
       :config
       (define-key transient-map (kbd "<escape>") 'transient-quit-one)) ;; Make escape quit magit prompts
 
     (use-package magit
-      :defer
+      :defer t
       :custom (magit-diff-refine-hunk (quote all)) ;; Shows inline diff
       :config
       (setopt magit-format-file-function #'magit-format-file-nerd-icons)) ;; Magit nerd icons
@@ -900,7 +899,7 @@ Notes:
 - Be aware when adding Capfs (Completion-at-point-functions) to the list since each of the Capfs adds a small runtime cost.
 Read the [[https://github.com/minad/cape#configuration][configuration section]] in Cape's readme for more information.
 #+begin_src emacs-lisp
-    (use-package yasnippet-capf :defer)
+    (use-package yasnippet-capf :defer t)
 
     (defun mark/setup-capfs ()
       "Configure completion backends"
@@ -965,7 +964,7 @@ Completion style that divides the pattern into space-separated components and ma
 Recommended for packages like vertico, corfu.
 #+begin_src emacs-lisp
     (use-package orderless
-      :defer
+      :defer t
       :custom
       (completion-styles '(orderless basic))
       (completion-category-overrides '((file (styles basic partial-completion)))))
@@ -1042,14 +1041,14 @@ Check out their [[https://github.com/minad/consult][git repository]] for more aw
 Utilities for opening files with root privileges (also works with doas).
 #+begin_src emacs-lisp
     (use-package sudo-edit
-      :defer
+      :defer t
       :custom (sudo-edit-local-method "doas")) ;; To use doas
 #+end_src
 
 ** Evil-mc
 Multiple-cursors for evil mode.
 #+begin_src emacs-lisp
-    (use-package evil-mc :defer)
+    (use-package evil-mc :defer t)
 #+end_src
 
 ** Helpful
@@ -1070,7 +1069,7 @@ An alternative to the built-in Emacs help that provides much more contextual inf
 This package implements hiding or abbreviation of the modeline displays (lighters) of minor-modes.
 With this package installed, you can add ‘:diminish’ to any use-package block to hide that particular mode in the modeline.
 #+begin_src emacs-lisp
-    (use-package diminish :defer)
+    (use-package diminish :defer t)
 #+end_src
 
 ** Rainbow Delimiters
@@ -1159,12 +1158,12 @@ Removes whitespace from the ends of lines.
 Emacs Start Up Profiler
 #+begin_src emacs-lisp
     (use-package esup
-      :defer
+      :defer t
       :custom
       (esup-depth 0))
 #+end_src
 
 ** Package-Lint
 #+begin_src emacs-lisp
-    (use-package package-lint :defer)
+    (use-package package-lint :defer t)
 #+end_src
