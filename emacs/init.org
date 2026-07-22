@@ -22,7 +22,6 @@
   - [[#doom-modeline][Doom Modeline]]
   - [[#nerd-icons][Nerd Icons]]
 - [[#development][Development]]
-  - [[#projectile][Projectile]]
   - [[#consult-dir][Consult-dir]]
   - [[#eglot][Eglot]]
   - [[#masonel][Mason.el]]
@@ -41,7 +40,6 @@
   - [[#cape][Cape]]
   - [[#orderless][Orderless]]
   - [[#vertico-and-marginalia][Vertico and Marginalia]]
-  - [[#embark][Embark]]
   - [[#jinx][Jinx]]
 - [[#other-packages][Other packages]]
   - [[#consult][Consult]]
@@ -303,11 +301,7 @@ Much more convenient to use:
         "TAB" '(comment-line :wk "Comment lines")
         "q" '(flymake-show-buffer-diagnostics :wk "Flymake buffer diagnostic")
         "u" '(vundo :wk "Vundo")
-        "j" '(jump-to-register :wk "Jump to register")
-
-        ;; Projectile
-        "p" '(projectile-command-map :wk "Projectile")
-        "s p" '(projectile-discover-projects-in-search-path :wk "Search for projects"))
+        "j" '(jump-to-register :wk "Jump to register"))
 
       (start/leader-keys
         "m" '(:ignore t :wk "Bookmarks & Registers")
@@ -495,33 +489,8 @@ Also Doom modeline requires nerd icons.
 #+end_src
 
 * Development
-** Projectile
-Project interaction library for Emacs.
-
-Emacs has a built in project manager called project.el, but we don't use it.
-You can try it out with the keybinds under C-x p because project.el does not require any special setup to use.
-
-We use projectile because it:
-- supports more features and project types.
-- has better integration with projects.
-- has better documentation.
-- is developed faster.
-More [[https://docs.projectile.mx/projectile/projectile_vs_project.html][reasons]] to use projectile.
-#+begin_src emacs-lisp
-    (use-package projectile
-      :hook (after-init . projectile-mode)
-      :custom
-      (projectile-auto-discover nil) ;; Disable auto search for better startup times ;; Search with a keybind
-      (projectile-run-use-comint-mode t) ;; Interactive run dialog when running projects inside emacs (like giving input)
-      (projectile-switch-project-action #'projectile-dired) ;; Open dired when switching to a project
-      (projectile-project-search-path '(("~/Projects" . 3)
-                                        ("~/SystemFiles/" . 2)
-                                        ("/mnt/Ext4D/Mark/Projektek/" . 2)
-                                        ("/mnt/Ext4D/Mark/Projektek/Desktop/Gyakorlas/" . 2)
-                                        ("/mnt/Ext4D/Mark/Projektek/Desktop/Iskola/" . 3))))
-#+end_src
-
 ** Consult-dir
+Insert paths into the minibuffer prompt in Emacs
 #+begin_src emacs-lisp
     (defvar mark/work-dirs-cache nil
       "Cache for `mark/get-work-dirs'.")
@@ -1037,15 +1006,6 @@ We use these packages because they use Emacs native functions. Unlike Ivy or Hel
       (marginalia-mode . nerd-icons-completion-marginalia-setup))
 #+end_src
 
-** Embark
-Emacs Mini-Buffer Actions Rooted in Keymaps
-#+begin_src emacs-lisp
-    (use-package embark :defer)
-    (use-package embark-consult
-      :hook
-      (embark-collect-mode . consult-preview-at-point-mode))
-#+end_src
-
 ** Jinx
 Enchanted Spell Checker
 Jinx can cause performance problems in large markdown files.
@@ -1077,11 +1037,7 @@ Check out their [[https://github.com/minad/consult][git repository]] for more aw
 
       ;; Use Consult to select xref locations with preview
       (setq xref-show-xrefs-function #'consult-xref
-            xref-show-definitions-function #'consult-xref)
-      :config
-       ;;;; 4. projectile.el (projectile-project-root)
-      (autoload 'projectile-project-root "projectile")
-      (setq consult-project-function (lambda (_) (projectile-project-root))))
+            xref-show-definitions-function #'consult-xref))
 #+end_src
 
 ** Sudo edit
