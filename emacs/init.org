@@ -25,6 +25,7 @@
   - [[#consult-dir][Consult-dir]]
   - [[#eglot][Eglot]]
   - [[#masonel][Mason.el]]
+  - [[#sideline-flymake][Sideline-flymake]]
   - [[#yasnippet][Yasnippet]]
   - [[#snippy][Snippy]]
   - [[#tree-sitter][Tree-Sitter]]
@@ -570,7 +571,6 @@ To control how a LSP server is started customize the eglot-server-programs list.
       (eglot-events-buffer-size 0) ;; No event buffers (LSP server logs)
       (eglot-autoshutdown t);; Shutdown unused servers.
       (eglot-report-progress nil) ;; Disable LSP server logs (Don't show lsp messages at the bottom, java)
-      (flymake-show-diagnostics-at-end-of-line t) ;; Show sideline errors
       ;; Manual lsp servers
       :config
       (add-to-list 'eglot-server-programs
@@ -583,6 +583,16 @@ I waited so long for a package like this.
 #+begin_src emacs-lisp
     (use-package mason
       :hook (after-init . mason-ensure))
+#+end_src
+
+** Sideline-flymake
+Show flymake errors with sideline
+#+begin_src emacs-lisp
+    (use-package sideline-flymake
+      :hook (flymake-mode . sideline-mode)
+      :custom
+      (sideline-flymake-display-mode 'line) ;; show errors on the current line
+      (sideline-backends-right '(sideline-flymake)))
 #+end_src
 
 ** Yasnippet
