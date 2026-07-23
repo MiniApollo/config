@@ -292,11 +292,12 @@ Much more convenient to use:
         :states '(normal insert visual motion emacs)
         :keymaps 'override
         :prefix "SPC"
-        :global-prefix "M-m") ;; Set global leader key so we can access our keybindings from any state
+        :global-prefix "M-n") ;; Set global leader key so we can access our keybindings from any state
 
       (start/leader-keys
         "." '(find-file :wk "Find file")
         "TAB" '(comment-line :wk "Comment lines")
+        "a" '(consult-dir :wk "Consult dir")
         "g" '(magit-status :wk "Magit status")
         "j" '(jump-to-register :wk "Jump to register")
         "p"   '(:keymap project-prefix-map :wk "Projects")
@@ -305,7 +306,6 @@ Much more convenient to use:
 
       (start/leader-keys
         "d" '(:ignore t :wk "Buffers & Dired")
-        "d a" '(consult-dir :wk "Consult dir")
         "d i" '(ibuffer :wk "Ibuffer")
         "d j" '(dired-jump :wk "Dired jump to current")
         "d k" '(kill-current-buffer :wk "Kill current buffer")
