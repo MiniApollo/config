@@ -38,8 +38,8 @@
 - [[#completion][Completion]]
   - [[#corfu][Corfu]]
   - [[#cape][Cape]]
-  - [[#orderless][Orderless]]
   - [[#vertico-and-marginalia][Vertico and Marginalia]]
+  - [[#orderless][Orderless]]
   - [[#jinx][Jinx]]
 - [[#other-packages][Other packages]]
   - [[#consult][Consult]]
@@ -940,20 +940,6 @@ Read the [[https://github.com/minad/cape#configuration][configuration section]] 
       (add-hook 'git-commit-setup-hook #'mark/setup-capfs)) ;; Fixes completion in magit commits
 #+end_src
 
-** Orderless
-Completion style that divides the pattern into space-separated components and matches candidates that match all of the components in any order.
-Recommended for packages like vertico, corfu.
-#+begin_src emacs-lisp
-    (use-package orderless
-      :defer t
-      :custom
-      (completion-styles '(orderless basic))
-      (completion-category-defaults nil)
-      (orderless-matching-styles '(orderless-literal orderless-regexp orderless-flex))
-      (completion-category-overrides '((file (styles basic orderless))
-                                       (directory (styles basic orderless)))))
-#+end_src
-
 ** Vertico and Marginalia
 - Vertico: Provides a performant and minimalistic vertical completion UI based on the default completion system.
 - Savehist: Saves completion history.
@@ -983,6 +969,23 @@ We use these packages because they use Emacs native functions. Unlike Ivy or Hel
       (nerd-icons-completion-mode)
       :hook
       (marginalia-mode . nerd-icons-completion-marginalia-setup))
+#+end_src
+
+** Orderless
+Completion style that divides the pattern into space-separated components and matches candidates that match all of the components in any order.
+Recommended for packages like vertico, corfu.
+#+begin_src emacs-lisp
+    (use-package orderless
+      :after (vertico)
+      :custom
+      (completion-styles '(orderless basic))
+      (completion-category-overrides
+       '((file (styles basic partial-completion))
+         (directory (styles orderless-with-flex basic))))
+      :config
+      ;; Define a custom orderless style specifically for flex/typo tolerance
+      (orderless-define-completion-style orderless-with-flex
+                                         (orderless-matching-styles '(orderless-literal orderless-regexp orderless-flex))))
 #+end_src
 
 ** Jinx
