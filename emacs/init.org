@@ -691,6 +691,7 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
             (gdscript-mode . gdscript-ts-mode)
             ))
     (setq treesit-font-lock-level 3)
+    (use-package c++-ts-mode :ensure nil :mode ("\\.cpp\\'" "\\.cppm\\'"))
 
     ;; Or if there is no built in mode
     (use-package cmake-ts-mode :ensure nil :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
