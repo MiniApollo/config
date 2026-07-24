@@ -22,7 +22,7 @@
   - [[#doom-modeline][Doom Modeline]]
   - [[#nerd-icons][Nerd Icons]]
 - [[#development][Development]]
-  - [[#consult-dir][Consult-dir]]
+  - [[#project-sessionizer][Project Sessionizer]]
   - [[#eglot][Eglot]]
   - [[#masonel][Mason.el]]
   - [[#sideline-flymake][Sideline-flymake]]
@@ -297,7 +297,7 @@ Much more convenient to use:
       (start/leader-keys
         "." '(find-file :wk "Find file")
         "TAB" '(comment-line :wk "Comment lines")
-        "a" '(consult-dir :wk "Consult dir")
+        "a" '(mark/project-sessionizer :wk "Project sessionizer")
         "g" '(magit-status :wk "Magit status")
         "j" '(jump-to-register :wk "Jump to register")
         "p"   '(:keymap project-prefix-map :wk "Projects")
@@ -483,8 +483,8 @@ Also Doom modeline requires nerd icons.
 #+end_src
 
 * Development
-** Consult-dir
-Insert paths into the minibuffer prompt in Emacs
+** Project Sessionizer
+Tmux sessionizer like project finder with built in behavior.
 #+begin_src emacs-lisp
     (defvar mark/work-dirs-cache nil
       "Cache for `mark/get-work-dirs'.")
@@ -506,7 +506,7 @@ Insert paths into the minibuffer prompt in Emacs
 
     (defun mark/get-work-dirs ()
       "Return list of work directories for consult.
-    If called interactively, forces a refresh of the cache."
+            If called interactively, forces a refresh of the cache."
       (interactive)
       (when (called-interactively-p 'any)
         (setq mark/work-dirs-cache nil)
@@ -522,23 +522,15 @@ Insert paths into the minibuffer prompt in Emacs
                   (append (mark/depth-searcher depth1 1)
                           (mark/depth-searcher depth2 2))))))
 
-    (use-package consult-dir
-      :defer t
-      :custom
-      (consult-dir-default-command #'consult-dir-dired)
-      :config
-      ;; A consult source that calls this function
-      (defvar consult-dir--source-work
-        `(:name     "Work Directories"
-                    :narrow   ?w
-                    :category file
-                    :face     consult-file
-                    :history  file-name-history
-                    :enabled  ,(lambda () (executable-find "fd"))
-                    :items    ,#'mark/get-work-dirs)
-        "Work directory source for `consult-dir'.")
-      ;; Adding to the list of consult-dir sources
-      (add-to-list 'consult-dir-sources 'consult-dir--source-work t))
+    (defun mark/project-sessionizer ()
+      "Interactively select a work directory and open it with Dired."
+      (interactive)
+      (let* ((dirs (mark/get-work-dirs))
+             ;; We attach 'directory category metadata so Orderless treats candidates as full directory paths
+             (cands (completion-table-with-metadata dirs '((category . directory))))
+             (selected-dir (completing-read "Switch Project: " cands nil t)))
+        (when (and selected-dir (not (string-empty-p selected-dir)))
+          (dired selected-dir))))
 #+end_src
 
 ** Eglot
@@ -955,7 +947,10 @@ Recommended for packages like vertico, corfu.
       :defer t
       :custom
       (completion-styles '(orderless basic))
-      (completion-category-overrides '((file (styles basic partial-completion)))))
+      (completion-category-defaults nil)
+      (orderless-matching-styles '(orderless-literal orderless-regexp orderless-flex))
+      (completion-category-overrides '((file (styles basic orderless))
+                                       (directory (styles basic orderless)))))
 #+end_src
 
 ** Vertico and Marginalia
