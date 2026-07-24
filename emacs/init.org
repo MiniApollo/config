@@ -171,9 +171,11 @@ Also "fixes" multi-vterm not finding vterm (delays vterm module compile).
       (use-short-answers t)   ;; Since Emacs 29, `yes-or-no-p' will use `y-or-n-p'
 
       (dired-kill-when-opening-new-dired-buffer t) ;; Dired don't create new buffer
+      (dired-mouse-drag-files t) ;; Enable Drag and Drop support in dired (Only works in X11)
+
+      (context-menu-mode t) ;; Right-click menu
       (recentf-mode t) ;; Enable recent file mode
       (savehist-mode t) ;; Enables save history mode
-      (context-menu-mode t) ;; Right-click menu
 
       ;; (global-visual-line-mode t)           ;; Enable line wrapping
       (truncate-lines t)                    ;; Enable long lines
