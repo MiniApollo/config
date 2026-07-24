@@ -286,6 +286,16 @@ Much more convenient to use:
       (interactive)
       (load-file "~/.config/emacs/init.el"))
 
+    (defun mark/open-file-manager ()
+      "Open system file manager at the current path."
+      (interactive)
+      (let ((path (expand-file-name default-directory)))
+        (if (and path (file-exists-p path))
+            (call-process-shell-command
+             (format "nohup xdg-open %s > /dev/null 2>&1 &" (shell-quote-argument path))
+             nil 0)
+          (message "No valid directory found for current buffer."))))
+
     (use-package general
       :after (evil)
       :config
@@ -310,6 +320,7 @@ Much more convenient to use:
         "d" '(:ignore t :wk "Buffers & Dired")
         "d i" '(ibuffer :wk "Ibuffer")
         "d j" '(dired-jump :wk "Dired jump to current")
+        "d f" '(mark/open-file-manager :wk "Open system file manager")
         "d k" '(kill-current-buffer :wk "Kill current buffer")
 
         "d n" '(next-buffer :wk "Next buffer")
