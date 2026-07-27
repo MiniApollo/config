@@ -113,17 +113,17 @@ We use it because it makes package configuration really easy.
 
 With Emacs 29 use-package is now built-in.
 #+begin_src emacs-lisp
-    (require 'use-package-ensure) ;; Load use-package-always-ensure
-    (setq use-package-always-ensure t) ;; Always ensures that a package is installed
-    (setq package-install-upgrade-built-in t) ;; Update built-in packages
+    (require 'use-package-ensure) ; Load use-package-always-ensure
+    (setq use-package-always-ensure t) ; Always ensures that a package is installed
+    (setq package-install-upgrade-built-in t) ; Update built-in packages
 #+end_src
 
 *** Setting package repositories
 Like Linux distributions, Emacs uses repositories to manage its packages.
 #+begin_src emacs-lisp
-    (setq package-archives '(("melpa" . "https://melpa.org/packages/") ;; Sets default package repositories
+    (setq package-archives '(("melpa" . "https://melpa.org/packages/") ; Sets default package repositories
                              ("elpa" . "https://elpa.gnu.org/packages/")
-                             ("nongnu" . "https://elpa.nongnu.org/nongnu/"))) ;; For Eat Terminal
+                             ("nongnu" . "https://elpa.nongnu.org/nongnu/"))) ; For Eat Terminal
 #+end_src
 
 *** Package quickstart
@@ -135,7 +135,7 @@ The larger your configuration, the more it will be felt at startup.
 Package quickstart only works with package.el.
 If you plan to use a different package manager, remember to remove this section and the package-quickstart-refresh line in the Auto-tangle hook.
 #+begin_src emacs-lisp
-    (setq package-quickstart t) ;; For blazingly fast startup times, this line makes startup miles faster
+    (setq package-quickstart t) ; For blazingly fast startup times, this line makes startup miles faster
 #+end_src
 
 *** Package Async
@@ -156,65 +156,65 @@ Also "fixes" multi-vterm not finding vterm (delays vterm module compile).
     (use-package emacs
       :custom
       ;; Still needed for terminals
-      (menu-bar-mode nil)         ;; Disable the menu bar
-      (scroll-bar-mode nil)       ;; Disable the scroll bar
-      (tool-bar-mode nil)         ;; Disable the tool bar
+      (menu-bar-mode nil)         ; Disable the menu bar
+      (scroll-bar-mode nil)       ; Disable the scroll bar
+      (tool-bar-mode nil)         ; Disable the tool bar
 
-      (inhibit-startup-screen t)  ;; Disable welcome screen
+      (inhibit-startup-screen t)  ; Disable welcome screen
 
-      (delete-selection-mode t)   ;; Select text and delete it by typing.
-      (electric-indent-mode nil)  ;; Turn off the weird indenting that Emacs does by default.
-      (electric-pair-mode t)      ;; Turns on automatic parens pairing
+      (delete-selection-mode t)   ; Select text and delete it by typing.
+      (electric-indent-mode nil)  ; Turn off the weird indenting that Emacs does by default.
+      (electric-pair-mode t)      ; Turns on automatic parens pairing
 
-      (blink-cursor-mode nil)     ;; Don't blink cursor
-      (global-auto-revert-mode t) ;; Automatically reload file and show changes if the file has changed
-      (use-short-answers t)   ;; Since Emacs 29, `yes-or-no-p' will use `y-or-n-p'
+      (blink-cursor-mode nil)     ; Don't blink cursor
+      (global-auto-revert-mode t) ; Automatically reload file and show changes if the file has changed
+      (use-short-answers t)   ; Since Emacs 29, `yes-or-no-p' will use `y-or-n-p'
 
-      (dired-kill-when-opening-new-dired-buffer t) ;; Dired don't create new buffer
-      (dired-mouse-drag-files t) ;; Enable Drag and Drop support in dired (Only works in X11)
+      (dired-kill-when-opening-new-dired-buffer t) ; Dired doesn't create new buffer
+      (dired-mouse-drag-files t) ; Enable Drag and Drop support in dired (Only works in X11)
 
-      (context-menu-mode t) ;; Right-click menu
-      (recentf-mode t) ;; Enable recent file mode
-      (savehist-mode t) ;; Enables save history mode
+      (context-menu-mode t) ; Right-click menu
+      (recentf-mode t) ; Enable recent file mode
+      (savehist-mode t) ; Enables save history mode
 
-      ;; (global-visual-line-mode t)           ;; Enable line wrapping
-      (truncate-lines t)                    ;; Enable long lines
-      (display-line-numbers-type 'relative) ;; Relative line numbers
-      (global-display-line-numbers-mode t)  ;; Display line numbers
-      (global-hl-line-mode t)               ;; Highlight current line
+      ;; (global-visual-line-mode t)           ; Enable line wrapping
+      (truncate-lines t)                    ; Enable long lines
+      (display-line-numbers-type 'relative) ; Relative line numbers
+      (global-display-line-numbers-mode t)  ; Display line numbers
+      (global-hl-line-mode t)               ; Highlight current line
 
-      ;; (pixel-scroll-precision-mode t)     ;; Precise pixel scrolling. i.e. smooth scrolling
+      ;; (pixel-scroll-precision-mode t)     ; Precise pixel scrolling. i.e. smooth scrolling
       ;; (pixel-scroll-precision-use-momentum nil)
 
-      (native-comp-async-report-warnings-errors 'silent) ;; Don't show native comp errors
-      (warning-minimum-level :error) ;; Only show errors in warnings buffer
+      (native-comp-async-report-warnings-errors 'silent) ; Don't show native comp errors
+      (warning-minimum-level :error) ; Only show errors in warnings buffer
 
-      (mouse-wheel-progressive-speed nil) ;; Disable progressive speed when scrolling
-      (scroll-conservatively 10) ;; Smooth scrolling
+      (mouse-wheel-progressive-speed nil) ; Disable progressive speed when scrolling
+      (scroll-conservatively 10) ; Smooth scrolling
       (scroll-margin 8)
 
-      (indent-tabs-mode nil) ;; Only use spaces for indentation
+      (indent-tabs-mode nil) ; Only use spaces for indentation
       (tab-width 4)
-      (sgml-basic-offset 4) ;; Set Html mode indentation to 4
-      (c-ts-mode-indent-offset 4) ;; Fix weird indentation in c-ts (C, C++)
-      (go-ts-mode-indent-offset 4) ;; Fix weird indentation in go-ts
+      (sgml-basic-offset 4) ; Set Html mode indentation to 4
+      (c-ts-mode-indent-offset 4) ; Fix weird indentation in c-ts (C, C++)
+      (go-ts-mode-indent-offset 4) ; Fix weird indentation in go-ts
 
-      (display-fill-column-indicator-column 80) ;; Set line length indicator to 80 characters
+      (display-fill-column-indicator-column 80) ; Set line length indicator to 80 characters
       (whitespace-style '(face tabs tab-mark trailing))
 
-      (make-backup-files nil) ;; Stop creating ~ backup files
-      (auto-save-default nil) ;; Stop creating # auto save files
+      (make-backup-files nil) ; Stop creating ~ backup files
+      (auto-save-default nil) ; Stop creating # auto save files
       (delete-by-moving-to-trash t)
       :hook
-      (prog-mode . hs-minor-mode) ;; Enable folding hide/show globally
-      (prog-mode . display-fill-column-indicator-mode) ;; Display line length indicator
+      (prog-mode . hs-minor-mode) ; Enable folding hide/show globally
+      (prog-mode . display-fill-column-indicator-mode) ; Display line length indicator
       (prog-mode . whitespace-mode)
       :config
       ;; Move customization variables to a separate file and load it, avoid filling up init.el with unnecessary variables
       (setq custom-file (locate-user-emacs-file "custom-vars.el"))
       (load custom-file 'noerror 'nomessage)
       :bind (
-             ([escape] . keyboard-escape-quit) ;; Makes Escape quit prompts (Minibuffer Escape)
+             ([escape] . keyboard-escape-quit) ; Makes Escape quit prompts (Minibuffer Escape)
              ("C-SPC" . completion-at-point)
              ;; Zooming In/Out
              ("C-+" . text-scale-increase)
@@ -234,16 +234,16 @@ Notes:
     (use-package evil
       :hook (after-init . evil-mode)
       :config
-      (evil-set-initial-state 'eat-mode 'insert) ;; Set initial state in eat terminal to insert mode
-      (global-set-key [C-backspace] 'evil-delete-backward-word) ;; Make C-backspace less agressive
+      (evil-set-initial-state 'eat-mode 'insert) ; Set initial state in eat terminal to insert mode
+      (global-set-key [C-backspace] 'evil-delete-backward-word) ; Make C-backspace less aggressive
       ;; Center cursor when jumping with C-d, C-u.
       (advice-add 'evil-scroll-down :after (lambda (&rest _) (recenter nil)))
       (advice-add 'evil-scroll-up :after (lambda (&rest _) (recenter nil)))
       :custom
-      (evil-want-keybinding nil)    ;; Disable evil bindings in other modes (It's not consistent and not good)
-      (evil-want-C-u-scroll t)      ;; Set C-u to scroll up
-      (evil-want-C-i-jump nil)      ;; Disables C-i jump
-      (evil-undo-system 'undo-fu) ;; C-r to redo
+      (evil-want-keybinding nil)    ; Disable evil bindings in other modes (It's not consistent and not good)
+      (evil-want-C-u-scroll t)      ; Set C-u to scroll up
+      (evil-want-C-i-jump nil)      ; Disables C-i jump
+      (evil-undo-system 'undo-fu) ; C-r to redo
       (evil-want-fine-undo t)
       (evil-respect-visual-line-mode t)
       ;; Unmap keys in 'evil-maps. If not done, org-return-follows-link will not work
@@ -304,7 +304,7 @@ Much more convenient to use:
         :states '(normal insert visual motion emacs)
         :keymaps 'override
         :prefix "SPC"
-        :global-prefix "M-n") ;; Set global leader key so we can access our keybindings from any state
+        :global-prefix "M-n") ; Set global leader key so we can access our keybindings from any state
 
       (start/leader-keys
         "." '(find-file :wk "Find file")
@@ -369,7 +369,7 @@ Much more convenient to use:
         "r p" '(list-packages :wk "List packages")
         "r c" '(package-menu-clear-filter :wk "Package clear filters")
         "r n" '(package-menu-filter-by-name :wk "Package filter by name")
-        "r N" '(package-menu-filter-by-name-or-description :wk "Package filter by name or descriptions")
+        "r N" '(package-menu-filter-by-name-or-description :wk "Package filter by name or description")
         "r s" '(package-menu-filter-by-status :wk "Package filter by status")
         "r u" '(package-menu-filter-upgradable :wk "Package filter by upgradable")
         ;; Session and Configuration Management
@@ -383,7 +383,7 @@ Much more convenient to use:
         "s f" '(consult-fd :wk "Search files with fd")
         "s g" '(consult-ripgrep :wk "Search with ripgrep")
 
-        "s i" '(consult-imenu :wk "Imenu buffer locations")  ;; This one is really cool
+        "s i" '(consult-imenu :wk "Imenu buffer locations")  ; This one is really cool
         "s l" '(consult-line :wk "Search line")
         "s o" '(jinx-correct :wk "Jinx correct")
         "s r" '(consult-recent-file :wk "Search recent files")
@@ -423,9 +423,9 @@ Undo-fu-session: Persistent undo history
     (use-package undo-fu
       :config
       ;; Increase undo history limits to reduce likelihood of data loss
-      (setq undo-limit (* 1024 1024 64)          ;; 64mb  (default is 160kb)
-            undo-strong-limit (* 1024 1024 96)   ;; 96mb  (default is 240kb)
-            undo-outer-limit (* 1024 1024 960))) ;; 960mb (default is 24mb)
+      (setq undo-limit (* 1024 1024 64)          ; 64mb  (default is 160kb)
+            undo-strong-limit (* 1024 1024 96)   ; 96mb  (default is 240kb)
+            undo-outer-limit (* 1024 1024 960))) ; 960mb (default is 24mb)
 
     (use-package undo-fu-session
       :hook (after-init . undo-fu-session-global-mode)
@@ -461,7 +461,7 @@ Use consult-theme to easily try out themes (*Epilepsy* Warning).
 ** Transparency
 With Emacs version 29, true transparency has been added.
 #+begin_src emacs-lisp
-    (add-to-list 'default-frame-alist '(alpha-background . 90)) ;; For all new frames henceforth
+    (add-to-list 'default-frame-alist '(alpha-background . 90)) ; For all new frames henceforth
 
     ;; Transparency in terminal
     (defun start/tui-enable-transparency ()
@@ -481,7 +481,7 @@ A fancy, fast and customizable mode-line.
 
 ** Nerd Icons
 This is an icon set that can be used with dired, ibuffer and other Emacs packages.
-Don't forget nerd-icons-install-fonts to install the resource fonts.
+Don't forget to run nerd-icons-install-fonts to install the resource fonts.
 
 We use nerd-icons because it supports both GUI and TUI unlike all-the-icons.
 Also Doom modeline requires nerd icons.
@@ -551,7 +551,7 @@ Built in Emacs client for the Language Server Protocol.
 We use Eglot because it is fast and minimal.
 For more: C-h i: g: (eglot)Top
 
-Eglot does not automatically download LSP servers. It requires separate download.
+Eglot does not automatically download LSP servers. It requires a separate download.
 The easiest way to install LSP servers is with a package manager.
 
 If you can't use a package manager you can do the following:
@@ -573,9 +573,9 @@ To control how a LSP server is started customize the eglot-server-programs list.
              . eglot-ensure)
       :custom
       ;; Good default
-      (eglot-events-buffer-size 0) ;; No event buffers (LSP server logs)
-      (eglot-autoshutdown t);; Shutdown unused servers.
-      (eglot-report-progress nil) ;; Disable LSP server logs (Don't show lsp messages at the bottom, java)
+      (eglot-events-buffer-size 0) ; No event buffers (LSP server logs)
+      (eglot-autoshutdown t) ; Shutdown unused servers.
+      (eglot-report-progress nil) ; Disable LSP server logs (Don't show lsp messages at the bottom, java)
       ;; Manual lsp servers
       :config
       (add-to-list 'eglot-server-programs
@@ -596,7 +596,7 @@ Show flymake errors with sideline
     (use-package sideline-flymake
       :hook (flymake-mode . sideline-mode)
       :custom
-      (sideline-flymake-display-mode 'line) ;; show errors on the current line
+      (sideline-flymake-display-mode 'line) ; show errors on the current line
       (sideline-backends-right '(sideline-flymake)))
 #+end_src
 
@@ -606,7 +606,7 @@ To use it write out the full keyword (or use autocompletion) and press Tab.
 #+begin_src emacs-lisp
     (use-package yasnippet-snippets
       :custom
-      (yas-key-syntaxes '("w_" "w_." "^ ")) ;; Fixes prefixes that have characters like: !,@ etc.
+      (yas-key-syntaxes '("w_" "w_." "^ ")) ; Fixes prefixes that have characters like: !,@ etc.
       :hook (prog-mode . yas-minor-mode))
 
     (defun mark/corfu-yas-tab-handler ()
@@ -630,10 +630,10 @@ VSCode/LSP snippet support for Emacs with Yasnippet.
     (use-package snippy
       :hook (after-init . global-snippy-minor-mode)
       :custom
-      (snippy-global-languages '("global")) ;; Recomended
+      (snippy-global-languages '("global")) ; Recommended
       :config
-      (snippy-fix-lsp-snippet-mode) ;; Fixes lsp server snippets (e.g java lsp)
-      (snippy-install-or-update-snippets)) ;; Autoupdate git repo
+      (snippy-fix-lsp-snippet-mode) ; Fixes lsp server snippets (e.g java lsp)
+      (snippy-install-or-update-snippets)) ; Autoupdate git repo
 #+end_src
 
 ** Tree-Sitter
@@ -698,8 +698,7 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
             (js-json-mode . json-ts-mode)
             (typescript-mode . typescript-ts-mode)
             (conf-toml-mode . toml-ts-mode)
-            (gdscript-mode . gdscript-ts-mode)
-            ))
+            (gdscript-mode . gdscript-ts-mode)))
     (setq treesit-font-lock-level 3)
     (use-package c++-ts-mode :ensure nil :mode ("\\.cpp\\'" "\\.cppm\\'"))
 
@@ -729,13 +728,13 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
       :config
       (defvar mark/ts-font-lock-settings
         (treesit-font-lock-rules
-         :language 'go ;; What language
-         :feature 'function-highlight ;; A unique feature name that we can toggle.
+         :language 'go ; What language
+         :feature 'function-highlight ; A unique feature name that we can toggle.
          `(
            ;; Function calls
            (call_expression
             function: (selector_expression
-                       field: (field_identifier) @font-lock-function-call-face)) ;; Use 'describe-face' to find faces
+                       field: (field_identifier) @font-lock-function-call-face)) ; Use 'describe-face' to find faces
            ;; Property values
            (argument_list
             (selector_expression
@@ -743,7 +742,7 @@ You can also use treesit-auto, but it is updated quite slowly so we don't use it
            (expression_list
             (selector_expression
              field: (field_identifier) @font-lock-property-use-face))
-           ;; ((Treesit patern) @defface_Settings)
+           ;; ((Treesit pattern) @defface_Settings)
            ))
         "Go-ts-mode settings, fix not highlighting function calls and property values.")
 
@@ -758,9 +757,9 @@ Emmet's support for emacs.
 #+begin_src emacs-lisp
     (use-package emmet-mode
       :hook
-      ((sgml-mode css-base-mode) . emmet-mode) ;; Auto-start on any markup modes
+      ((sgml-mode css-base-mode) . emmet-mode) ; Auto-start on any markup modes
       :config
-      (sgml-electric-tag-pair-mode)) ;; Auto close tags
+      (sgml-electric-tag-pair-mode)) ; Auto close tags
 #+end_src
 
 ** Language modes
@@ -783,10 +782,10 @@ Much easier than org-tempo
     (use-package org
       :ensure nil
       :custom
-      (org-edit-src-content-indentation 4) ;; Set src block automatic indent to 4 instead of 2.
-      (org-return-follows-link t)   ;; Sets RETURN key in org-mode to follow links
+      (org-edit-src-content-indentation 4) ; Set src block automatic indent to 4 instead of 2.
+      (org-return-follows-link t)   ; Sets RETURN key in org-mode to follow links
       :hook
-      (org-mode . org-indent-mode)) ;; Indent text
+      (org-mode . org-indent-mode)) ; Indent text
 #+end_src
 
 **** Table of Contents
@@ -828,13 +827,13 @@ Complete text-based user interface to Git.
     (use-package transient
       :defer t
       :config
-      (define-key transient-map (kbd "<escape>") 'transient-quit-one)) ;; Make escape quit magit prompts
+      (define-key transient-map (kbd "<escape>") 'transient-quit-one)) ; Make escape quit magit prompts
 
     (use-package magit
       :defer t
-      :custom (magit-diff-refine-hunk (quote all)) ;; Shows inline diff
+      :custom (magit-diff-refine-hunk (quote all)) ; Shows inline diff
       :config
-      (setopt magit-format-file-function #'magit-format-file-nerd-icons)) ;; Magit nerd icons
+      (setopt magit-format-file-function #'magit-format-file-nerd-icons)) ; Magit nerd icons
 #+end_src
 
 ** Diff-hl
@@ -855,15 +854,15 @@ Notes:
     (use-package corfu
       ;; Optional customizations
       :custom
-      (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
-      (corfu-auto t)                 ;; Enable auto completion
-      (corfu-auto-prefix 2)          ;; Minimum length of prefix for auto completion.
-      (corfu-popupinfo-mode t)       ;; Enable popup information
-      (corfu-popupinfo-delay 0.5)    ;; Lower popup info delay to 0.5 seconds from 2 seconds
+      (corfu-cycle t)                ; Enable cycling for `corfu-next/previous'
+      (corfu-auto t)                 ; Enable auto completion
+      (corfu-auto-prefix 2)          ; Minimum length of prefix for auto completion.
+      (corfu-popupinfo-mode t)       ; Enable popup information
+      (corfu-popupinfo-delay 0.5)    ; Lower popup info delay to 0.5 seconds from 2 seconds
 
-      (corfu-separator ?\s)        ;; Orderless field separator, Use M-SPC to enter separator
-      (corfu-on-exact-match 'show) ;; Initiate completion even for a single match only.
-      (corfu-preview-current nil)  ;; Don't insert completion without confirmation
+      (corfu-separator ?\s)        ; Orderless field separator, Use M-SPC to enter separator
+      (corfu-on-exact-match 'show) ; Initiate completion even for a single match only.
+      (corfu-preview-current nil)  ; Don't insert completion without confirmation
 
       (completion-ignore-case t)
       ;; Emacs 30 and newer: Disable Ispell completion function.
@@ -900,21 +899,21 @@ Read the [[https://github.com/minad/cape#configuration][configuration section]] 
                              ;; Snippy-capf needed to be first, so characters like !,@, etc. Works with Snippy.
                              ;; When cape-capf-super combines multiple completion functions, it uses the prefix boundaries of the first capf.
                              ;; Other capf have different prefix boundaries.
-                             #'snippy-capf       ;; Vscode Snippets
-                             #'yasnippet-capf    ;; Yasnippet snippets
-                             ;; #'cape-abbrev       ;; Complete abbreviation
-                             #'cape-dabbrev      ;; Complete word from current buffers
-                             #'cape-keyword      ;; Keyword completion
-                             ;; #'cape-line         ;; Complete entire line from current buffer
-                             ;; #'cape-history      ;; Complete from Eshell, Comint or minibuffer history
-                             ;; #'cape-dict         ;; Dictionary completion (Needs Dictionary file installed)
-                             ;; #'cape-tex          ;; Complete Unicode char from TeX command, e.g. \hbar
-                             ;; #'cape-sgml         ;; Complete Unicode char from SGML entity, e.g., &alpha
-                             ;; #'cape-rfc1345      ;; Complete Unicode char using RFC 1345 mnemonics
+                             #'snippy-capf       ; Vscode Snippets
+                             #'yasnippet-capf    ; Yasnippet snippets
+                             ;; #'cape-abbrev       ; Complete abbreviation
+                             #'cape-dabbrev      ; Complete word from current buffers
+                             #'cape-keyword      ; Keyword completion
+                             ;; #'cape-line         ; Complete entire line from current buffer
+                             ;; #'cape-history      ; Complete from Eshell, Comint or minibuffer history
+                             ;; #'cape-dict         ; Dictionary completion (Needs Dictionary file installed)
+                             ;; #'cape-tex          ; Complete Unicode char from TeX command, e.g. \hbar
+                             ;; #'cape-sgml         ; Complete Unicode char from SGML entity, e.g., &alpha
+                             ;; #'cape-rfc1345      ; Complete Unicode char using RFC 1345 mnemonics
                              ))
             (seperate-backends (list
-                                #'cape-file ;; Path completion
-                                #'cape-elisp-block ;; Complete elisp in Org or Markdown mode
+                                #'cape-file ; Path completion
+                                #'cape-elisp-block ; Complete elisp in Org or Markdown mode
                                 )))
 
         ;; Remove keyword and snippet completion in git commits
@@ -924,7 +923,7 @@ Read the [[https://github.com/minad/cape#configuration][configuration section]] 
 
         ;; Add Elisp symbols only in Elisp modes
         (when (derived-mode-p 'emacs-lisp-mode 'ielm-mode)
-          (setq merge-backends (cons #'cape-elisp-symbol merge-backends))) ;; Emacs Lisp code (functions, variables)
+          (setq merge-backends (cons #'cape-elisp-symbol merge-backends))) ; Emacs Lisp code (functions, variables)
 
         ;; Add Eglot to the front of the list if it's active
         (when (bound-and-true-p eglot--managed-mode)
@@ -947,7 +946,7 @@ Read the [[https://github.com/minad/cape#configuration][configuration section]] 
       (add-hook 'eglot-managed-mode-hook #'mark/setup-capfs)
       (add-hook 'prog-mode-hook #'mark/setup-capfs)
       (add-hook 'text-mode-hook #'mark/setup-capfs)
-      (add-hook 'git-commit-setup-hook #'mark/setup-capfs)) ;; Fixes completion in magit commits
+      (add-hook 'git-commit-setup-hook #'mark/setup-capfs)) ; Fixes completion in magit commits
 #+end_src
 
 ** Vertico and Marginalia
@@ -966,7 +965,7 @@ We use these packages because they use Emacs native functions. Unlike Ivy or Hel
                   ("C-u" . vertico-scroll-down)
                   ("C-d" . vertico-scroll-up))
       :custom
-      (vertico-cycle t)) ;; Enable cycling for `vertico-next/previous'
+      (vertico-cycle t)) ; Enable cycling for `vertico-next/previous'
 
     (use-package marginalia
       :after vertico
@@ -1037,7 +1036,7 @@ Utilities for opening files with root privileges (also works with doas).
 #+begin_src emacs-lisp
     (use-package sudo-edit
       :defer t
-      :custom (sudo-edit-local-method "doas")) ;; To use doas
+      :custom (sudo-edit-local-method "doas")) ; To use doas
 #+end_src
 
 ** Evil-mc
@@ -1122,24 +1121,24 @@ Show indendation
       :hook
       (prog-mode . indent-guide-mode)
       :config
-      (setq indent-guide-char "│")) ;; Set the character used for the indent guide.
+      (setq indent-guide-char "│")) ; Set the character used for the indent guide.
 #+end_src
 
 ** Which-Key
 Which-key is a helper utility for keychords (which key to press).
 #+begin_src emacs-lisp
     (use-package which-key
-      :ensure nil ;; Don't install which-key because it's now built-in
+      :ensure nil ; Don't install which-key because it's now built-in
       :hook (after-init . which-key-mode)
       :diminish
       :custom
       (which-key-side-window-location 'bottom)
-      (which-key-sort-order #'which-key-key-order-alpha) ;; Same as default, except single characters are sorted alphabetically
+      (which-key-sort-order #'which-key-key-order-alpha) ; Same as default, except single characters are sorted alphabetically
       (which-key-sort-uppercase-first nil)
-      (which-key-add-column-padding 1) ;; Number of spaces to add to the left of each column
-      (which-key-min-display-lines 6)  ;; Increase the minimum lines to display because the default is only 1
-      (which-key-idle-delay 0.3)       ;; Set the time delay (in seconds) for the which-key popup to appear
-      (which-key-allow-imprecise-window-fit nil)) ;; Fixes which-key window slipping out in Emacs Daemon
+      (which-key-add-column-padding 1) ; Number of spaces to add to the left of each column
+      (which-key-min-display-lines 6)  ; Increase the minimum lines to display because the default is only 1
+      (which-key-idle-delay 0.3)       ; Set the time delay (in seconds) for the which-key popup to appear
+      (which-key-allow-imprecise-window-fit nil)) ; Fixes which-key window slipping out in Emacs Daemon
 #+end_src
 
 ** Ws-butler
