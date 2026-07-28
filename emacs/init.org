@@ -517,8 +517,8 @@ Tmux sessionizer like project finder with built in behavior.
            "\n" t))))
 
     (defun mark/get-work-dirs ()
-      "Return list of work directories for consult.
-            If called interactively, forces a refresh of the cache."
+      "Return a list of work directories.
+    If called interactively, force a cache refresh."
       (interactive)
       (when (called-interactively-p 'any)
         (setq mark/work-dirs-cache nil)
