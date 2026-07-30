@@ -769,6 +769,11 @@ An Emacs package to get GDScript support and syntax highlighting.
       :mode "\\.gd\\'")
 #+end_src
 
+#+begin_src emacs-lisp
+    (use-package meson-mode
+      :mode "\\meson.build\\'")
+#+end_src
+
 *** Org Mode
 We use an Org mode document for our Emacs configuration because it provides:
 - Better organization: It lets us structure with outlines, headings, and tags.
