@@ -987,16 +987,10 @@ Completion style that divides the pattern into space-separated components and ma
 Recommended for packages like vertico, corfu.
 #+begin_src emacs-lisp
     (use-package orderless
-      :after (vertico)
+      :defer t
       :custom
       (completion-styles '(orderless basic))
-      (completion-category-overrides
-       '((file (styles basic partial-completion))
-         (directory (styles orderless-with-flex basic))))
-      :config
-      ;; Define a custom orderless style specifically for flex/typo tolerance
-      (orderless-define-completion-style orderless-with-flex
-                                         (orderless-matching-styles '(orderless-literal orderless-regexp orderless-flex))))
+      (completion-category-overrides '((file (styles basic partial-completion)))))
 #+end_src
 
 ** Jinx
