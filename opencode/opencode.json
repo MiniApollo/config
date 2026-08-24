@@ -4,7 +4,8 @@
     "edit": "ask",
     "read": "ask",
     "glob": "ask",
-    "grep": "ask"
+    "grep": "ask",
+    "websearch": "allow"
   },
   "$schema": "https://opencode.ai/config.json",
   "mcp": {
@@ -18,6 +19,31 @@
       "enabled": true,
       "environment": {
         "SEARXNG_URL": "http://localhost:3001"
+      }
+    }
+  },
+  "provider": {
+    "llama.cpp": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "llama-server (local)",
+      "options": {
+        "baseURL": "http://127.0.0.1:8080/v1"
+      },
+      "models": {
+        "Qwen3.5-9B-GGUF:IQ4_XS": {
+          "name": "unsloth/Qwen3.5-9B-GGUF:IQ4_XS",
+          "limit": {
+            "context": 128000,
+            "output": 65536
+          }
+        },
+        "gemma-4-E4B-it-GGUF:Q4_0": {
+          "name": "ggml-org/gemma-4-E4B-it-GGUF:Q4_0",
+          "limit": {
+            "context": 128000,
+            "output": 65536
+          }
+        }
       }
     }
   }

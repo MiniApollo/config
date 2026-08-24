@@ -1,0 +1,6 @@
+Commands:
+llama-server -hf unsloth/Qwen3.5-9B-GGUF:IQ4_XS --port 3002 -c 65536 -ngl 99 -ctk q4_0 -ctv q4_0 --no-mmproj-offload
+
+llama-server -hf ggml-org/Qwen3.5-0.8B-GGUF --port 3002 -c 0 -ngl 99 -ctk q4_0 -ctv q4_0
+
+llama-server -hf ggml-org/gemma-4-E4B-it-GGUF:Q4_0 --port 3002 -c 0 -ngl 99 -ctk q4_0 -ctv q4_0
