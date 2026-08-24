@@ -409,7 +409,7 @@ Much more convenient to use:
       :after (evil general)
       :ghook ('after-init-hook
               (lambda (&rest _)
-                (when-let ((messages-buffer (get-buffer "*Messages*")))
+                (when-let* ((messages-buffer (get-buffer "*Messages*")))
                   (with-current-buffer messages-buffer
                     (evil-normalize-keymaps))))
               nil nil t))
@@ -469,6 +469,7 @@ With Emacs version 29, true transparency has been added.
         (set-face-background 'default "unspecified-bg" (selected-frame))))
 
     (add-hook 'window-setup-hook 'start/tui-enable-transparency)
+
 #+end_src
 
 ** Doom Modeline
@@ -572,7 +573,6 @@ To control how a LSP server is started customize the eglot-server-programs list.
              . eglot-ensure)
       :custom
       ;; Good default
-      (eglot-events-buffer-size 0) ; No event buffers (LSP server logs)
       (eglot-autoshutdown t) ; Shutdown unused servers.
       (eglot-report-progress nil) ; Disable LSP server logs (Don't show lsp messages at the bottom, java)
       ;; Manual lsp servers
@@ -643,76 +643,26 @@ With Emacs 29 Tree-Sitter is now built-in. You may need to compile Emacs from so
 You also need to have a compiler installed so Emacs can compile the parsers into a shared library.
 For more info about how to use Tree-Sitter check out this [[https://www.masteringemacs.org/article/how-to-get-started-tree-sitter][masteringemacs]] article.
 
-Using Tree-Sitter is somewhat hacky because it requires you to:
-- manually manage a source list of the parsers you want to use.
-- remap the major modes you want to use.
-You can also use treesit-auto, but it is updated quite slowly so we don't use it.
 #+begin_src emacs-lisp
-    (setq treesit-language-source-alist
-          '((bash "https://github.com/tree-sitter/tree-sitter-bash")
-            (cmake "https://github.com/uyha/tree-sitter-cmake")
-            (c "https://github.com/tree-sitter/tree-sitter-c")
-            (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
-            (css "https://github.com/tree-sitter/tree-sitter-css")
-            (gdscript "https://github.com/PrestonKnopp/tree-sitter-gdscript")
-            (go "https://github.com/tree-sitter/tree-sitter-go")
-            (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
-            (html "https://github.com/tree-sitter/tree-sitter-html")
-            (java "https://github.com/tree-sitter/tree-sitter-java")
-            (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-            (json "https://github.com/tree-sitter/tree-sitter-json")
-            (make "https://github.com/alemuller/tree-sitter-make")
-            (python "https://github.com/tree-sitter/tree-sitter-python")
-            (rust "https://github.com/tree-sitter/tree-sitter-rust")
-            (toml "https://github.com/tree-sitter/tree-sitter-toml")
-            (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-            (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-            (vue "https://github.com/ikatyang/tree-sitter-vue")
-            (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+    (use-package emacs
+      :custom
+      (treesit-font-lock-level 3)
+      (treesit-enabled-modes t)
+      (treesit-auto-install-grammar 'always)
+      (treesit-language-source-alist
+       '((gdscript "https://github.com/PrestonKnopp/tree-sitter-gdscript")
+         (vue "https://github.com/ikatyang/tree-sitter-vue")))
+      :config
+      (add-to-list 'major-mode-remap-alist '(gdscript-mode . gdscript-ts-mode)))
 
-    (defun start/install-treesit-grammars ()
-      "Install missing treesitter grammars."
-      (interactive)
-      (dolist (grammar treesit-language-source-alist)
-        (let ((lang (car grammar)))
-          (unless (treesit-language-available-p lang)
-            (treesit-install-language-grammar lang)))))
-
-    ;; Call this function to install missing grammars
-    (add-hook 'after-init-hook #'start/install-treesit-grammars)
-
-    ;; Optionally, add any additional mode remappings not covered by defaults
-    (setq major-mode-remap-alist
-          '((yaml-mode . yaml-ts-mode)
-            (sh-mode . bash-ts-mode)
-            (c-mode . c-ts-mode)
-            (c++-mode . c++-ts-mode)
-            (css-mode . css-ts-mode)
-            (python-mode . python-ts-mode)
-            (mhtml-mode . html-ts-mode)
-            (java-mode . java-ts-mode)
-            (javascript-mode . js-ts-mode)
-            (js-json-mode . json-ts-mode)
-            (typescript-mode . typescript-ts-mode)
-            (conf-toml-mode . toml-ts-mode)
-            (gdscript-mode . gdscript-ts-mode)))
-    (setq treesit-font-lock-level 3)
     (use-package c++-ts-mode :ensure nil :mode ("\\.cpp\\'" "\\.cppm\\'"))
 
-    ;; Or if there is no built in mode
-    (use-package cmake-ts-mode :ensure nil :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
-    (use-package go-mod-ts-mode :ensure nil :mode "\\.mod\\'")
-    (use-package lua-ts-mode :ensure nil :mode "\\.lua\\'")
-    (use-package rust-ts-mode :ensure nil :mode "\\.rs\\'")
-    (use-package typescript-ts-mode :ensure nil :mode "\\.ts\\'")
-    (use-package tsx-ts-mode :ensure nil :mode "\\.tsx\\'")
-    (use-package yaml-ts-mode :ensure nil :mode ("\\.yaml\\'" "\\.yml\\'"))
-
+    ;; Credits to LionyxML
     (use-package markdown-ts-mode
-      :mode ("\\.md\\'")
-      :config
-      (add-to-list 'treesit-language-source-alist '(markdown "https://github.com/tree-sitter-grammars/tree-sitter-markdown" "split_parser" "tree-sitter-markdown/src"))
-      (add-to-list 'treesit-language-source-alist '(markdown-inline "https://github.com/tree-sitter-grammars/tree-sitter-markdown" "split_parser" "tree-sitter-markdown-inline/src")))
+      :if (>= emacs-major-version 31)
+      :ensure nil
+      :mode ("\\.md\\'" "\\.mdx\\'" "\\.markdown\\'")
+      :init (load-library "markdown-ts-mode"))
 #+end_src
 
 *** Fix go-ts-mode highlighting
@@ -764,12 +714,12 @@ Emmet's support for emacs.
 An Emacs package to get GDScript support and syntax highlighting.
 #+begin_src emacs-lisp
     (use-package gdscript-mode
+      :config
+      ;; Needed, treesit-enabled-modes t is not installing it.
+      ;; Probably gdscript-mode handles treesit their own way.
+      (unless (treesit-language-available-p 'gdscript)
+        (treesit-install-language-grammar 'gdscript))
       :mode "\\.gd\\'")
-#+end_src
-
-#+begin_src emacs-lisp
-    (use-package meson-mode
-      :mode "\\meson.build\\'")
 #+end_src
 
 *** Org Mode
