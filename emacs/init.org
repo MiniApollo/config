@@ -468,7 +468,6 @@ With Emacs version 29, true transparency has been added.
         (set-face-background 'default "unspecified-bg" (selected-frame))))
 
     (add-hook 'window-setup-hook 'start/tui-enable-transparency)
-
 #+end_src
 
 ** Doom Modeline
