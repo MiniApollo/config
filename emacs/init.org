@@ -578,6 +578,8 @@ To control how a LSP server is started customize the eglot-server-programs list.
       ;; Manual lsp servers
       :config
       (add-to-list 'eglot-server-programs
+                   `(vue-ts-mode . ("vue-language-server" "--stdio" "--tsdk=/home/mark/.config/emacs/mason/packages/typescript-language-server/lib/node_modules/typescript/lib/")))
+      (add-to-list 'eglot-server-programs
                    `(asm-mode . ("asm-lsp"))))
 #+end_src
 
@@ -699,6 +701,37 @@ Emmet's support for emacs.
 #+end_src
 
 ** Language modes
+*** Vue js testing
+The vue-language-server does not want to cooperate.
+
+#+begin_src emacs-lisp :tangle no
+    (defun mark/eglot-web-mode-server (interactive)
+      "Select the appropriate LSP server for web-mode based on file extension."
+      (let ((ext (file-name-extension (or (buffer-file-name) ""))))
+        (pcase ext
+          ("vue"                       '("vue-language-server" "--stdio" "--tsdk=/home/mark/.config/emacs/mason/packages/typescript-language-server/lib/node_modules/typescript/lib/"))
+          (_                           '("typescript-language-server" "--stdio")))))
+    (use-package web-mode
+      :mode
+      ("\\.vue\\'"
+       "\\.svelte\\'")
+      :custom
+      ;; Auto-closing & UI feedback features
+      (web-mode-enable-auto-pairing t)
+      (web-mode-enable-auto-closing t)
+      (web-mode-enable-current-element-highlight t)
+      (web-mode-enable-auto-indentation t)
+      (web-mode-enable-auto-quoting t))
+
+    (use-package vue-ts-mode
+      :init
+      (unless (treesit-language-available-p 'vue)
+        (treesit-install-language-grammar 'vue))
+      :vc (:url "https://github.com/8uff3r/vue-ts-mode.git"
+                :branch "main")
+      :mode "\\.vue\\'")
+#+end_src
+
 *** GDScript
 An Emacs package to get GDScript support and syntax highlighting.
 #+begin_src emacs-lisp
