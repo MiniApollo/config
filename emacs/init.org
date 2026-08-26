@@ -703,7 +703,7 @@ Emmet's support for emacs.
 An Emacs package to get GDScript support and syntax highlighting.
 #+begin_src emacs-lisp
     (use-package gdscript-mode
-      :config
+      :init
       ;; Needed, treesit-enabled-modes t is not installing it.
       ;; Probably gdscript-mode handles treesit their own way.
       (unless (treesit-language-available-p 'gdscript)
