@@ -651,7 +651,8 @@ For more info about how to use Tree-Sitter check out this [[https://www.masterin
     (use-package markdown-ts-mode
       :ensure nil
       :mode ("\\.md\\'" "\\.mdx\\'" "\\.markdown\\'")
-      :init (load-library "markdown-ts-mode"))
+      :config
+      (require 'markdown-ts-mode-x))
 #+end_src
 
 *** Fix go-ts-mode highlighting
