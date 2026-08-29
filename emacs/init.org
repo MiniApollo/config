@@ -113,7 +113,7 @@ With Emacs 29 use-package is now built-in.
 #+begin_src emacs-lisp
     (require 'use-package-ensure) ; Load use-package-always-ensure
     (setq use-package-always-ensure t) ; Always ensures that a package is installed
-    (setq package-install-upgrade-built-in t) ; Update built-in packages
+    ;; (setq package-install-upgrade-built-in t) ; Update built-in packages
 #+end_src
 
 *** Setting package repositories
