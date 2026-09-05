@@ -41,21 +41,28 @@ border_width       = 0.5
 radius             = 0
 margin_ends        = 0
 padding            = 10
-widget_spacing     = 10
+widget_spacing     = 6
+scale              = 1.1
 font_scale         = 1.1
+capsule            = true
 
 start  = ["launcher", "workspaces", "active_window"]
 center = []
-end    = ["tray", "privacy", "volume", "brightness", "battery", "network", "bluetooth", "clock", "control-center", "session"]
+end    = ["tray", "privacy", "volume", "brightness", "network", "bluetooth", "battery", "clock", "control-center", "session"]
 
 [widget.workspaces]
-pill_scale = 1.5
+pill_scale = 1
 active_pill_size = 2.3
 inactive_pill_size = 1.5
+capsule = false
 
 [widget.active_window]
 max_length = 500
-icon_size = 25
+icon_size = 22
+capsule = false
+
+[widget.privacy]
+capsule = false
 
 [widget.tray]
 drawer_item_size = 20
