@@ -1,0 +1,70 @@
+[theme]
+mode = "dark"
+builtin = "Gruvbox"
+
+[shell]
+corner_radius_scale   = 0
+telemetry_enabled     = false
+setup_wizard_enabled = false
+polkit_agent          = false
+settings_show_advanced = true
+clipboard_enabled     = false
+
+[shell.panel]
+control_center_position = "bottom_right"
+open_near_click_control_center = true
+
+[system.monitor]
+enabled = false
+
+[location]
+auto_locate = true
+
+[wallpaper]
+enabled             = false
+
+[lockscreen]
+enabled               = true
+wallpaper             = "~/Pictures/Wallpapers/arch_hero_wallpaper_by_rahremix_d979ppg.png"
+
+[nightlight]
+enabled              = false
+
+[bar.default]
+position = "bottom"
+enabled            = true
+auto_hide          = false
+thickness          = 34
+background_opacity = 1.0
+border             = "outline"
+border_width       = 0.5
+radius             = 0
+margin_ends        = 0
+padding            = 10
+widget_spacing     = 10
+font_scale         = 1.1
+
+start  = ["launcher", "workspaces", "active_window"]
+center = []
+end    = ["tray", "privacy", "volume", "brightness", "battery", "network", "bluetooth", "clock", "control-center", "session"]
+
+[widget.workspaces]
+pill_scale = 1.5
+active_pill_size = 2.3
+inactive_pill_size = 1.5
+
+[widget.active_window]
+max_length = 500
+icon_size = 25
+
+[widget.tray]
+drawer_item_size = 20
+
+[widget.clock]
+format = "{:L%b %d %A %R}"
+
+[notification]
+filter_order = ["no_history"]
+
+[osd.kinds]
+media = false

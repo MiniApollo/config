@@ -14,9 +14,9 @@ hl.bind("XF86Calculator", hl.dsp.exec_cmd("galculator"))
 hl.bind(MainMod .. " + SHIFT + G", hl.dsp.exec_cmd("galculator"))
 
 -- Rofi
-hl.bind(MainMod .. " + D", hl.dsp.exec_cmd(Menu))
-hl.bind(MainMod .. " + SHIFT + D", hl.dsp.exec_cmd("~/.config/hypr/scripts/gpu_hybrid.sh"))
-hl.bind(MainMod .. " + CTRL + D", hl.dsp.exec_cmd("~/.config/rofi/powermenu/powermenu.sh"))
+-- hl.bind(MainMod .. " + D", hl.dsp.exec_cmd(Menu))
+-- hl.bind(MainMod .. " + SHIFT + D", hl.dsp.exec_cmd("~/.config/hypr/scripts/gpu_hybrid.sh")) -- This is not needed anymore. Automatically happens.
+-- hl.bind(MainMod .. " + CTRL + D", hl.dsp.exec_cmd("~/.config/rofi/powermenu/powermenu.sh"))
 
 hl.bind(MainMod .. " + SHIFT + C", hl.dsp.window.close())
 hl.bind(MainMod .. " + SHIFT + T", hl.dsp.exit())
@@ -26,7 +26,7 @@ hl.bind(MainMod .. " + SHIFT + F", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(MainMod .. " + SHIFT + R", hl.dsp.exec_cmd("killall waybar ; waybar"))
 hl.bind(MainMod .. " + CTRL + I", hl.dsp.exec_cmd("~/.config/hypr/scripts/toggle-hypridle.sh"))
 hl.bind(MainMod .. " + CTRL + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/wallpaper.sh"))
-hl.bind(MainMod .. " + CTRL + SHIFT + L", hl.dsp.exec_cmd("hyprlock"))
+hl.bind(MainMod .. " + CTRL + SHIFT + L", hl.dsp.exec_cmd("loginctl lock-session"))
 hl.bind(MainMod .. " + R", hl.dsp.exec_cmd("hyprpicker -a"))
 
 -- System Controls
@@ -104,3 +104,10 @@ hl.bind(MainMod .. " + CTRL + H", hl.dsp.window.move({ direction = "left" }))
 hl.bind(MainMod .. " + CTRL + L", hl.dsp.window.move({ direction = "right" }))
 hl.bind(MainMod .. " + CTRL + K", hl.dsp.window.move({ direction = "up" }))
 hl.bind(MainMod .. " + CTRL + J", hl.dsp.window.move({ direction = "down" }))
+
+-- Noctalia
+local ipc = "noctalia msg "
+
+hl.bind(MainMod .. "+ D", hl.dsp.exec_cmd(ipc .. "panel-toggle launcher"))
+hl.bind(MainMod .. "+ W", hl.dsp.exec_cmd(ipc .. "panel-toggle control-center"))
+hl.bind(MainMod .. "+ comma", hl.dsp.exec_cmd(ipc .. "settings-toggle"))

@@ -8,7 +8,7 @@ function run {
 }
 killall gammastep
 
-run dunst
+# run dunst
 run gammastep -l 47.55:19.09
 run thunar --daemon
-run nm-applet
+# run nm-applet

@@ -35,7 +35,7 @@ MainMod     = "SUPER" -- Sets "Windows" key as main modifier
 hl.on("hyprland.start", function()
     hl.exec_cmd("wl-clipboard-history -t")
     hl.exec_cmd("systemctl --user start hyprpolkitagent")
-    hl.exec_cmd("waybar")
+    hl.exec_cmd("noctalia")
     hl.exec_cmd("hypridle")
     hl.exec_cmd("~/.config/hypr/scripts/gtk-theme.sh")
     hl.exec_cmd("~/.config/hypr/scripts/autostart.sh")
