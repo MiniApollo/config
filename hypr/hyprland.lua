@@ -24,7 +24,6 @@ Editor      = "emacs"
 FileManager = "thunar"
 WebBrowser  = "librewolf"
 Office      = "libreoffice"
-Menu        = "rofi -show drun"
 MainMod     = "SUPER" -- Sets "Windows" key as main modifier
 
 -------------------
