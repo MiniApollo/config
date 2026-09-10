@@ -66,8 +66,8 @@ hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true 
 -- Scroll through existing workspaces with MainMod + scroll
 hl.bind(MainMod .. " + right", hl.dsp.focus({ workspace = "e+1" }))
 hl.bind(MainMod .. " + left", hl.dsp.focus({ workspace = "e-1" }))
-hl.bind(MainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e+1" }))
-hl.bind(MainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e-1" }))
+hl.bind(MainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
+hl.bind(MainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
 
 -- Move/resize windows with MainMod + LMB/RMB and dragging
 hl.bind(MainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
