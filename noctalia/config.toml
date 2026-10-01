@@ -69,6 +69,7 @@ drawer_item_size = 20
 
 [widget.clock]
 format = "{:L%b %d %A %R}"
+tooltip_format = "{:L%Y - %b %d %A %R:%S}"
 
 [notification]
 filter_order = ["no_history"]
