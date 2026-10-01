@@ -646,6 +646,7 @@ For more info about how to use Tree-Sitter check out this [[https://www.masterin
       (add-to-list 'major-mode-remap-alist '(gdscript-mode . gdscript-ts-mode)))
 
     (use-package c++-ts-mode :ensure nil :mode ("\\.cpp\\'" "\\.cppm\\'"))
+    (use-package html-ts-mode :ensure nil :mode ("\\.html\\'")) ;; For better LSP (mhtml not works that well)
 
     ;; Credits to LionyxML
     (use-package markdown-ts-mode
