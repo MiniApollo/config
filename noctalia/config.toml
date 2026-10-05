@@ -48,7 +48,7 @@ capsule            = true
 
 start  = ["launcher", "workspaces", "active_window"]
 center = []
-end    = ["tray", "privacy", "volume", "brightness", "network", "bluetooth", "battery", "clock", "control-center", "session"]
+end    = ["tray", "privacy", "input-volume", "output-volume", "brightness", "network", "battery", "clock", "control-center", "session"]
 
 [widget.workspaces]
 pill_scale = 1
@@ -61,11 +61,19 @@ max_length = 500
 icon_size = 22
 capsule = false
 
+[widget.tray]
+drawer_item_size = 20
+
 [widget.privacy]
 capsule = false
 
-[widget.tray]
-drawer_item_size = 20
+[widget.input-volume]
+type = "volume"
+device = "input"
+
+[widget.output-volume]
+type = "volume"
+device = "output"
 
 [widget.clock]
 format = "{:L%b %d %A %R}"
