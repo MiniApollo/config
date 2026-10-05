@@ -41,14 +41,14 @@ border_width       = 0.5
 radius             = 0
 margin_ends        = 0
 padding            = 10
-widget_spacing     = 6
+widget_spacing     = 3
 scale              = 1.1
 font_scale         = 1.1
 capsule            = true
 
-start  = ["launcher", "workspaces", "active_window"]
+start  = ["control-center", "workspaces", "active_window"]
 center = []
-end    = ["tray", "privacy", "input-volume", "output-volume", "brightness", "network", "battery", "clock", "control-center", "session"]
+end    = ["tray", "privacy", "output-volume", "input-volume", "brightness", "network", "battery", "clock", "launcher"]
 
 [widget.workspaces]
 pill_scale = 1
@@ -70,6 +70,7 @@ capsule = false
 [widget.input-volume]
 type = "volume"
 device = "input"
+show_label = false
 
 [widget.output-volume]
 type = "volume"
