@@ -85,3 +85,10 @@ filter_order = ["no_history"]
 
 [osd.kinds]
 media = false
+
+[shell.launcher]
+default_view = "all"
+
+[keybinds]
+down = [ "Down", "Ctrl+n", "Ctrl+j" ]
+up = [ "Up", "Ctrl+p", "Ctrl+k" ]
